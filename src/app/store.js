@@ -12,7 +12,7 @@ import {
 import { combineReducers } from "redux";
 import storage from "redux-persist/lib/storage";
 import chatReducer from "../features/chat/chatSlice";
-import settingsReducer from "../features/settings/settingsSlice";
+import settingsReducer from "../features/menu/menuSlice";
 
 // Configuration object for redux-persist.
 // Only objects on the whitelist are stored.
