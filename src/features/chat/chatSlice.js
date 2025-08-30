@@ -53,7 +53,7 @@ export const getChatResponseThunk = createAsyncThunk(
 
     // Remove key/value "created" from obj. API doesn't support additional input
     const context = conversations[currentId].messages.map((message) => {
-      const { created, ...rest } = message;
+      const { _, ...rest } = message;
       return rest;
     });
 

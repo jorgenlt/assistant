@@ -19,7 +19,6 @@ export const menu = createSlice({
   extraReducers: () => {},
 });
 
-// Action creators are generated for each case reducer function
 export const { toggleTheme, toggleLargeText } = menu.actions;
 
 export default menu.reducer;
