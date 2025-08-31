@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { getChatResponseThunk, updateMessages } from "./chatSlice.js";
-import { PaperClipIcon } from '@heroicons/react/24/solid'
+import { FaArrowUp, FaPaperclip } from "react-icons/fa6";
 
 function ChatInput() {
   const {
@@ -39,14 +39,14 @@ function ChatInput() {
       <div className="w-3/5">
         <div className="bg-white dark:bg-gray-800 shadow-md rounded-2xl p-3 grid grid-cols-[auto_1fr_auto] gap-2 items-center">
           {/* Left action */}
-          <PaperClipIcon className="h-5 w-5 text-gray-600 cursor-pointer hover:text-gray-400" />
+          <FaPaperclip className="size-6 text-gray-600 cursor-pointer hover:text-gray-400" />
 
           {/* Input */}
           <textarea
             placeholder={`${name} (${model})`}
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-            className="w-full resize-none rounded-md p-2 bg-transparent outline-none text-gray-900 dark:text-gray-100"
+            className="w-full resize-none rounded-4xl p-4 outline-none text-gray-900 dark:text-gray-100 bg-gray-700"
             rows={1}
           />
 
@@ -58,12 +58,15 @@ function ChatInput() {
             >
               Dictate
             </button>
-            <button
-              onClick={handleSendPrompt}
-              className="px-3 py-1 text-sm font-medium rounded-md bg-blue-500 text-white hover:bg-blue-600 cursor-pointer"
+            <div
+            onClick={handleSendPrompt}
+
+            className="p-4 bg-neutral-200 hover:bg-neutral-50 rounded-4xl cursor-pointer"
             >
-              Send
-            </button>
+            <FaArrowUp  className="size-6 text-neutral-800" />
+
+            </div>
+
           </div>
         </div>
       </div>
