@@ -1,13 +1,15 @@
 import { useRef, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { formatDate } from "../../common/utils/formatDate.js";
-import { ClipLoader } from "react-spinners"; // loader
+import { PropagateLoader } from "react-spinners"; // loader
 // import { colors, chat } from "../../styles/colors";
 
 const Conversation = () => {
   const { currentId, conversations, error, status } = useSelector(
     (state) => state.chat
   );
+
+  const theme = useSelector((state) => state.menu.theme);
 
   // const { currentId, conversations, error, status, theme, largeText } =
   //   useSelector((state) => state.chat);
@@ -57,7 +59,7 @@ const Conversation = () => {
 
   return (
     <div ref={scrollRef} className="flex justify-center flex-1 overflow-y-auto">
-      <div className="px-2 max-w-3/5 flex flex-col gap-4">
+      <div className="px-2 w-3/5 flex flex-col gap-4">
       {/* <div ref={scrollRef} className="px-2 w-full max-h-[80vh] overflow-y-auto"> */}
         {conversation?.map((message, i) => {
           const { created, content, role } = message;
@@ -104,9 +106,10 @@ const Conversation = () => {
 
         {/* Loading state */}
         {status === "loading" && (
-          <div className="flex justify-start my-2">
-            <div className="p-3 bg-gray-200 rounded-2xl rounded-tl-sm">
-              <ClipLoader size={30} color="#202020" />
+          <div className="flex justify-center align-start pb-10">
+            <div className="p-3">
+              {/* <ClipLoader size={30} color={theme === "light" ? "black" : "white"} /> */}
+              <PropagateLoader size={12} color={theme === "light" ? "#1c1f22" : "#f5f5f5"}/>
             </div>
           </div>
         )}
