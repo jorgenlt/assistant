@@ -56,8 +56,8 @@ const Conversation = () => {
   }, [conversation, status]);
 
   return (
-    <div ref={scrollRef} className="flex-1 overflow-y-auto">
-      <div className="px-2 w-full flex flex-col gap-4">
+    <div ref={scrollRef} className="flex justify-center flex-1 overflow-y-auto">
+      <div className="px-2 max-w-3/5 flex flex-col gap-4">
       {/* <div ref={scrollRef} className="px-2 w-full max-h-[80vh] overflow-y-auto"> */}
         {conversation?.map((message, i) => {
           const { created, content, role } = message;
@@ -82,10 +82,10 @@ const Conversation = () => {
                 }`}
               >
                 <div
-                  className={`cursor-pointer rounded-2xl p-2 max-w-[90%] ${
+                  className={`cursor-pointer rounded-2xl p-2 ${
                     role === "assistant"
-                      ? ""
-                      : "bg-gray-200 dark:bg-gray-700 rounded-tr-sm"
+                      ? "max-w-[100%]"
+                      : "bg-gray-200 dark:bg-gray-700 rounded-tr-sm max-w-[90%]"
                   }`}
                   onClick={() => handleCopyToClipboard(content)}
                   onContextMenu={(e) => {
@@ -93,7 +93,7 @@ const Conversation = () => {
                     handleShare(content);
                   }}
                 >
-                  <p>
+                  <p className="text-lg">
                     {content}
                   </p>
                 </div>
