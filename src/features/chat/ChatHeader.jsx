@@ -1,6 +1,6 @@
 function ChatHeader() {
   return (
-    <div className="chat-header">
+    <div className="flex-shrink-0">
       <p>Chat Header</p>
     </div>
   );

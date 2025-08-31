@@ -48,6 +48,7 @@ export const getChatResponseThunk = createAsyncThunk(
 
     // Exit early if currentId is falsy
     if (!currentId) {
+      console.error("currentId is null or undefined");
       return;
     }
 
