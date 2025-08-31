@@ -39,12 +39,17 @@ function ChatInput() {
   return (
     <div className="chat-input">
       <textarea 
-        type="textarea" 
+        id="chat-input"
+        name="chat-input" 
         placeholder={`${name} (${model})`}
         value={prompt}
         onChange={(e) => setPrompt(e.target.value)}
         cols="40" 
         rows="5"
+        wrap="soft"
+        autofocus="true"
+
+
       ></textarea>
       <button>Send</button>
     </div>
