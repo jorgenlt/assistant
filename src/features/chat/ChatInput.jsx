@@ -1,6 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useRef, useEffect } from "react";
-import { getChatResponseThunk, updateMessages } from "./chatSlice.js";
+import {
+  getChatResponseThunk,
+  updateMessages,
+  addConversation,
+} from "./chatSlice.js";
 import { FaArrowUp, FaPaperclip } from "react-icons/fa6";
 
 function ChatInput() {
@@ -12,6 +16,8 @@ function ChatInput() {
 
   const key = useSelector((state) => state.chat.providers[currentProvider].key);
 
+  const currentId = useSelector((state) => state.chat.currentId);
+
   const [prompt, setPrompt] = useState("");
 
   const dispatch = useDispatch();
@@ -19,6 +25,9 @@ function ChatInput() {
   const handleSendPrompt = () => {
     if (key) {
       if (prompt) {
+        if (currentId === null) {
+          dispatch(addConversation());
+        }
         dispatch(getChatResponseThunk(prompt));
         setPrompt("");
 
