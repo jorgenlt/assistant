@@ -1,33 +1,26 @@
-import axios from "axios";
+import OpenAI from "openai";
 
-// OpenAI
-// Fetch chat completion with the axios library.
 async function fetchOpenAiChatCompletion(context, prompt, providers) {
-  const URL = "https://api.openai.com/v1/chat/completions";
-  const API_KEY = providers.openAi.key;
+  const client = new OpenAI({
+    apiKey: providers.openAi.key,
+    dangerouslyAllowBrowser: true,
+  });
+
   const MODEL = providers.openAi.model;
 
-  const userMessage = {
-    role: "user",
-    content: prompt,
-  };
-
-  const requestBody = {
-    model: MODEL,
-    messages: [...context, userMessage],
-  };
-
-  const config = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      "Content-Type": "application/json",
-    },
-  };
-
   try {
-    const response = await axios.post(URL, requestBody, config);
+    const response = await client.chat.completions.create({
+      model: MODEL,
+      messages: [
+        ...context,
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
+    });
 
-    const { role, content } = response.data.choices[0].message;
+    const { role, content } = response.choices[0].message;
 
     return {
       role,
@@ -36,7 +29,7 @@ async function fetchOpenAiChatCompletion(context, prompt, providers) {
   } catch (error) {
     console.error(
       "Error in fetchChatCompletion:",
-      error.message || error.response.data.error?.message
+      error.message || error.response?.data?.error?.message
     );
     throw error;
   }
