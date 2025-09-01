@@ -42,7 +42,7 @@ function ChatList() {
     });
 
     return sortedIds.map((id) => {
-      const title = conversations[id].title || "";
+      const title = conversations[id].title || null;
 
       return (
         <ListItem

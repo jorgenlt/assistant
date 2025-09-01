@@ -1,23 +1,17 @@
 import { FaPenToSquare, FaGear, FaMoon, FaArrowRight } from "react-icons/fa6";
 import MenuHeader from "./MenuHeader.jsx";
 import ChatList from "./ChatList.jsx";
-import { addConversation, addKey, updateCurrentId } from "../chat/chatSlice.js";
+import { addKey, updateCurrentId } from "../chat/chatSlice.js";
 import { toggleTheme } from "./menuSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import SidebarItem from "../../components/SidebarItem.jsx";
 
 function Menu() {
-  // const [apiKey, setApiKey] = useState("");
-
   const { provider: currentProvider } = useSelector(
     (state) => state.chat.providers.current
   );
 
   const dispatch = useDispatch();
-
-  const handleNewChat = () => {
-    dispatch(addConversation());
-  };
 
   const handleToggleTheme = () => {
     dispatch(toggleTheme());
@@ -25,7 +19,7 @@ function Menu() {
 
   const handleResetId = () => {
     dispatch(updateCurrentId(null));
-  }
+  };
 
   const setApi = async () => {
     const apiKey = await navigator.clipboard.readText();
@@ -35,12 +29,10 @@ function Menu() {
   return (
     <div className="flex flex-col justify-between h-screen w-1/5  bg-neutral-100 dark:bg-gray-900 text-gray-900 dark:text-neutral-50">
       <div>
-        <MenuHeader 
-          action={handleResetId}
-        />
+        <MenuHeader action={handleResetId} />
         <div className="mt-2">
           <SidebarItem
-            action={handleNewChat}
+            action={handleResetId}
             title="New Chat"
             Icon={FaPenToSquare}
           />
