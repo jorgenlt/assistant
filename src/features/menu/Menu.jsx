@@ -28,15 +28,18 @@ function Menu() {
     <div className="flex flex-col justify-between h-screen w-1/5  bg-neutral-100 dark:bg-gray-900 text-gray-900 dark:text-neutral-50">
       <div>
         <MenuHeader />
-        <SidebarItem
-          action={handleNewChat}
-          title="New Chat"
-          Icon={FaPenToSquare}
-        />
+        <div className="mt-2">
+          <SidebarItem
+            action={handleNewChat}
+            title="New Chat"
+            Icon={FaPenToSquare}
+          />
 
-        <ChatList />
+          <ChatList />
+        </div>
       </div>
-      <div>
+
+      <div className="mb-2">
         <div className="flex flex-col border p-2">
           <input
             type="text"
@@ -56,20 +59,16 @@ function Menu() {
             Save API Key
           </button>
         </div>
-
-
-
-        <SidebarItem 
+        <SidebarItem
           action={handleToggleTheme}
           title="Toggle Dark Mode"
           Icon={FaMoon}
         />
-        <SidebarItem 
+        <SidebarItem
           action={() => console.log("Settings clicked")}
           title="Settings"
           Icon={FaGear}
         />
-
       </div>
     </div>
   );
