@@ -1,79 +1,63 @@
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentId } from "../chat/chatSlice";
 import { useMemo } from "react";
-import { truncateString } from "../../common/utils/truncateString";
+import ListItem from "../../components/ListItem";
 
 function ChatList() {
   const conversations = useSelector((state) => state.chat.conversations);
 
-  const ids = conversations ? Object.keys(conversations) : [];
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch;
+  // const handleDeleteConversation = (id) => {
+  //   // impactAsync(ImpactFeedbackStyle.Heavy);
 
-  const handleChangeConversation = (id) => {
-    dispatch(updateCurrentId(id));
-  };
+  //   // Alert.alert("Delete conversation?", 'Choose "Delete" to confirm.', [
+  //   //   {
+  //   //     text: "Cancel",
+  //   //     style: "cancel",
+  //   //   },
+  //   //   {
+  //   //     text: "Delete",
+  //   //     onPress: () => dispatch(deleteConversation(id)),
+  //   //   },
+  //   // ]);
 
-  const handleDeleteConversation = (id) => {
-    // impactAsync(ImpactFeedbackStyle.Heavy);
-
-    // Alert.alert("Delete conversation?", 'Choose "Delete" to confirm.', [
-    //   {
-    //     text: "Cancel",
-    //     style: "cancel",
-    //   },
-    //   {
-    //     text: "Delete",
-    //     onPress: () => dispatch(deleteConversation(id)),
-    //   },
-    // ]);
-
-    console.log("Delete conversation clicked");
-  };
+  //   console.log("Delete conversation clicked");
+  // };
 
   const getLastMessageDate = (conversation) => {
     const lastMessage = conversation.messages[conversation.messages.length - 1];
     return lastMessage?.created;
   };
 
-  const ConversationList = () => {
-    const conversationElements = useMemo(() => {
-      if (!ids) return [];
+  const conversationElements = useMemo(() => {
+    const ids = conversations ? Object.keys(conversations) : [];
 
-      const sortedIds = ids.sort((a, b) => {
-        const aDate = getLastMessageDate(conversations[a]);
-        const bDate = getLastMessageDate(conversations[b]);
-        return bDate - aDate; // Sort in decending order
-      });
+    if (!ids.length) return [];
 
-      return sortedIds.map((id) => {
-        const conversation = conversations[id].messages;
-        const lastTwoItems = conversation.slice(-2);
-        const userObject = lastTwoItems.find((item) => item.role === "user");
-        const assistantObject = lastTwoItems.find(
-          (item) => item.role === "assistant"
-        );
-        const userMessage = userObject ? userObject.content : "";
-        const assistantMessage = assistantObject ? assistantObject.content : "";
+    const sortedIds = [...ids].sort((a, b) => {
+      const aDate = getLastMessageDate(conversations[a]);
+      const bDate = getLastMessageDate(conversations[b]);
+      return bDate - aDate; // Sort in decending order
+    });
 
-        return (
-          <div key={id}>
-            <span>You:</span><span>{truncateString(userMessage, 20)}</span>
-            <br />
-            <span>Assistant:</span><span>{truncateString(assistantMessage, 20)}</span>
-          </div>
-        )
-      })
+    return sortedIds.map((id) => {
+      const title = conversations[id].title || "";
 
-    }, [ids, conversations, handleDeleteConversation]);
-
-    return conversationElements;
-  };
+      return (
+        <ListItem
+          key={id}
+          action={() => dispatch(updateCurrentId(id))} // Change current conversation
+          title={title}
+        />
+      );
+    });
+  }, [conversations, dispatch]);
 
   return (
-    <div className="cursor-default select-none mx-2 px-3 py-2 text-gray-400">
-      <p>Chats</p>
-      <ConversationList />
+    <div className="cursor-default select-none mt-6">
+      <span className="text-gray-400 px-3 py-2 mx-2">Chats</span>
+      {conversationElements}
     </div>
   );
 }
