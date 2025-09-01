@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { getChatResponseThunk, updateMessages } from "./chatSlice.js";
 import { FaArrowUp, FaPaperclip } from "react-icons/fa6";
 
@@ -34,19 +34,35 @@ function ChatInput() {
     }
   };
 
+  const textareaRef = useRef(null);
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto"; // reset
+      textareaRef.current.style.height =
+        textareaRef.current.scrollHeight + "px";
+    }
+  }, [prompt]);
+
   return (
     <div className="flex-shrink-0 mb-2 ml-2 mr-4 flex justify-center">
       <div className="w-3/5">
-        <div className="dark:bg-gray-800 p-3 grid grid-cols-[auto_1fr_auto] gap-2 items-center">
+        <div className="dark:bg-gray-800 p-3 flex items-end gap-2">
           {/* Left action */}
-          <FaPaperclip className="size-6 text-gray-600 cursor-pointer hover:text-gray-400" />
+          <div
+            onClick={() => console.log("Attach file")}
+            className="p-4 cursor-pointer text-gray-600 hover:text-gray-400"
+          >
+            <FaPaperclip className="size-6" />
+          </div>
 
           {/* Input */}
           <textarea
+            ref={textareaRef}
             placeholder={`${name} (${model})`}
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-            className="w-full resize-none rounded-4xl p-4 outline-none bg-neutral-200 text-gray-900 dark:text-gray-100 dark:bg-gray-700"
+            className="flex-1 resize-none overflow-hidden rounded-4xl p-4 outline-none bg-neutral-200 text-gray-900 dark:text-gray-100 dark:bg-gray-700"
             rows={1}
           />
 
@@ -67,27 +83,6 @@ function ChatInput() {
           </div>
         </div>
       </div>
-
-      {/* <div className="flex flex-col gap-2 mx-3">
-        <textarea
-          id="chat-input"
-          name="chat-input"
-          placeholder={`${name} (${model})`}
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          cols="40"
-          rows="5"
-          wrap="soft"
-          autoFocus={true}
-          className="p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none bg-white text-gray-900"
-        ></textarea>
-        <button
-          onClick={handleSendPrompt}
-          className="self-end px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-        >
-          Send
-        </button>
-      </div> */}
     </div>
   );
 }
