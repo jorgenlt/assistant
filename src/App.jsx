@@ -5,7 +5,6 @@ import { useEffect } from "react";
 
 function App() {
   const theme = useSelector((state) => state.menu.theme);
-  console.log("🚀 ~ theme:", theme)
 
   useEffect(() => {
     if (theme === "dark") {
