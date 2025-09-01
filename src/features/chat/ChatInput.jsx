@@ -37,7 +37,7 @@ function ChatInput() {
   return (
     <div className="flex-shrink-0 mb-2 ml-2 mr-4 flex justify-center">
       <div className="w-3/5">
-        <div className="bg-white dark:bg-gray-800 shadow-md rounded-2xl p-3 grid grid-cols-[auto_1fr_auto] gap-2 items-center">
+        <div className="dark:bg-gray-800 p-3 grid grid-cols-[auto_1fr_auto] gap-2 items-center">
           {/* Left action */}
           <FaPaperclip className="size-6 text-gray-600 cursor-pointer hover:text-gray-400" />
 
@@ -46,7 +46,7 @@ function ChatInput() {
             placeholder={`${name} (${model})`}
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-            className="w-full resize-none rounded-4xl p-4 outline-none text-gray-900 dark:text-gray-100 bg-gray-700"
+            className="w-full resize-none rounded-4xl p-4 outline-none bg-neutral-200 text-gray-900 dark:text-gray-100 dark:bg-gray-700"
             rows={1}
           />
 
@@ -59,14 +59,11 @@ function ChatInput() {
               Dictate
             </button>
             <div
-            onClick={handleSendPrompt}
-
-            className="p-4 bg-neutral-200 hover:bg-neutral-50 rounded-4xl cursor-pointer"
+              onClick={handleSendPrompt}
+              className="p-4 bg-neutral-200 dark:bg-neutral-200 hover:bg-neutral-100 hover:dark:bg-neutral-50 rounded-4xl cursor-pointer"
             >
-            <FaArrowUp  className="size-6 text-neutral-800" />
-
+              <FaArrowUp className="size-6 text-neutral-800" />
             </div>
-
           </div>
         </div>
       </div>
