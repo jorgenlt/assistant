@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import fetchOpenAiChatCompletion from "../../api/openAiApi";
 import fetchAnthropicChatCompletion from "../../api/anthropicApi";
 import fetchMistralChatCompletion from "../../api/mistralApi";
+import generateConversationTitle from "../../api/generateConversationTitle";
 import uuid from "react-native-uuid";
 
 const initialState = {
@@ -10,6 +11,7 @@ const initialState = {
   status: "idle",
   providers: {
     current: { name: "OpenAI", provider: "openAi", model: "gpt-5-nano" },
+    default: { name: "OpenAI", provider: "openAi", model: "gpt-5-nano" },
     openAi: {
       name: "OpenAI",
       key: null,
@@ -87,6 +89,12 @@ export const getChatResponseThunk = createAsyncThunk(
           break;
         default:
           throw new Error("Unsupported chat completion provider: " + provider);
+      }
+
+      // Generate title only for the first message
+      if (context.length === 0) {
+        const title = await generateConversationTitle(prompt, providers);
+        return { ...response, title };
       }
 
       return response;
@@ -207,7 +215,7 @@ export const chat = createSlice({
         state.status = "idle";
 
         const { currentId } = state;
-        const { content, role } = action.payload;
+        const { content, role, title } = action.payload;
 
         if (currentId && content && role) {
           const message = {
@@ -218,6 +226,11 @@ export const chat = createSlice({
 
           // Push the fetched message into the messages of current conversation
           state.conversations[currentId]?.messages.push(message);
+
+          // If we got a title (first message case), store it
+          if (title && !state.conversations[currentId].title) {
+            state.conversations[currentId].title = title;
+          }
         }
       })
       // Case where getting chat response failed
