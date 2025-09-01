@@ -3,6 +3,10 @@ import { useSelector } from "react-redux";
 import { formatDate } from "../../common/utils/formatDate.js";
 import { PropagateLoader } from "react-spinners"; // loader
 // import { colors, chat } from "../../styles/colors";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+// import remarkParse from 'remark-parse'
+// import remarkRehype from 'remark-rehype'
 
 const Conversation = () => {
   const { currentId, conversations, error, status } = useSelector(
@@ -95,7 +99,10 @@ const Conversation = () => {
                     handleShare(content);
                   }}
                 >
-                  <p className="text-lg">{content}</p>
+                  {/* Message content */}
+                  <div className="prose prose-base dark:prose-invert">
+                    <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>
+                  </div>
                 </div>
               </div>
             </div>
