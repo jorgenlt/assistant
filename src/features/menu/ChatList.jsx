@@ -1,8 +1,7 @@
 function ChatList() {
   return (
-    <div className="chat-list">
-      <p>Chat List</p>
-      <p>No messages...</p>
+    <div className="cursor-default select-none mx-2 px-3 py-2 text-gray-500">
+      <p>Chats</p>
     </div>
   );
 }
