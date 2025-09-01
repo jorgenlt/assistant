@@ -27,16 +27,18 @@ function Menu() {
   };
 
   return (
-    <div className="flex flex-col justify-between h-screen w-1/5  bg-neutral-100 dark:bg-gray-900 text-gray-900 dark:text-neutral-50">
+    <div className="flex flex-col justify-between w-1/5  bg-neutral-100 dark:bg-gray-900 text-gray-900 dark:text-neutral-50">
       <div>
         <MenuHeader action={handleResetId} />
-        <div className="mt-2">
+        <div className="chat-list mt-2 flex flex-col h-[calc(100vh-10rem)]">
           <SidebarItem
             action={handleResetId}
             title="New Chat"
             Icon={FaPenToSquare}
           />
-          <ChatList />
+          <div className="flex-1 overflow-y-auto mt-2 border-t border-b border-[#83838326]">
+            <ChatList />
+          </div>
         </div>
       </div>
 

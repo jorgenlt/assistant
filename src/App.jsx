@@ -15,7 +15,7 @@ function App() {
   }, [theme]);
 
   return (
-    <div className="flex">
+    <div className="flex h-screen">
       <Menu />
       <Chat />
     </div>

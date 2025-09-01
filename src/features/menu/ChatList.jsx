@@ -55,7 +55,7 @@ function ChatList() {
   }, [conversations, dispatch]);
 
   return (
-    <div className="cursor-default select-none mt-6">
+    <div className="cursor-default select-none mt-2">
       <span className="text-gray-400 px-3 py-2 mx-2">Chats</span>
       {conversationElements}
     </div>
