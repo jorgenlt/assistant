@@ -113,13 +113,7 @@ export const chat = createSlice({
       state.currentId = id;
       state.conversations[id] = {
         created: Date.now(),
-        messages: [
-          {
-            created: Date.now(),
-            content: "Hello! How can I assist you today?",
-            role: "assistant",
-          },
-        ],
+        messages: [],
       };
     },
     updateMessages: (state, action) => {
