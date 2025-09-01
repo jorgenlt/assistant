@@ -1,10 +1,11 @@
-import { FaPenToSquare, FaGear } from "react-icons/fa6";
+import { FaPenToSquare, FaGear, FaMoon } from "react-icons/fa6";
 import MenuHeader from "./MenuHeader.jsx";
 import ChatList from "./ChatList.jsx";
 import { addConversation, addKey } from "../chat/chatSlice.js";
 import { toggleTheme } from "./menuSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
+import SidebarItem from "../../components/SidebarItem.jsx";
 
 function Menu() {
   const [apiKey, setApiKey] = useState("");
@@ -21,18 +22,18 @@ function Menu() {
 
   const handleToggleTheme = () => {
     dispatch(toggleTheme());
-  }
+  };
 
   return (
     <div className="flex flex-col justify-between h-screen w-1/5  bg-neutral-100 dark:bg-gray-900 text-gray-900 dark:text-neutral-50">
       <div>
         <MenuHeader />
-        <div
-          className="flex items-center gap-2 m-2 cursor-pointer hover:bg-gray-200 p-2 rounded-md"
-          onClick={handleNewChat}
-        >
-          <FaPenToSquare /> New Chat
-        </div>
+        <SidebarItem
+          action={handleNewChat}
+          title="New Chat"
+          Icon={FaPenToSquare}
+        />
+
         <ChatList />
       </div>
       <div>
@@ -56,19 +57,19 @@ function Menu() {
           </button>
         </div>
 
-        <div>
-          <button onClick={handleToggleTheme} className="px-3 py-1 text-sm font-medium rounded-md bg-blue-500 text-white hover:bg-blue-600 cursor-pointer">
-
-            Toggle Dark Mode
-          </button>
-        </div>
 
 
+        <SidebarItem 
+          action={handleToggleTheme}
+          title="Toggle Dark Mode"
+          Icon={FaMoon}
+        />
+        <SidebarItem 
+          action={() => console.log("Settings clicked")}
+          title="Settings"
+          Icon={FaGear}
+        />
 
-
-        <div className="flex items-center gap-2 m-2 cursor-pointer hover:bg-gray-200 p-2 rounded-md">
-          <FaGear /> Settings
-        </div>
       </div>
     </div>
   );
