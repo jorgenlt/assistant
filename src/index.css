@@ -26,3 +26,40 @@ body {
 .chat-input-textarea {
   scrollbar-width: none;
 }
+
+/* THEMES */
+/* Base (light/default) theme */
+:root {
+  --bg1: #efefef;
+  --bg2: #f8f8f8;
+  --bg3: #ffffff;
+  --chat-bubble: #e2e3e3;
+  --text: #030712;
+}
+
+/* Dark theme */
+[data-theme="dark"] {
+  --bg1: #111827;
+  --bg2: #1f2937;
+  --bg3: #374151;
+  --chat-bubble: #d1d5db;
+  --text: #fafafa;
+}
+/* [data-theme="dark"] {
+  --bg: #0b1020;
+  --surface: #111827;
+  --card: rgba(17, 24, 39, 0.85);
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --border: #1f2937;
+  --primary: #8b5cf6;
+  --ring: rgba(139, 92, 246, 0.5);
+} */
+
+/* Sunset theme (example) */
+[data-theme="sunset"] {
+  --bg1: #fece93;
+  --bg2: #fedcb2;
+  --bg3: #ffead1;
+  --chat-bubble: #ffc987;
+}

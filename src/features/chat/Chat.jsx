@@ -8,7 +8,7 @@ function Chat() {
   const currentId = useSelector((state) => state.chat.currentId);
 
   return (
-    <div className="flex flex-col w-4/5 bg-neutral-50 dark:bg-gray-800 text-gray-900 dark:text-neutral-50">
+    <div className="flex flex-col w-4/5 bg-[var(--bg2)] text-[var(--text)]">
       <ChatHeader />
       {currentId === null ? (
         <ChatHome />

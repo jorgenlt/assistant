@@ -74,7 +74,7 @@ const Conversation = () => {
                   className={`cursor-default ${
                     role === "assistant"
                       ? "max-w-full"
-                      : "bg-gray-200 dark:bg-gray-700 rounded-2xl py-2 pl-4 pr-2 rounded-tr-sm max-w-[90%]"
+                      : "bg-[var(--chat-bubble)] rounded-2xl py-2 pl-4 pr-2 rounded-tr-sm max-w-[90%]"
                   }`}
                   // onClick={() => handleCopyToClipboard(content)}
                 >

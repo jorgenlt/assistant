@@ -6,6 +6,7 @@ import { addKey } from "../providers/providersSlice.js";
 import { toggleTheme } from "./menuSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import SidebarItem from "../../components/SidebarItem.jsx";
+import ThemeSwitcher from '../../components/ThemeSwitcher.jsx'
 
 function Menu() {
   const { provider: currentProvider } = useSelector(
@@ -28,7 +29,7 @@ function Menu() {
   };
 
   return (
-    <div className="py-2 flex flex-col w-1/5 bg-neutral-100 dark:bg-gray-900 text-gray-900 dark:text-neutral-50">
+    <div className="py-2 flex flex-col w-1/5 bg-[var(--bg1)] text-[var(--text)]">
       <MenuHeader action={handleResetId} />
 
       <div className="mb-4">
@@ -37,6 +38,8 @@ function Menu() {
           title="New Chat"
           Icon={FaPenToSquare}
         />
+
+        <ThemeSwitcher />
       </div>
 
       {/* Chats */}
@@ -49,7 +52,7 @@ function Menu() {
       <SidebarItem action={setApi} title="Set API Key" Icon={FaArrowRight} />
       <SidebarItem
         action={handleToggleTheme}
-        title="Toggle Dark Mode"
+        title="Toggle Theme"
         Icon={FaMoon}
       />
       <SidebarItem
