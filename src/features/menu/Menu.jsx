@@ -6,7 +6,6 @@ import { addKey } from "../providers/providersSlice.js";
 import { toggleTheme } from "./menuSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import SidebarItem from "../../components/SidebarItem.jsx";
-import ThemeSwitcher from '../../components/ThemeSwitcher.jsx'
 
 function Menu() {
   const { provider: currentProvider } = useSelector(
@@ -38,8 +37,6 @@ function Menu() {
           title="New Chat"
           Icon={FaPenToSquare}
         />
-
-        <ThemeSwitcher />
       </div>
 
       {/* Chats */}

@@ -70,19 +70,19 @@ const Conversation = () => {
                   role === "assistant" ? "justify-start" : "justify-end"
                 }`}
               >
-                <div
-                  className={`cursor-default ${
-                    role === "assistant"
-                      ? "max-w-full"
-                      : "bg-[var(--chat-bubble)] rounded-2xl py-2 pl-4 pr-2 rounded-tr-sm max-w-[90%]"
-                  }`}
-                  // onClick={() => handleCopyToClipboard(content)}
-                >
-                  {/* Message content */}
-                  <div className="prose prose-base dark:prose-invert max-w-full">
-                    <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>
+                {role === "assistant" ? (
+                  <div className="cursor-default max-w-full">
+                    <div className="prose prose-base dark:prose-invert max-w-full">
+                      <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="bg-[var(--bg-chat-bubble)] rounded-2xl py-2 pl-4 pr-2 rounded-tr-sm max-w-[90%]">
+                    <div className="prose prose-base max-w-full text-[var(--text-chat-bubble)]">
+                      <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           );

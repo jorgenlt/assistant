@@ -41,15 +41,15 @@ export const providers = createSlice({
     },
     setProvider: (state, action) => {
       const { provider } = action.payload;
-      state.current.name = state.providers[provider].name;
+      state.current.name = state[provider].name;
       state.current.provider = provider;
-      state.current.model = state.providers[provider].model;
+      state.current.model = state[provider].model;
     },
     resetProviders: (state) => {
       // Preserve the current keys
-      const openAiKey = state.providers.openAi.key;
-      const anthropicKey = state.providers.anthropic.key;
-      const mistralKey = state.providers.mistral.key;
+      const openAiKey = state.openAi.key;
+      const anthropicKey = state.anthropic.key;
+      const mistralKey = state.mistral.key;
 
       // Reset providers to initial state
       state = {

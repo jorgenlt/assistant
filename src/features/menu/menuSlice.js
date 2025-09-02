@@ -2,8 +2,25 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   theme: "light",
-  themes: ["light", "dark", "sunset"],
-  largeText: false,
+  themes: [
+    "light",
+    "dark",
+    // Dark themes
+    "github-dark",
+    "vscode-dark",
+    "slack-dark",
+    "discord-dark",
+    "material-dark",
+    "jetbrains-dark",
+    "one-dark",
+    "dracula",
+    "monokai",
+    // Light themes
+    "slack-light",
+    "discord-light",
+    "material-light",
+    "sunset",
+  ],
 };
 
 export const menu = createSlice({

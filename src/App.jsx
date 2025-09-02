@@ -4,14 +4,27 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
 function App() {
-  const theme = useSelector((state) => state.menu.theme);
+  const theme = useSelector((state) => state.menu.theme) || "light";
 
   useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
+    const darkThemes = [
+      "dark",
+      "github-dark",
+      "vscode-dark",
+      "notion-dark",
+      "slack-dark",
+      "discord-dark",
+      "material-dark",
+      "jetbrains-dark",
+      "one-dark",
+      "dracula",
+      "monokai",
+    ];
+
+    const root = document.documentElement;
+
+    root.classList.toggle("dark", darkThemes.includes(theme));
+    root.setAttribute("data-theme", theme);
   }, [theme]);
 
   return (
