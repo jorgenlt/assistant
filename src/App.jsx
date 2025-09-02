@@ -4,8 +4,7 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
 function App() {
-  const theme = useSelector((state) => state.menu.theme) || "light";
-  const isThemeDark = /dark/.test(theme);
+  const { theme, isThemeDark } = useSelector((state) => state.menu);
 
   useEffect(() => {
     const root = document.documentElement;

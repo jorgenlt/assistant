@@ -3,8 +3,7 @@ import { PulseLoader } from "react-spinners";
 import { useSelector } from "react-redux";
 
 function ListItem({ action, title }) {
-  const theme = useSelector((state) => state.menu.theme);
-  const isThemeDark = /dark/.test(theme);
+  const isThemeDark = useSelector((state) => state.menu.isThemeDark);
 
   return title ? (
     <div

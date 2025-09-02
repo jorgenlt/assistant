@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { formatDate } from "../../common/utils/formatDate.js";
 import { PropagateLoader } from "react-spinners"; // loader
@@ -10,9 +10,7 @@ const Conversation = () => {
     (state) => state.chat
   );
 
-  const theme = useSelector((state) => state.menu.theme);
-
-  const isThemeDark = /dark/.test(theme);
+  const isThemeDark = useSelector((state) => state.menu).isThemeDark;
 
   const conversation = conversations[currentId]?.messages;
 

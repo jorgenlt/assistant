@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import systemPrompt from "./systemPrompt";
 
 async function fetchOpenAiChatCompletion(context, prompt, providers) {
   const client = new OpenAI({
@@ -14,14 +15,13 @@ async function fetchOpenAiChatCompletion(context, prompt, providers) {
       messages: [
         {
           role: "system",
-          content:
-            "You are a professional assistant who uses emojis sparingly to clarify tone. Use emojis only when they add value (e.g., 👍, ✅, 🎯). Always respond in valid Markdown. Use proper Markdown syntax (headings, lists, bold/italics, etc.). When you include code, wrap it in triple backticks with an appropriate language tag. Do not include non-Markdown text outside of Markdown.",
+          content: systemPrompt,
         },
         ...context,
         { role: "user", content: prompt },
       ],
     });
-
+    console.log(systemPrompt);
     const { role, content } = response.choices[0].message;
 
     return {

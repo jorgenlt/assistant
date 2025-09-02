@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   theme: "light",
+  isThemeDark: false,
   themes: [
     "light",
     "dark",
@@ -37,6 +38,7 @@ export const menu = createSlice({
       const nextIndex =
         currentIndex >= 0 ? (currentIndex + 1) % state.themes.length : 0;
       state.theme = state.themes[nextIndex];
+      state.isThemeDark = /dark/.test(state.theme);
     },
     toggleLargeText: (state) => {
       state.largeText = !state.largeText;
