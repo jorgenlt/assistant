@@ -71,15 +71,15 @@ const Conversation = () => {
                 }`}
               >
                 <div
-                  className={`cursor-default rounded-2xl p-2 ${
+                  className={`cursor-default ${
                     role === "assistant"
-                      ? "max-w-[100%]"
-                      : "bg-gray-200 dark:bg-gray-700 rounded-tr-sm max-w-[90%]"
+                      ? "max-w-full"
+                      : "bg-gray-200 dark:bg-gray-700 rounded-2xl py-2 pl-4 pr-2 rounded-tr-sm max-w-[90%]"
                   }`}
                   // onClick={() => handleCopyToClipboard(content)}
                 >
                   {/* Message content */}
-                  <div className="prose prose-base dark:prose-invert">
+                  <div className="prose prose-base dark:prose-invert max-w-full">
                     <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>
                   </div>
                 </div>

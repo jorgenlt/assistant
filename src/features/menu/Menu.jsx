@@ -28,34 +28,35 @@ function Menu() {
   };
 
   return (
-    <div className="flex flex-col justify-between w-1/5  bg-neutral-100 dark:bg-gray-900 text-gray-900 dark:text-neutral-50">
-      <div>
-        <MenuHeader action={handleResetId} />
-        <div className="chat-list mt-2 flex flex-col h-[calc(100vh-10rem)]">
-          <SidebarItem
-            action={handleResetId}
-            title="New Chat"
-            Icon={FaPenToSquare}
-          />
-          <div className="flex-1 overflow-y-auto mt-2 border-t border-b border-[#83838326]">
-            <ChatList />
-          </div>
+    <div className="py-2 flex flex-col w-1/5 bg-neutral-100 dark:bg-gray-900 text-gray-900 dark:text-neutral-50">
+      <MenuHeader action={handleResetId} />
+
+      <div className="mb-4">
+        <SidebarItem
+          action={handleResetId}
+          title="New Chat"
+          Icon={FaPenToSquare}
+        />
+      </div>
+
+      {/* Chats */}
+      <div className="chat-list flex flex-col h-[calc(100vh-10rem)]">
+        <div className="flex-1 overflow-y-auto border-t border-b border-[#83838326]">
+          <ChatList />
         </div>
       </div>
 
-      <div className="mb-2">
-        <SidebarItem action={setApi} title="Set API Key" Icon={FaArrowRight} />
-        <SidebarItem
-          action={handleToggleTheme}
-          title="Toggle Dark Mode"
-          Icon={FaMoon}
-        />
-        <SidebarItem
-          action={() => console.log("Settings clicked")}
-          title="Settings"
-          Icon={FaGear}
-        />
-      </div>
+      <SidebarItem action={setApi} title="Set API Key" Icon={FaArrowRight} />
+      <SidebarItem
+        action={handleToggleTheme}
+        title="Toggle Dark Mode"
+        Icon={FaMoon}
+      />
+      <SidebarItem
+        action={() => console.log("Settings clicked")}
+        title="Settings"
+        Icon={FaGear}
+      />
     </div>
   );
 }

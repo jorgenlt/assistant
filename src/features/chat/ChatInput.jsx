@@ -64,7 +64,7 @@ function ChatInput() {
   return (
     <div className="flex-shrink-0 mb-2 ml-2 mr-4 flex justify-center">
       <div className="w-3/5">
-        <div className="dark:bg-gray-800 p-3 flex items-end gap-2">
+        <div className="p-3 flex items-end gap-2">
           {/* Left action */}
           <div
             onClick={() => console.log("Attach file")}

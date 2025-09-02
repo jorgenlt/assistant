@@ -1,9 +1,20 @@
-import { FaSeedling } from "react-icons/fa6";
+import { FaSeedling, FaAnglesLeft } from "react-icons/fa6";
 
 function MenuHeader({ action }) {
   return (
-    <div className="cursor-pointer flex mx-2 my-2 px-3 py-2" onClick={action}>
-      <FaSeedling className="size-5" color="#ee29f5" />
+    <div className="mb-4 flex justify-between">
+      <div
+        className="mx-3 px-2 py-2 cursor-pointer w-fit rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700"
+        onClick={action}
+      >
+        <FaSeedling className="size-5" color="#ee29f5" />
+      </div>
+      <div
+        className="mx-3 px-2 py-2 cursor-pointer w-fit rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700"
+        onClick={action}
+      >
+        <FaAnglesLeft className="size-5" color="gray" />
+      </div>
     </div>
   );
 }
