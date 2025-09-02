@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 
 function ListItem({ action, title }) {
   const theme = useSelector((state) => state.menu.theme);
+  const isThemeDark = /dark/.test(theme);
 
   return title ? (
     <div
@@ -17,7 +18,7 @@ function ListItem({ action, title }) {
     </div>
   ) : (
     <div className="px-3 py-1 rounded-xl mx-2 cursor-pointer select-none hover:bg-gray-200 dark:hover:bg-gray-700">
-      <PulseLoader size={5} color={theme === "light" ? "#1c1f22" : "#f5f5f5"} />
+      <PulseLoader size={5} color={isThemeDark ? "#fafafa" : "#121416"} />
     </div>
   );
 }

@@ -12,10 +12,7 @@ const Conversation = () => {
 
   const theme = useSelector((state) => state.menu.theme);
 
-  // const { currentId, conversations, error, status, theme, largeText } =
-  //   useSelector((state) => state.chat);
-
-  const [prevStatus, setPrevStatus] = useState(status);
+  const isThemeDark = /dark/.test(theme);
 
   const conversation = conversations[currentId]?.messages;
 
@@ -28,14 +25,6 @@ const Conversation = () => {
   //     alert("Failed to copy: " + err.message);
   //   }
   // };
-
-  // Monitor status changes
-  useEffect(() => {
-    if (prevStatus === "loading" && status === "idle") {
-      console.log("Status changed: loading → idle");
-    }
-    setPrevStatus(status);
-  }, [status, prevStatus]);
 
   // Scroll to bottom when messages change
   const scrollRef = useRef();
@@ -94,7 +83,7 @@ const Conversation = () => {
             <div className="p-3">
               <PropagateLoader
                 size={12}
-                color={theme === "light" ? "#1c1f22" : "#f5f5f5"}
+                color={isThemeDark ? "#fafafa" : "#121416"}
               />
             </div>
           </div>

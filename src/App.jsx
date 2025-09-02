@@ -5,27 +5,14 @@ import { useEffect } from "react";
 
 function App() {
   const theme = useSelector((state) => state.menu.theme) || "light";
+  const isThemeDark = /dark/.test(theme);
 
   useEffect(() => {
-    const darkThemes = [
-      "dark",
-      "github-dark",
-      "vscode-dark",
-      "notion-dark",
-      "slack-dark",
-      "discord-dark",
-      "material-dark",
-      "jetbrains-dark",
-      "one-dark",
-      "dracula",
-      "monokai",
-    ];
-
     const root = document.documentElement;
 
-    root.classList.toggle("dark", darkThemes.includes(theme));
+    root.classList.toggle("dark", isThemeDark);
     root.setAttribute("data-theme", theme);
-  }, [theme]);
+  }, [theme, isThemeDark]);
 
   return (
     <div className="flex h-screen">

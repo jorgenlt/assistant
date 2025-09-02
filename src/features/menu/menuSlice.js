@@ -13,8 +13,9 @@ const initialState = {
     "material-dark",
     "jetbrains-dark",
     "one-dark",
-    "dracula",
-    "monokai",
+    "dracula-dark",
+    "monokai-dark",
+    "oled-dark",
     // Light themes
     "slack-light",
     "discord-light",
