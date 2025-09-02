@@ -7,7 +7,7 @@ function ListItem({ action, title }) {
 
   return title ? (
     <div
-      className="group flex justify-between items-center gap-2 px-3 py-2 rounded-xl mx-2 cursor-pointer select-none hover:bg-gray-200 dark:hover:bg-gray-700"
+      className="hover:bg-[var(--hover)] group flex justify-between items-center gap-2 px-3 py-2 rounded-xl mx-2 cursor-pointer select-none"
       onClick={action}
     >
       <span className="text-sm font-medium truncate">{title}</span>
