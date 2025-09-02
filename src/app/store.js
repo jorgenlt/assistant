@@ -13,6 +13,7 @@ import { combineReducers } from "redux";
 import storage from "redux-persist/lib/storage";
 import chatReducer from "../features/chat/chatSlice";
 import menuReducer from "../features/menu/menuSlice";
+import providersReducer from "../features/providers/providersSlice";
 
 // Configuration object for redux-persist.
 // Only objects on the whitelist are stored.
@@ -27,6 +28,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   chat: chatReducer,
   menu: menuReducer,
+  providers: providersReducer,
 });
 
 // Persisted reducer

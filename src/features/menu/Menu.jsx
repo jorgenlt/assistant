@@ -1,14 +1,15 @@
 import { FaPenToSquare, FaGear, FaMoon, FaArrowRight } from "react-icons/fa6";
 import MenuHeader from "./MenuHeader.jsx";
 import ChatList from "./ChatList.jsx";
-import { addKey, updateCurrentId } from "../chat/chatSlice.js";
+import { updateCurrentId } from "../chat/chatSlice.js";
+import { addKey } from "../providers/providersSlice.js";
 import { toggleTheme } from "./menuSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import SidebarItem from "../../components/SidebarItem.jsx";
 
 function Menu() {
   const { provider: currentProvider } = useSelector(
-    (state) => state.chat.providers.current
+    (state) => state.providers.current
   );
 
   const dispatch = useDispatch();

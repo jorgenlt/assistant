@@ -12,9 +12,9 @@ function ChatInput() {
     provider: currentProvider,
     name,
     model,
-  } = useSelector((state) => state.chat.providers.current);
+  } = useSelector((state) => state.providers.current);
 
-  const key = useSelector((state) => state.chat.providers[currentProvider].key);
+  const key = useSelector((state) => state.providers[currentProvider].key);
 
   const currentId = useSelector((state) => state.chat.currentId);
 

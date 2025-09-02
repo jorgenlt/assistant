@@ -9,35 +9,7 @@ const initialState = {
   conversations: {},
   currentId: null,
   status: "idle",
-  providers: {
-    current: { name: "OpenAI", provider: "openAi", model: "gpt-5-nano" },
-    default: { name: "OpenAI", provider: "openAi", model: "gpt-5-nano" },
-    openAi: {
-      name: "OpenAI",
-      key: null,
-      model: "gpt-5-nano",
-      models: ["gpt-5", "gpt-5-mini", "gpt-5-nano"],
-    },
-    anthropic: {
-      name: "Anthropic",
-      key: null,
-      model: "claude-3-7-sonnet-20250219",
-      models: [
-        "claude-3-5-haiku-20241022",
-        "claude-sonnet-4-20250514",
-        "claude-opus-4-1-20250805",
-      ],
-    },
-    mistral: {
-      name: "Mistral",
-      key: null,
-      model: "mistral-small-latest",
-      models: ["mistral-small-latest", "mistral-large-latest"],
-    },
-  },
   error: null,
-  theme: "light",
-  largeText: false,
 };
 
 // Get chat completion from chosen provider using async thunk
@@ -45,7 +17,8 @@ export const getChatResponseThunk = createAsyncThunk(
   "chat/getResponse",
   async (prompt, { getState }) => {
     const {
-      chat: { currentId, conversations, providers },
+      chat: { currentId, conversations },
+      providers,
     } = getState();
 
     // Exit early if currentId is falsy
@@ -109,12 +82,6 @@ export const chat = createSlice({
   name: "chat",
   initialState,
   reducers: {
-    toggleTheme: (state) => {
-      state.theme = state.theme === "light" ? "dark" : "light";
-    },
-    toggleLargeText: (state) => {
-      state.largeText = !state.largeText;
-    },
     addConversation: (state) => {
       const id = uuid.v4();
 
@@ -146,57 +113,8 @@ export const chat = createSlice({
       state.conversations = {};
       state.currentId = null;
     },
-    deleteKey: (state, action) => {
-      const { provider } = action.payload;
-      state.providers[provider].key = null;
-    },
     updateCurrentId: (state, action) => {
       state.currentId = action.payload;
-    },
-    addKey: (state, action) => {
-      const { provider, apiKey } = action.payload;
-      state.providers[provider].key = apiKey;
-    },
-    setProvider: (state, action) => {
-      const { provider } = action.payload;
-      state.providers.current.name = state.providers[provider].name;
-      state.providers.current.provider = provider;
-      state.providers.current.model = state.providers[provider].model;
-    },
-    resetProviders: (state) => {
-      // Preserve the current keys
-      const openAiKey = state.providers.openAi.key;
-      const anthropicKey = state.providers.anthropic.key;
-      const mistralKey = state.providers.mistral.key;
-
-      // Reset providers to initial state
-      state.providers = {
-        ...initialState.providers,
-        openAi: {
-          ...initialState.providers.openAi,
-          key: openAiKey,
-        },
-        anthropic: {
-          ...initialState.providers.anthropic,
-          key: anthropicKey,
-        },
-        mistral: {
-          ...initialState.providers.mistral,
-          key: mistralKey,
-        },
-      };
-    },
-    setModel: (state, action) => {
-      const { provider, model } = action.payload;
-
-      const currentProvider = state.providers.current.provider;
-
-      if (provider === currentProvider) {
-        state.providers.current.model = model;
-        state.providers[provider].model = model;
-      } else {
-        state.providers[provider].model = model;
-      }
     },
     importConversations: (state, action) => {
       state.conversations = action.payload;
@@ -243,18 +161,11 @@ export const chat = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {
-  toggleTheme,
-  toggleLargeText,
+  addConversation,
   updateMessages,
   deleteConversation,
   deleteConversations,
-  addConversation,
   updateCurrentId,
-  addKey,
-  deleteKey,
-  setProvider,
-  resetProviders,
-  setModel,
   importConversations,
 } = chat.actions;
 
