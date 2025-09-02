@@ -12,11 +12,13 @@ async function fetchOpenAiChatCompletion(context, prompt, providers) {
     const response = await client.chat.completions.create({
       model: MODEL,
       messages: [
-        ...context,
         {
-          role: "user",
-          content: prompt,
+          role: "system",
+          content:
+            "Respond in valid Markdown. Use proper Markdown syntax (headings, lists, bold/italics, etc.). When you include code, wrap it in triple backticks with an appropriate language tag. Do not include non-Markdown text outside of Markdown.",
         },
+        ...context,
+        { role: "user", content: prompt },
       ],
     });
 
