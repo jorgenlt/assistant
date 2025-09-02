@@ -43,6 +43,14 @@ function ChatInput() {
     }
   };
 
+  const handleKeyDown = (e) => {
+    // Detect Ctrl+Enter or Cmd+Enter
+    if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+      e.preventDefault(); // prevents newline in textarea
+      handleSendPrompt();
+    }
+  };
+
   const textareaRef = useRef(null);
 
   useEffect(() => {
@@ -71,6 +79,7 @@ function ChatInput() {
             placeholder={`${name} (${model})`}
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
+            onKeyDown={handleKeyDown}
             className="chat-input-textarea max-h-[350px] overflow-y-auto flex-1 resize-none overflow-hidden rounded-4xl p-4 outline-none bg-neutral-200 text-gray-900 dark:text-gray-100 dark:bg-gray-700"
             rows={1}
           />
