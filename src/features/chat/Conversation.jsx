@@ -71,6 +71,12 @@ const Conversation = () => {
                   </div>
                 )}
               </div>
+
+              {error && (
+                <div>
+                  <p className="text-red-500">{error}</p>
+                </div>
+              )}
             </div>
           );
         })}
@@ -87,8 +93,6 @@ const Conversation = () => {
           </div>
         )}
       </div>
-
-      {error && <p className="text-red-500">{error}</p>}
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
+import systemPrompt from "./systemPrompt";
 
 async function fetchAnthropicChatCompletion(context, prompt, providers) {
   const { key: API_KEY, model: MODEL } = providers.anthropic;
@@ -8,7 +9,7 @@ async function fetchAnthropicChatCompletion(context, prompt, providers) {
     content: prompt,
   };
 
-  const messages = [...context, userMessage].slice(1); // Anthropic API messages must start with a message with the role "user", remove the first item in the array
+  const messages = [...context, userMessage];
 
   const anthropic = new Anthropic({
     apiKey: API_KEY,
@@ -19,6 +20,7 @@ async function fetchAnthropicChatCompletion(context, prompt, providers) {
     const msg = await anthropic.messages.create({
       model: MODEL,
       max_tokens: 3500,
+      system: systemPrompt,
       messages: messages,
     });
 
