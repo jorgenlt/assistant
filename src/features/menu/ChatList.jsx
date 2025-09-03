@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { updateCurrentId } from "../chat/chatSlice";
+import { updateCurrentId, deleteConversation } from "../chat/chatSlice";
 import { useMemo } from "react";
 import ListItem from "../../components/ListItem";
 
@@ -8,22 +8,9 @@ function ChatList() {
 
   const dispatch = useDispatch();
 
-  // const handleDeleteConversation = (id) => {
-  //   // impactAsync(ImpactFeedbackStyle.Heavy);
-
-  //   // Alert.alert("Delete conversation?", 'Choose "Delete" to confirm.', [
-  //   //   {
-  //   //     text: "Cancel",
-  //   //     style: "cancel",
-  //   //   },
-  //   //   {
-  //   //     text: "Delete",
-  //   //     onPress: () => dispatch(deleteConversation(id)),
-  //   //   },
-  //   // ]);
-
-  //   console.log("Delete conversation clicked");
-  // };
+  const handleDeleteConversation = (id) => {
+    dispatch(deleteConversation(id));
+  };
 
   const getLastMessageDate = (conversation) => {
     const lastMessage = conversation.messages[conversation.messages.length - 1];
@@ -49,10 +36,12 @@ function ChatList() {
           key={id}
           action={() => dispatch(updateCurrentId(id))} // Change current conversation
           title={title}
+          id={id}
+          onDelete={() => handleDeleteConversation(id)}
         />
       );
     });
-  }, [conversations, dispatch]);
+  }, [conversations, dispatch, handleDeleteConversation]);
 
   return (
     <div className="cursor-default select-none mt-2">
