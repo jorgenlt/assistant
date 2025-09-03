@@ -5,12 +5,14 @@ const initialState = {
   default: { name: "OpenAI", provider: "openAi", model: "gpt-5-nano" },
   openAi: {
     name: "OpenAI",
+    providerName: "openAi",
     key: null,
     model: "gpt-5-nano",
     models: ["gpt-5", "gpt-5-mini", "gpt-5-nano"],
   },
   anthropic: {
     name: "Anthropic",
+    providerName: "anthropic",
     key: null,
     model: "claude-3-7-sonnet-20250219",
     models: [
@@ -21,6 +23,7 @@ const initialState = {
   },
   mistral: {
     name: "Mistral",
+    providerName: "mistral",
     key: null,
     model: "mistral-small-latest",
     models: ["mistral-small-latest", "mistral-large-latest"],
@@ -69,7 +72,7 @@ export const providers = createSlice({
       };
     },
     setModel: (state, action) => {
-      const { provider, model } = action.payload;
+      const { provider  , model } = action.payload;
 
       const currentProvider = state.current.provider;
 
