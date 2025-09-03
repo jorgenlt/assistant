@@ -21,7 +21,7 @@ async function fetchOpenAiChatCompletion(context, prompt, providers) {
         { role: "user", content: prompt },
       ],
     });
-    console.log(systemPrompt);
+
     const { role, content } = response.choices[0].message;
 
     return {
