@@ -2,16 +2,11 @@ import { FaPenToSquare, FaGear, FaMoon, FaArrowRight } from "react-icons/fa6";
 import MenuHeader from "./MenuHeader.jsx";
 import ChatList from "./ChatList.jsx";
 import { updateCurrentId } from "../chat/chatSlice.js";
-import { addKey } from "../providers/providersSlice.js";
 import { toggleTheme } from "./menuSlice.js";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import SidebarItem from "../../components/SidebarItem.jsx";
 
 function Menu() {
-  const { provider: currentProvider } = useSelector(
-    (state) => state.providers.current
-  );
-
   const dispatch = useDispatch();
 
   const handleToggleTheme = () => {
@@ -20,11 +15,6 @@ function Menu() {
 
   const handleResetId = () => {
     dispatch(updateCurrentId(null));
-  };
-
-  const setApi = async () => {
-    const apiKey = await navigator.clipboard.readText();
-    dispatch(addKey({ provider: currentProvider, apiKey: apiKey.trim() }));
   };
 
   return (
@@ -46,7 +36,6 @@ function Menu() {
         </div>
       </div>
 
-      <SidebarItem action={setApi} title="Set API Key" Icon={FaArrowRight} />
       <SidebarItem
         action={handleToggleTheme}
         title="Toggle Theme"

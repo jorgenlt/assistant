@@ -12,6 +12,7 @@ async function fetchAnthropicChatCompletion(context, prompt, providers) {
 
   const anthropic = new Anthropic({
     apiKey: API_KEY,
+    dangerouslyAllowBrowser: true,
   });
 
   try {

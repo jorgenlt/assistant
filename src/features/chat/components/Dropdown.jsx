@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setModel, setProvider } from "../../providers/providersSlice";
-import { FaChevronDown, FaCheck } from "react-icons/fa6";
+import { setModel, setProvider, addKey } from "../../providers/providersSlice";
+import { FaChevronDown, FaCheck, FaGear } from "react-icons/fa6";
+import Modal from "../../../components/Modal";
 
 export default function Dropdown() {
   const { current, openAi, anthropic, mistral } = useSelector(
@@ -13,10 +14,20 @@ export default function Dropdown() {
   const dispatch = useDispatch();
 
   const [isOpen, setIsOpen] = useState(false);
-
+  const [activeProvider, setActiveProvider] = useState(null); // null means no modal
   const handleSetModel = (provider, model) => {
     dispatch(setProvider({ provider }));
     dispatch(setModel({ provider, model }));
+  };
+
+  const [apiKey, setApiKey] = useState("");
+
+  const handleAddKey = () => {
+    dispatch(
+      addKey({ provider: activeProvider.providerName, apiKey: apiKey.trim() })
+    );
+    setApiKey("");
+    setActiveProvider(null);
   };
 
   return (
@@ -41,13 +52,21 @@ export default function Dropdown() {
                 key={provider.name}
                 className="text-neutral-400 p-2 flex flex-col m-1 cursor-default select-none text-left"
               >
-                <span>{provider.name}</span>
+                <div className="flex items-center justify-between">
+                  <span>{provider.name}</span>
+                  <div
+                    onClick={() => setActiveProvider(provider)}
+                    className="cursor-pointer select-none p-3 rounded-xl hover:bg-[var(--hover)]"
+                  >
+                    <FaGear />
+                  </div>
+                </div>
 
                 {provider.models.map((model) => (
                   <div
                     key={model}
                     onClick={() => handleSetModel(provider.providerName, model)}
-                    className="text-[var(--text)] p-2 flex items-center justify-between m-1 cursor-pointer select-none rounded-lg text-left hover:bg-[var(--hover)]"
+                    className="text-[var(--text)] p-2 flex items-center justify-between m-1 cursor-pointer select-none rounded-xl text-left hover:bg-[var(--hover)]"
                   >
                     {model}{" "}
                     {current.model === model && (
@@ -61,6 +80,40 @@ export default function Dropdown() {
             ))}
           </div>
         </div>
+      )}
+
+      {activeProvider && (
+        <Modal
+          open={activeProvider}
+          onClose={() => setActiveProvider(null)}
+          title={`Set API key for ${activeProvider.name}`}
+        >
+          <form className="space-y-4">
+            <input
+              type="text"
+              value={apiKey}
+              onChange={(e) => setApiKey(e.target.value)}
+              placeholder="Enter your API key"
+              className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
+              required
+            />
+            <div className="flex justify-end gap-2">
+              <div
+                type="button"
+                onClick={() => setActiveProvider(null)}
+                className="rounded-xl bg-gray-200 px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+              >
+                Cancel
+              </div>
+              <div
+                onClick={handleAddKey}
+                className="rounded-xl bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
+              >
+                Save
+              </div>
+            </div>
+          </form>
+        </Modal>
       )}
     </div>
   );
