@@ -24,7 +24,7 @@ export default function Dropdown() {
 
   const handleAddKey = () => {
     dispatch(
-      addKey({ provider: activeProvider.providerName, apiKey: apiKey.trim() })
+      addKey({ provider: activeProvider.provider, apiKey: apiKey.trim() })
     );
     setApiKey("");
     setActiveProvider(null);
@@ -65,7 +65,7 @@ export default function Dropdown() {
                 {provider.models.map((model) => (
                   <div
                     key={model}
-                    onClick={() => handleSetModel(provider.providerName, model)}
+                    onClick={() => handleSetModel(provider.provider, model)}
                     className="text-[var(--text)] p-2 flex items-center justify-between m-1 cursor-pointer select-none rounded-xl text-left hover:bg-[var(--hover)]"
                   >
                     {model}{" "}

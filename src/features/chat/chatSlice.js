@@ -20,60 +20,41 @@ export const getChatResponseThunk = createAsyncThunk(
       chat: { currentId, conversations },
       providers,
     } = getState();
-
-    // Exit early if currentId is falsy
+    console.log("providers", providers);
     if (!currentId) {
-      console.error("currentId is null or undefined");
-      return;
+      throw new Error("No active conversation selected (currentId is falsy).");
+    }
+
+    const conversation = conversations[currentId];
+    if (!conversation) {
+      throw new Error(`Conversation not found for currentId: ${currentId}`);
     }
 
     // Remove key/value "created" from obj. API doesn't support additional input
-    const context = conversations[currentId].messages.map((message) => {
-      const { _, ...rest } = message;
-      return rest;
-    });
+    const context = conversation.messages.map(({ _, ...rest }) => rest);
 
     const provider = providers.current.provider;
 
-    try {
-      let response;
+    const fetchers = {
+      openAi: fetchOpenAiChatCompletion,
+      anthropic: fetchAnthropicChatCompletion,
+      mistral: fetchMistralChatCompletion,
+    };
 
-      switch (provider) {
-        case "openAi":
-          response = await fetchOpenAiChatCompletion(
-            context,
-            prompt,
-            providers
-          );
-          break;
-        case "anthropic":
-          response = await fetchAnthropicChatCompletion(
-            context,
-            prompt,
-            providers
-          );
-          break;
-        case "mistral":
-          response = await fetchMistralChatCompletion(
-            context,
-            prompt,
-            providers
-          );
-          break;
-        default:
-          throw new Error("Unsupported chat completion provider: " + provider);
-      }
-
-      // Generate title only for the first message
-      if (context.length === 0) {
-        const title = await generateConversationTitle(prompt, providers);
-        return { ...response, title };
-      }
-
-      return response;
-    } catch (error) {
-      return Promise.reject(error.message);
+    const fetcher = fetchers[provider];
+    if (!fetcher) {
+      throw new Error("Unsupported chat completion provider: " + provider);
     }
+
+    const response = await fetcher(context, prompt, providers);
+
+    // Generate title only for the first message
+    if (context.length === 0) {
+      const title = await generateConversationTitle(prompt, providers);
+      return { ...response, title };
+    }
+
+    return response;
   }
 );
 
