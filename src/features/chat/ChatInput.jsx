@@ -75,6 +75,7 @@ function ChatInput() {
 
           {/* Input */}
           <textarea
+            autoFocus
             ref={textareaRef}
             placeholder={`${name} (${model})`}
             value={prompt}

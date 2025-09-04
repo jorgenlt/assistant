@@ -38,7 +38,7 @@ function Menu() {
 
       <SidebarItem
         action={handleToggleTheme}
-        title="Toggle Theme"
+        title="Toggle Themes"
         Icon={FaMoon}
       />
       <SidebarItem
