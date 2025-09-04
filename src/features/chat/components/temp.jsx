@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, use } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setModel, setProvider, addKey } from "../../providers/providersSlice";
 import { FaChevronDown, FaCheck, FaGear } from "react-icons/fa6";
@@ -15,13 +15,35 @@ export default function Dropdown() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [activeProvider, setActiveProvider] = useState(null); // null means no modal
-
   const handleSetModel = (provider, model) => {
     dispatch(setProvider({ provider }));
     dispatch(setModel({ provider, model }));
   };
 
   const [apiKey, setApiKey] = useState("");
+
+  // Ref to detect clicks outside the dropdown
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Optional: close when pressing Escape
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, []);
 
   const handleAddKey = () => {
     dispatch(
@@ -30,19 +52,6 @@ export default function Dropdown() {
     setApiKey("");
     setActiveProvider(null);
   };
-
-  const dropdownRef = useRef(null);
-
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
   return (
     <div ref={dropdownRef} className="relative inline-block text-left">
@@ -113,15 +122,14 @@ export default function Dropdown() {
             />
             <div className="flex justify-end gap-2">
               <div
-                type="button"
                 onClick={() => setActiveProvider(null)}
-                className="rounded-xl bg-gray-200 px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                className="rounded-xl bg-gray-200 px-4 py-2 text-sm font-medium text-gray-800 cursor-pointer hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
               >
                 Cancel
               </div>
               <div
                 onClick={handleAddKey}
-                className="rounded-xl bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
+                className="rounded-xl bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 cursor-pointer"
               >
                 Save
               </div>
