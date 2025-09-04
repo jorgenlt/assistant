@@ -4,6 +4,7 @@ import { formatDate } from "../../common/utils/formatDate.js";
 import { PropagateLoader } from "react-spinners"; // loader
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { FaCopy } from "react-icons/fa6";
 
 const Conversation = () => {
   const { currentId, conversations, error, status } = useSelector(
@@ -14,15 +15,14 @@ const Conversation = () => {
 
   const conversation = conversations[currentId]?.messages;
 
-  // Copy text to clipboard
-  // const handleCopyToClipboard = async (text) => {
-  //   try {
-  //     await navigator.clipboard.writeText(text);
-  //     alert("Message copied to clipboard."); // swap with toast lib if you like
-  //   } catch (err) {
-  //     alert("Failed to copy: " + err.message);
-  //   }
-  // };
+  // Copy message to clipboard
+  const handleCopyToClipboard = async (text) => {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch (err) {
+      alert("Failed to copy: " + err.message);
+    }
+  };
 
   // Scroll to bottom when messages change
   const scrollRef = useRef();
@@ -58,12 +58,19 @@ const Conversation = () => {
                 }`}
               >
                 {role === "assistant" ? (
+                  // Assistant
                   <div className="cursor-default max-w-full">
                     <div className="prose prose-base dark:prose-invert max-w-full">
                       <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>
                     </div>
+                    <div 
+                      onClick={() => handleCopyToClipboard(content)}
+                      className="active:scale-90 mt-3 px-2 py-2 cursor-pointer w-fit rounded-xl hover:bg-[var(--hover)]">
+                      <FaCopy size={16} />
+                    </div>
                   </div>
                 ) : (
+                  // User
                   <div className="bg-[var(--bg-chat-bubble)] rounded-2xl py-2 pl-4 pr-2 rounded-tr-sm max-w-[90%]">
                     <div className="prose prose-base max-w-full text-[var(--text-chat-bubble)]">
                       <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>
