@@ -45,7 +45,7 @@ function ListItem({ action, title, id, onDelete }) {
         onClick={handleDeleteClick}
         className="ml-2 p-1 cursor-pointer hidden group-hover:flex"
       >
-        <FaTrashCan className="text-gray-300 hover:text-gray-400 dark:text-gray-600 dark:hover:text-gray-400" />
+        <FaTrashCan size={12} className="text-gray-300 hover:text-gray-400 dark:text-gray-600 dark:hover:text-gray-400" />
       </div>
 
       {showConfirm && (
