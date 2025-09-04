@@ -3,10 +3,14 @@ import MenuHeader from "./MenuHeader.jsx";
 import ChatList from "./ChatList.jsx";
 import { updateCurrentId } from "../chat/chatSlice.js";
 import { toggleTheme } from "./menuSlice.js";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SidebarItem from "../../components/SidebarItem.jsx";
+import { useState } from "react";
 
 function Menu() {
+  const theme = useSelector((state) => state.menu.theme);
+  const [isThemeHover, setIsThemeHover] = useState(false);
+
   const dispatch = useDispatch();
 
   const handleToggleTheme = () => {
@@ -36,11 +40,16 @@ function Menu() {
         </div>
       </div>
 
-      <SidebarItem
-        action={handleToggleTheme}
-        title="Toggle Themes"
-        Icon={FaMoon}
-      />
+      <div
+        onMouseEnter={() => setIsThemeHover(true)}
+        onMouseLeave={() => setIsThemeHover(false)}
+      >
+        <SidebarItem
+          action={handleToggleTheme}
+          title={isThemeHover ? theme : "Toggle Themes"}
+          Icon={FaMoon}
+        />
+      </div>
       <SidebarItem
         action={() => console.log("Settings clicked")}
         title="Settings"

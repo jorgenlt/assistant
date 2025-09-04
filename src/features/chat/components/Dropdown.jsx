@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, use } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setModel, setProvider, addKey } from "../../providers/providersSlice";
 import { FaChevronDown, FaCheck, FaGear } from "react-icons/fa6";
