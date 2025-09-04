@@ -71,7 +71,7 @@ const Conversation = () => {
                   </div>
                 ) : (
                   // User
-                  <div className="bg-[var(--bg-chat-bubble)] rounded-2xl py-2 pl-4 pr-2 rounded-tr-sm max-w-[90%]">
+                  <div className="cursor-default bg-[var(--bg-chat-bubble)] rounded-2xl py-2 pl-4 pr-2 rounded-tr-sm max-w-[90%]">
                     <div className="prose prose-base max-w-full text-[var(--text-chat-bubble)]">
                       <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>
                     </div>

@@ -68,7 +68,7 @@ function ChatInput() {
           {/* Left action */}
           <div
             onClick={() => console.log("Attach file")}
-            className="p-4 cursor-pointer text-gray-600 hover:text-gray-400"
+            className="hidden active:scale-90 p-4 cursor-pointer text-gray-600 hover:text-gray-400"
           >
             <FaPaperclip className="size-6" />
           </div>
@@ -94,7 +94,7 @@ function ChatInput() {
             </button>
             <div
               onClick={handleSendPrompt}
-              className="p-4 bg-neutral-200 dark:bg-neutral-200 hover:bg-neutral-100 hover:dark:bg-neutral-50 rounded-4xl cursor-pointer"
+              className="active:scale-95 p-4 bg-neutral-200 dark:bg-neutral-200 hover:bg-neutral-100 hover:dark:bg-neutral-50 rounded-4xl cursor-pointer"
             >
               <FaArrowUp className="size-6 text-neutral-800" />
             </div>
