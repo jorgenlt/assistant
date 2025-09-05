@@ -20,32 +20,13 @@ export const generateConversationTitleThunk = createAsyncThunk(
       const title = await generateConversationTitle(prompt, providers);
       return { currentId, title };
     } catch (error) {
-      // Normalize error messages coming from OpenAI or network issues
-      // const message =
-      // err?.response?.data?.error?.message
-      // ?? err?.message
-      // ?? "Failed to generate conversation title";
-
-      // console.log("🚀 ~ message:", message)
-      // // Optional: include more error context
-      // const code = err?.response?.status ?? err?.code ?? null;
-      // console.log("🚀 ~ code:", code)
-
       throw new Error(
-        "Generation title failed. OpenAI key is required for generating titles: " +
+        "Title generation failed. OpenAI key is required for generating titles: " +
           error
       );
     }
   }
 );
-
-// export const generateConversationTitleThunk = createAsyncThunk(
-//   "chat/generateTitle",
-//   async ({ currentId, prompt, providers }) => {
-//     const title = await generateConversationTitle(prompt, providers);
-//     return { currentId, title };
-//   }
-// );
 
 // Get chat completion from chosen provider using async thunk
 export const getChatResponseThunk = createAsyncThunk(
