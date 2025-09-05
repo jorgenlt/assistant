@@ -119,6 +119,11 @@ export const chat = createSlice({
       state.conversations = action.payload;
       state.currentId = null;
     },
+    resetChatSlice: () => {
+      return {
+        ...initialState,
+      };
+    },
     setError: (state, action) => {
       state.error = action.payload;
     },
@@ -175,6 +180,7 @@ export const {
   deleteConversations,
   updateCurrentId,
   importConversations,
+  resetChatSlice,
   setError,
 } = chat.actions;
 

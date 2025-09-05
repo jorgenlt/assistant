@@ -48,31 +48,20 @@ export const providers = createSlice({
       state.current.provider = provider;
       state.current.model = state[provider].model;
     },
-    resetProviders: (state) => {
-      // Preserve the current keys
+    resetProviderSlice: (state) => {
       const openAiKey = state.openAi.key;
       const anthropicKey = state.anthropic.key;
       const mistralKey = state.mistral.key;
 
-      // Reset providers to initial state
-      state = {
+      return {
         ...initialState,
-        openAi: {
-          ...initialState.openAi,
-          key: openAiKey,
-        },
-        anthropic: {
-          ...initialState.anthropic,
-          key: anthropicKey,
-        },
-        mistral: {
-          ...initialState.mistral,
-          key: mistralKey,
-        },
+        openAi: { ...initialState.openAi, key: openAiKey },
+        anthropic: { ...initialState.anthropic, key: anthropicKey },
+        mistral: { ...initialState.mistral, key: mistralKey },
       };
     },
     setModel: (state, action) => {
-      const { provider  , model } = action.payload;
+      const { provider, model } = action.payload;
 
       const currentProvider = state.current.provider;
 
@@ -86,7 +75,7 @@ export const providers = createSlice({
   },
 });
 
-export const { deleteKey, addKey, setProvider, resetProviders, setModel } =
+export const { deleteKey, addKey, setProvider, resetProviderSlice, setModel } =
   providers.actions;
 
 export default providers.reducer;

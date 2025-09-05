@@ -4,8 +4,11 @@ import {
   getChatResponseThunk,
   updateMessages,
   addConversation,
+  resetChatSlice,
   setError,
 } from "./chatSlice.js";
+import { resetProviderSlice } from "../providers/providersSlice.js";
+import { resetMenuSlice } from "../menu/menuSlice.js";
 import { FaArrowUp, FaPaperclip } from "react-icons/fa6";
 
 function ChatInput() {
@@ -24,6 +27,32 @@ function ChatInput() {
   const dispatch = useDispatch();
 
   const handleSendPrompt = () => {
+    if (prompt === "resetProviderSlice") {
+      dispatch(resetProviderSlice());
+      setPrompt("");
+      return;
+    }
+
+    if (prompt === "resetChatSlice") {
+      dispatch(resetChatSlice());
+      setPrompt("");
+      return;
+    }
+
+    if (prompt === "resetMenuSlice") {
+      dispatch(resetMenuSlice());
+      setPrompt("");
+      return;
+    }
+
+    if (prompt === "resetAll") {
+      dispatch(resetProviderSlice());
+      dispatch(resetChatSlice());
+      dispatch(resetMenuSlice());
+      setPrompt("");
+      return;
+    }
+
     if (key) {
       if (prompt) {
         if (currentId === null) {
@@ -88,19 +117,11 @@ function ChatInput() {
           />
 
           {/* Right actions */}
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              className="hidden px-2 py-1 text-sm rounded-md bg-gray-100 dark:bg-gray-700 hover:bg-gray-200"
-            >
-              Dictate
-            </button>
-            <div
-              onClick={handleSendPrompt}
-              className="active:scale-95 p-4 bg-neutral-200 dark:bg-neutral-200 hover:bg-neutral-100 hover:dark:bg-neutral-50 rounded-4xl cursor-pointer"
-            >
-              <FaArrowUp className="size-6 text-neutral-800" />
-            </div>
+          <div
+            onClick={handleSendPrompt}
+            className="active:scale-95 p-4 bg-neutral-200 dark:bg-neutral-200 hover:bg-neutral-100 hover:dark:bg-neutral-50 rounded-4xl cursor-pointer"
+          >
+            <FaArrowUp className="size-6 text-neutral-800" />
           </div>
         </div>
       </div>

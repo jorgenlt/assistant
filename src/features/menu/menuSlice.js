@@ -28,6 +28,11 @@ export const menu = createSlice({
   name: "menu",
   initialState,
   reducers: {
+    resetMenuSlice: () => {
+      return {
+        ...initialState,
+      };
+    },
     setTheme: (state, action) => {
       console.log(action.payload);
       state.theme = action.payload;
@@ -46,6 +51,6 @@ export const menu = createSlice({
   extraReducers: () => {},
 });
 
-export const { setTheme, toggleTheme, toggleLargeText } = menu.actions;
+export const { resetMenuSlice, setTheme, toggleTheme, toggleLargeText } = menu.actions;
 
 export default menu.reducer;
