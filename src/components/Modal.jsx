@@ -3,7 +3,6 @@ import { FaX } from "react-icons/fa6";
 
 function Modal({ open, onClose, title = "Simple Modal", children }) {
   const overlayRef = useRef(null);
-  const closeBtnRef = useRef(null);
 
   // Close on Escape
   useEffect(() => {
@@ -14,11 +13,6 @@ function Modal({ open, onClose, title = "Simple Modal", children }) {
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open, onClose]);
-
-  // Focus the close button when modal opens
-  useEffect(() => {
-    if (open) closeBtnRef.current?.focus();
-  }, [open]);
 
   if (!open) return null;
 
@@ -37,15 +31,14 @@ function Modal({ open, onClose, title = "Simple Modal", children }) {
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
-        className="w-full max-w-md rounded-2xl bg-[var(--bg1)] p-6 shadow-xl outline-none transition-all"
+        className="relative w-full max-w-md rounded-2xl bg-[var(--bg1)] p-6 shadow-xl outline-none transition-all"
       >
-        <div className="flex justify-end">
+        <div className="absolute right-1 top-1">
           <div
-            ref={closeBtnRef}
             onClick={onClose}
-            className="w-fit cursor-pointer select-none p-3 rounded-xl hover:bg-[var(--hover)]"
+            className="w-fit cursor-pointer select-none p-3 rounded-xl hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
           >
-            <FaX />
+            <FaX size={14} />
           </div>
         </div>
         <div className="flex items-start justify-between gap-4">
@@ -61,15 +54,6 @@ function Modal({ open, onClose, title = "Simple Modal", children }) {
               hit Close to dismiss it.
             </p>
           )}
-        </div>
-
-        <div className="mt-6 flex justify-end gap-2">
-          <button
-            onClick={onClose}
-            className="rounded-xl bg-gray-900 px-4 py-2 text-sm font-medium text-white shadow hover:shadow-md dark:bg-gray-100 dark:text-gray-900"
-          >
-            Okay
-          </button>
         </div>
       </div>
     </div>

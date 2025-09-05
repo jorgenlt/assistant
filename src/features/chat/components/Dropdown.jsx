@@ -49,7 +49,7 @@ export default function Dropdown() {
       {/* Dropdown button */}
       <div
         onClick={() => setIsOpen(!isOpen)}
-        className=" cursor-pointer select-none rounded-xl hover:bg-[var(--hover)] flex items-center py-2 my-2 mx-2 px-4"
+        className=" cursor-pointer select-none rounded-xl hover:bg-[var(--hover)] hover:text-[var(--text-hover)] flex items-center py-2 my-2 mx-2 px-4"
       >
         <span className="mr-2">
           {current.name} ({current.model})
@@ -70,7 +70,7 @@ export default function Dropdown() {
                   <span>{provider.name}</span>
                   <div
                     onClick={() => setActiveProvider(provider)}
-                    className="cursor-pointer select-none p-3 rounded-xl hover:bg-[var(--hover)]"
+                    className="cursor-pointer select-none p-3 rounded-xl hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
                   >
                     <FaGear />
                   </div>
@@ -80,7 +80,7 @@ export default function Dropdown() {
                   <div
                     key={model}
                     onClick={() => handleSetModel(provider.provider, model)}
-                    className="text-[var(--text)] p-2 flex items-center justify-between m-1 cursor-pointer select-none rounded-xl text-left hover:bg-[var(--hover)]"
+                    className="text-[var(--text)] p-2 flex items-center justify-between m-1 cursor-pointer select-none rounded-xl text-left hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
                   >
                     {model}{" "}
                     {current.model === model && (
@@ -107,21 +107,21 @@ export default function Dropdown() {
               type="text"
               value={apiKey}
               onChange={(e) => setApiKey(e.target.value)}
-              placeholder="Enter your API key"
-              className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
+              placeholder={activeProvider.key ? activeProvider.key : "Enter your API key"}
+              
+              className="w-full rounded-xl px-3 py-2 text-sm outline-none bg-[var(--bg3)] text-[var(--text)]"
               required
             />
             <div className="flex justify-end gap-2">
               <div
-                type="button"
                 onClick={() => setActiveProvider(null)}
-                className="rounded-xl bg-gray-200 px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                className="cursor-pointer rounded-xl px-4 py-2 text-sm font-medium hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
               >
                 Cancel
               </div>
               <div
                 onClick={handleAddKey}
-                className="rounded-xl bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
+                className="cursor-pointer rounded-xl px-4 py-2 text-sm font-medium text-white bg-[var(--bg2)] hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
               >
                 Save
               </div>

@@ -36,6 +36,7 @@ body {
   --bg-chat-bubble: #e2e3e3;
   --text-chat-bubble: #030712;
   --text: #030712;
+  --text-hover: #030712;
   --hover: #e6e7e7;
 }
 
@@ -47,17 +48,19 @@ body {
   --bg-chat-bubble: #d1d5db;
   --text-chat-bubble: #030712;
   --text: #fafafa;
+  --text-hover: #fafafa;
   --hover: #374151;
 }
 
-/* Sunset theme */
-[data-theme="sunset"] {
-  --bg1: #fcf3d9;
+/* Solarized Light */
+[data-theme="solarized-light"] {
+  --bg1: #faeec8;
   --bg2: #fdf6e3;
   --bg3: #fcf3d9;
   --bg-chat-bubble: #ffe9a8;
   --text-chat-bubble: #5e4908;
   --text: #5e4908;
+  --text-hover: #5e4908;
   --hover: #ffe9a8;
 }
 
@@ -71,6 +74,7 @@ body {
   --bg-chat-bubble: #1264a3;
   --text-chat-bubble: #ffffff;
   --text: #1d1c1d;
+  --text-hover: #1d1c1d;
   --hover: #efefef;
 }
 
@@ -82,6 +86,7 @@ body {
   --bg-chat-bubble: #5865f2;
   --text-chat-bubble: #ffffff;
   --text: #2e3338;
+  --text-hover: #2e3338;
   --hover: #b8bdf5;
 }
 
@@ -93,6 +98,7 @@ body {
   --bg-chat-bubble: #2196f3;
   --text-chat-bubble: #ffffff;
   --text: #212121;
+  --text-hover: #212121;
   --hover: #e9e8e8;
 }
 
@@ -106,7 +112,20 @@ body {
   --bg-chat-bubble: #238636;
   --text-chat-bubble: #ffffff;
   --text: #f0f6fc;
+  --text-hover: #f0f6fc;
   --hover: #238636;
+}
+
+/* Pop OS */
+[data-theme="popos-dark"] {
+  --bg1: #1d1e21;
+  --bg2: #272727;
+  --bg3: #363636;
+  --bg-chat-bubble: #94ebeb;
+  --text-chat-bubble: #272727;
+  --text: #f0f6fc;
+  --text-hover: #272727;
+  --hover: #94ebeb;
 }
 
 /* VS Code Dark */
@@ -117,6 +136,7 @@ body {
   --bg-chat-bubble: #007acc;
   --text-chat-bubble: #ffffff;
   --text: #cccccc;
+  --text-hover: #cccccc;
   --hover: rgb(83, 97, 121);
 }
 
@@ -128,6 +148,7 @@ body {
   --bg-chat-bubble: #1264a3;
   --text-chat-bubble: #ffffff;
   --text: #d1d2d3;
+  --text-hover: #d1d2d3;
   --hover: #2b3044;
 }
 
@@ -139,6 +160,7 @@ body {
   --bg-chat-bubble: #5865f2;
   --text-chat-bubble: #ffffff;
   --text: #dcddde;
+  --text-hover: #dcddde;
   --hover: #5865f2;
 }
 
@@ -150,18 +172,8 @@ body {
   --bg-chat-bubble: #bb86fc;
   --text-chat-bubble: #000000;
   --text: #ffffff;
+  --text-hover: #ffffff;
   --hover: #644786;
-}
-
-/* JetBrains Dark */
-[data-theme="jetbrains-dark"] {
-  --bg1: #2b2b2b;
-  --bg2: #3c3f41;
-  --bg3: #4e5254;
-  --bg-chat-bubble: #4a9eff;
-  --text-chat-bubble: #ffffff;
-  --text: #bbbbbb;
-  --hover: rgb(80, 94, 117);
 }
 
 /* One Dark */
@@ -172,18 +184,8 @@ body {
   --bg-chat-bubble: #61afef;
   --text-chat-bubble: #282c34;
   --text: #abb2bf;
+  --text-hover: #abb2bf;
   --hover: #424856;
-}
-
-/* Dracula Dark */
-[data-theme="dracula-dark"] {
-  --bg1: #282a36;
-  --bg2: #44475a;
-  --bg3: #6272a4;
-  --bg-chat-bubble: #bd93f9;
-  --text-chat-bubble: #282a36;
-  --text: #f8f8f2;
-  --hover: #8768b3;
 }
 
 /* Monokai Dark */
@@ -194,6 +196,7 @@ body {
   --bg-chat-bubble: #a6e22e;
   --text-chat-bubble: #272822;
   --text: #f8f8f2;
+  --text-hover: #f8f8f2;
   --hover: #667034;
 }
 
@@ -205,6 +208,7 @@ body {
   --bg-chat-bubble: #25292d;
   --text-chat-bubble: #fafafa;
   --text: #f1f0f0;
+  --text-hover: #f1f0f0;
   --hover: #131313;
 }
 

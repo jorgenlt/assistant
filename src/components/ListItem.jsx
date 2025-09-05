@@ -6,29 +6,15 @@ import { useState } from "react";
 function ListItem({ action, title, id, onDelete }) {
   const isThemeDark = useSelector((state) => state.menu.isThemeDark);
   const error = useSelector((state) => state.chat.error);
-  const [isDeleting, setIsDeleting] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
-  const handleDeleteClick = (e) => {
-    e.stopPropagation();
+  const handleDeleteClick = () => {
     setShowConfirm(true);
   };
 
-  const confirmDelete = async (e) => {
-    e?.preventDefault?.();
-    if (isDeleting) return;
-
-    setIsDeleting(true);
+  const confirmDelete = () => {
     setShowConfirm(false);
-
-    try {
-      const result = onDelete?.(id);
-      if (result && typeof result.then === "function") {
-        await result;
-      }
-    } finally {
-      setIsDeleting(false);
-    }
+    onDelete(id);
   };
 
   const cancelDelete = () => {
@@ -37,7 +23,7 @@ function ListItem({ action, title, id, onDelete }) {
 
   return title ? (
     <div
-      className="group relative flex justify-between items-center gap-2 px-3 py-2 rounded-xl mx-2 cursor-pointer select-none hover:bg-[var(--hover)]"
+      className="group relative flex justify-between items-center gap-2 px-3 py-2 rounded-xl mx-2 cursor-pointer select-none hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
       onClick={action}
     >
       <span className="text-sm font-medium truncate">{title}</span>
@@ -53,23 +39,23 @@ function ListItem({ action, title, id, onDelete }) {
       </div>
 
       {showConfirm && (
-        <div className="absolute right-0 mt-2 w-48 bg-[var(--bg1)] rounded-xl shadow-lg z-20 p-3">
+        <div className="hover:text-[var(--text)] text-[var(--text)] absolute right-0 top-8 mt-2 w-48 bg-[var(--bg2)] rounded-xl shadow-lg z-20 p-3">
           <div className="text-sm mb-2">
             Are you sure you want to delete this conversation?
           </div>
           <div className="flex justify-end space-x-2">
-            <button
+            <div
               onClick={cancelDelete}
-              className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
+              className="cursor-pointer rounded-xl px-4 py-2 text-sm font-medium hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
             >
               Cancel
-            </button>
-            <button
+            </div>
+            <div
               onClick={confirmDelete}
-              className="px-3 py-1 rounded bg-red-500 text-white hover:bg-red-600"
+              className="cursor-pointer rounded-xl px-4 py-2 text-sm font-medium bg-[var(--bg1)] hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
             >
-              {isDeleting ? <PulseLoader size={5} color="#fff" /> : "Delete"}
-            </button>
+              Delete
+            </div>
           </div>
         </div>
       )}

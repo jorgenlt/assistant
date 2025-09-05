@@ -8,20 +8,19 @@ const initialState = {
     "dark",
     // Dark themes
     "github-dark",
+    "popos-dark",
     "vscode-dark",
     "slack-dark",
     "discord-dark",
     "material-dark",
-    "jetbrains-dark",
     "one-dark",
-    "dracula-dark",
     "monokai-dark",
     "oled-dark",
     // Light themes
+    "solarized-light",
     "slack-light",
     "discord-light",
     "material-light",
-    "sunset",
   ],
 };
 

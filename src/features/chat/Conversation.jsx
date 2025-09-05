@@ -65,7 +65,7 @@ const Conversation = () => {
                     </div>
                     <div 
                       onClick={() => handleCopyToClipboard(content)}
-                      className="active:scale-90 mt-3 px-2 py-2 cursor-pointer w-fit rounded-xl hover:bg-[var(--hover)]">
+                      className="active:scale-90 mt-3 px-2 py-2 cursor-pointer w-fit rounded-xl hover:bg-[var(--hover)] hover:text-[var(--text-hover)]">
                       <FaCopy size={16} />
                     </div>
                   </div>
