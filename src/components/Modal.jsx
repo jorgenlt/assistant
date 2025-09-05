@@ -48,12 +48,7 @@ function Modal({ open, onClose, title = "Simple Modal", children }) {
         </div>
 
         <div className="mt-4 text-sm text-gray-700 dark:text-gray-200">
-          {children ?? (
-            <p>
-              This is a simple modal. Click outside, press <kbd>Esc</kbd>, or
-              hit Close to dismiss it.
-            </p>
-          )}
+          {children}
         </div>
       </div>
     </div>

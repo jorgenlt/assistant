@@ -1,15 +1,17 @@
-import { FaPenToSquare, FaGear, FaMoon, FaArrowRight } from "react-icons/fa6";
-import MenuHeader from "./MenuHeader.jsx";
-import ChatList from "./ChatList.jsx";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentId } from "../chat/chatSlice.js";
 import { toggleTheme } from "./menuSlice.js";
-import { useDispatch, useSelector } from "react-redux";
+import { FaPenToSquare, FaGear, FaMoon } from "react-icons/fa6";
+import MenuHeader from "./MenuHeader.jsx";
+import ChatList from "./ChatList.jsx";
 import SidebarItem from "../../components/SidebarItem.jsx";
-import { useState } from "react";
+import Modal from "../../components/Modal.jsx";
 
 function Menu() {
   const theme = useSelector((state) => state.menu.theme);
   const [isThemeHover, setIsThemeHover] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -51,10 +53,23 @@ function Menu() {
         />
       </div>
       <SidebarItem
-        action={() => console.log("Settings clicked")}
+        action={() => setIsModalOpen(true)}
         title="Settings"
         Icon={FaGear}
       />
+
+      <Modal
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Settings"
+      >
+        <div className="flex flex-col">
+          <div>Setting 1</div>
+          <div>Setting 2</div>
+          <div>Setting 3</div>
+          <div>Setting 4</div>
+        </div>
+      </Modal>
     </div>
   );
 }
