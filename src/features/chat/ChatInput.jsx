@@ -4,6 +4,7 @@ import {
   getChatResponseThunk,
   updateMessages,
   addConversation,
+  setError,
 } from "./chatSlice.js";
 import { FaArrowUp, FaPaperclip } from "react-icons/fa6";
 
@@ -39,7 +40,8 @@ function ChatInput() {
         );
       }
     } else {
-      console.error("API key is missing");
+      dispatch(setError(`API key for ${name} is missing`));
+      console.error(`API key for ${name} is missing`);
     }
   };
 

@@ -16,10 +16,36 @@ const initialState = {
 export const generateConversationTitleThunk = createAsyncThunk(
   "chat/generateTitle",
   async ({ currentId, prompt, providers }) => {
-    const title = await generateConversationTitle(prompt, providers);
-    return { currentId, title };
+    try {
+      const title = await generateConversationTitle(prompt, providers);
+      return { currentId, title };
+    } catch (error) {
+      // Normalize error messages coming from OpenAI or network issues
+      // const message =
+      // err?.response?.data?.error?.message
+      // ?? err?.message
+      // ?? "Failed to generate conversation title";
+
+      // console.log("🚀 ~ message:", message)
+      // // Optional: include more error context
+      // const code = err?.response?.status ?? err?.code ?? null;
+      // console.log("🚀 ~ code:", code)
+
+      throw new Error(
+        "Generation title failed. OpenAI key is required for generating titles: " +
+          error
+      );
+    }
   }
 );
+
+// export const generateConversationTitleThunk = createAsyncThunk(
+//   "chat/generateTitle",
+//   async ({ currentId, prompt, providers }) => {
+//     const title = await generateConversationTitle(prompt, providers);
+//     return { currentId, title };
+//   }
+// );
 
 // Get chat completion from chosen provider using async thunk
 export const getChatResponseThunk = createAsyncThunk(
@@ -112,6 +138,9 @@ export const chat = createSlice({
       state.conversations = action.payload;
       state.currentId = null;
     },
+    setError: (state, action) => {
+      state.error = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -149,6 +178,10 @@ export const chat = createSlice({
         if (state.conversations[currentId]) {
           state.conversations[currentId].title = title;
         }
+      })
+      // Generate title failed
+      .addCase(generateConversationTitleThunk.rejected, (state, action) => {
+        state.error = action.error.message;
       });
   },
 });
@@ -161,6 +194,7 @@ export const {
   deleteConversations,
   updateCurrentId,
   importConversations,
+  setError,
 } = chat.actions;
 
 export default chat.reducer;

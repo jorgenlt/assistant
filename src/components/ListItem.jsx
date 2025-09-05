@@ -5,6 +5,7 @@ import { useState } from "react";
 
 function ListItem({ action, title, id, onDelete }) {
   const isThemeDark = useSelector((state) => state.menu.isThemeDark);
+  const error = useSelector((state) => state.chat.error);
   const [isDeleting, setIsDeleting] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -45,7 +46,10 @@ function ListItem({ action, title, id, onDelete }) {
         onClick={handleDeleteClick}
         className="ml-2 p-1 cursor-pointer hidden group-hover:flex"
       >
-        <FaTrashCan size={12} className="text-gray-300 hover:text-gray-400 dark:text-gray-600 dark:hover:text-gray-400" />
+        <FaTrashCan
+          size={12}
+          className="text-gray-300 hover:text-gray-400 dark:text-gray-600 dark:hover:text-gray-400"
+        />
       </div>
 
       {showConfirm && (
@@ -69,6 +73,13 @@ function ListItem({ action, title, id, onDelete }) {
           </div>
         </div>
       )}
+    </div>
+  ) : error ? (
+    <div
+      onClick={action}
+      className="px-3 py-1 rounded-xl mx-2 cursor-pointer select-none hover:bg-gray-200 dark:hover:bg-gray-700"
+    >
+      <span className="text-red-500 text-nowrap">{error}</span>
     </div>
   ) : (
     <div className="px-3 py-1 rounded-xl mx-2 cursor-pointer select-none hover:bg-gray-200 dark:hover:bg-gray-700">
