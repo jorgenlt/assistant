@@ -5,7 +5,7 @@ function SidebarItem({ action, title, Icon }) {
       onClick={action}
     >
       {Icon && <Icon />}
-      <span className="text-sm font-medium">{title}</span>
+      <span className="text-sm">{title}</span>
     </div>
   );
 }

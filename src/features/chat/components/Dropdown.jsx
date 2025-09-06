@@ -115,13 +115,13 @@ export default function Dropdown() {
             <div className="flex justify-end gap-2">
               <div
                 onClick={() => setActiveProvider(null)}
-                className="cursor-pointer rounded-xl px-4 py-2 text-sm font-medium hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
+                className="cursor-pointer rounded-xl px-4 py-2 text-sm hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
               >
                 Cancel
               </div>
               <div
                 onClick={handleAddKey}
-                className="cursor-pointer rounded-xl px-4 py-2 text-sm font-medium text-white bg-[var(--bg2)] hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
+                className="cursor-pointer rounded-xl px-4 py-2 text-sm text-white bg-[var(--bg2)] hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
               >
                 Save
               </div>

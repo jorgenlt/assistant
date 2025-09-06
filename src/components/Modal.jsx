@@ -42,7 +42,7 @@ function Modal({ open, onClose, title = "Simple Modal", children }) {
           </div>
         </div>
         <div className="flex items-start justify-between gap-4">
-          <h2 id="modal-title" className="text-lg font-semibold tracking-tight">
+          <h2 id="modal-title" className="text-lg font-medium tracking-tight">
             {title}
           </h2>
         </div>

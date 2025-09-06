@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentId, deleteConversation } from "../chat/chatSlice";
 import { useMemo } from "react";
-import ListItem from "../../components/ListItem";
+import ListItem from "./components/ListItem";
 
 function ChatList() {
   const conversations = useSelector((state) => state.chat.conversations);

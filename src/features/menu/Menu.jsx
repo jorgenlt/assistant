@@ -5,7 +5,7 @@ import { toggleTheme } from "./menuSlice.js";
 import { FaPenToSquare, FaGear, FaMoon } from "react-icons/fa6";
 import MenuHeader from "./MenuHeader.jsx";
 import ChatList from "./ChatList.jsx";
-import SidebarItem from "../../components/SidebarItem.jsx";
+import SidebarItem from "./components/SidebarItem.jsx";
 import Modal from "../../components/Modal.jsx";
 
 function Menu() {
