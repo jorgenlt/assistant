@@ -13,7 +13,7 @@ async function generateConversationTitle(firstMessage, providers) {
         {
           role: "system",
           content:
-            "You are a helpful assistant. Summarize the user's first message into a very short, clear title (max 5 words). Return only the title.",
+            "You are a helpful assistant. Summarize the user's first message into a very short, clear title (max 5 words). Add an emoji at the end if there is one that fits the message. Return only the title.",
         },
         {
           role: "user",
