@@ -8,10 +8,6 @@ function ChatList() {
 
   const dispatch = useDispatch();
 
-  const handleDeleteConversation = (id) => {
-    dispatch(deleteConversation(id));
-  };
-
   const getLastMessageDate = (conversation) => {
     const lastMessage = conversation.messages[conversation.messages.length - 1];
     return lastMessage?.created;
@@ -28,6 +24,10 @@ function ChatList() {
       return bDate - aDate; // Sort in decending order
     });
 
+    const handleDeleteConversation = (id) => {
+      dispatch(deleteConversation(id));
+    };
+
     return sortedIds.map((id) => {
       const title = conversations[id].title || null;
 
@@ -41,7 +41,7 @@ function ChatList() {
         />
       );
     });
-  }, [conversations, dispatch, handleDeleteConversation]);
+  }, [conversations, dispatch]);
 
   return (
     <div className="cursor-default select-none mt-2">
