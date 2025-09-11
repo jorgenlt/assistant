@@ -41,7 +41,7 @@ export default function Dropdown() {
         key: apiKey,
       });
 
-      console.log(response.data);
+      console.log(response.data.message);
 
       if (response.status === 200) {
         return response.data;

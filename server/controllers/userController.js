@@ -1,5 +1,5 @@
-// Importing the User model
 import User from "../models/User.js";
+import { encryptKey, decryptKey } from "../utils/crypto.js";
 
 // Get a specific user based on ID
 export const getUser = async (req, res) => {
@@ -23,6 +23,7 @@ export const getUser = async (req, res) => {
 };
 
 export const addApiKey = async (req, res) => {
+  console.log("hello from addApiKey")
   try {
     const { id } = req.params;
     const { provider, key } = req.body;
@@ -37,8 +38,10 @@ export const addApiKey = async (req, res) => {
         .json({ message: "Provider and api key are required" });
     }
 
+    const encryptedKey = encryptKey(key);
+
     const update = {
-      [`apiKeys.${provider}`]: key,
+      [`apiKeys.${provider}`]: encryptedKey,
     };
 
     const updatedUser = await User.findByIdAndUpdate(
@@ -51,7 +54,7 @@ export const addApiKey = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    res.status(200).json({ message: `API key for ${provider} saved.` });
+    res.status(200).json({ message: `API key for ${provider} encrypted and saved in the database.` });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
