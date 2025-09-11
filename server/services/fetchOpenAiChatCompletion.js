@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import systemPrompt from "./systemPrompt.js";
 
 const fetchOpenAiChatCompletion = async (
   context,
@@ -10,7 +11,7 @@ const fetchOpenAiChatCompletion = async (
   const response = await client.chat.completions.create({
     model,
     messages: [
-      { role: "system", content: "Your system prompt here" },
+      { role: "system", content: systemPrompt },
       ...context,
       { role: "user", content: prompt },
     ],
