@@ -1,0 +1,44 @@
+import Anthropic from "@anthropic-ai/sdk";
+import systemPrompt from "./systemPrompt";
+
+async function fetchAnthropicChatCompletion(context, prompt, providers) {
+  const { key: API_KEY, model: MODEL } = providers.anthropic;
+
+  const userMessage = {
+    role: "user",
+    content: prompt,
+  };
+
+  const messages = [...context, userMessage];
+
+  const anthropic = new Anthropic({
+    apiKey: API_KEY,
+    dangerouslyAllowBrowser: true,
+  });
+
+  try {
+    const msg = await anthropic.messages.create({
+      model: MODEL,
+      max_tokens: 3500,
+      system: systemPrompt,
+      messages: messages,
+    });
+
+    const role = msg.role;
+
+    const content = msg.content[0].text;
+
+    return {
+      role,
+      content,
+    };
+  } catch (error) {
+    console.error(
+      "Error in fetchAnthropicChatCompletion:",
+      error.message || error.response.data.error?.message
+    );
+    throw error;
+  }
+}
+
+export default fetchAnthropicChatCompletion;
