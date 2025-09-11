@@ -2,6 +2,7 @@ import Conversation from "../models/Conversation.js";
 import wrapAsync from "../utils/wrapAsync.js";
 import fetchOpenAiChatCompletion from "../services/fetchOpenAiChatCompletion.js";
 import generateConversationTitle from "../utils/generateConversationTitle.js";
+import { getApiKey } from "./userController.js";
 
 // Build context from existing messages
 const toContext = (messages) => {
@@ -28,7 +29,7 @@ export const getConversation = wrapAsync(async (req, res) => {
 });
 
 export const addMessage = wrapAsync(async (req, res) => {
-  const { role, content, provider, currentId: id } = req.body;
+  const { role, content, provider, currentId: id, userId } = req.body;
   if (!role || !content)
     return res.status(400).json({ error: "Role and content required" });
 
@@ -47,16 +48,14 @@ export const addMessage = wrapAsync(async (req, res) => {
 
   // Fetch response from provider
   const fetchers = {
-    openAi: {
-      fetcher: fetchOpenAiChatCompletion,
-      apiKey: process.env.OPENAI_API_KEY,
-    },
+    openAi: fetchOpenAiChatCompletion,
     // anthropic: fetchAnthropicChatCompletion,
     // mistral: fetchMistralChatCompletion,
   };
 
-  // const {fetcher, apiKey} = fetchers[provider];
-  const { fetcher, apiKey } = fetchers["openAi"];
+  const apiKey = await getApiKey(userId, provider);
+
+  const fetcher = fetchers[provider];
 
   if (!fetcher) {
     throw new Error("Unsupported chat completion provider: " + provider);

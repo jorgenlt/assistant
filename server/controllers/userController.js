@@ -23,7 +23,7 @@ export const getUser = async (req, res) => {
 };
 
 export const addApiKey = async (req, res) => {
-  console.log("hello from addApiKey")
+  console.log("hello from addApiKey");
   try {
     const { id } = req.params;
     const { provider, key } = req.body;
@@ -54,8 +54,26 @@ export const addApiKey = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    res.status(200).json({ message: `API key for ${provider} encrypted and saved in the database.` });
+    res.status(200).json({
+      message: `API key for ${provider} encrypted and saved in the database.`,
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+export const getApiKey = async (userId, provider) => {
+  try {
+    if (!userId || !provider) {
+      throw new Error("userId or provider is invalid");
+    }
+
+    const user = await User.findById(userId);
+    const key = user.apiKeys[provider];
+    const decryptedKey = decryptKey(key);
+
+    return decryptedKey;
+  } catch (error) {
+    throw new Error(error.message);
   }
 };
