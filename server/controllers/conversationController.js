@@ -28,6 +28,38 @@ export const getConversation = wrapAsync(async (req, res) => {
   res.json(convo);
 });
 
+// Get all conversations for the authenticated user
+export const getConversationsForUser = wrapAsync(async (req, res) => {
+  const { userId } = req.query;
+
+  if (!userId) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+
+  const conversations = await Conversation.find({ userId }).lean();
+
+  res.json({ conversations });
+});
+
+export const deleteConversation = wrapAsync(async (req, res) => {
+  const { id } = req.params;
+  const { userId } = req.body;
+  console.log(req.params)
+  console.log(req.body)
+  if (!userId) {
+    return res.status(400).json({ error: "userId is required" });
+  }
+
+  const result = await Conversation.deleteOne({ _id: id, userId });
+
+  if (result.deletedCount === 0) {
+    // Not found or not owned by this user
+    return res.status(404).json({ error: "Not found or not authorized" });
+  }
+
+  res.status(200).json({ id });
+});
+
 export const addMessage = wrapAsync(async (req, res) => {
   const { role, content, provider, currentId: id, userId } = req.body;
   if (!role || !content)
@@ -102,17 +134,4 @@ export const generateTitle = wrapAsync(async (req, res) => {
   ).lean();
 
   res.json(updated);
-});
-
-// Get all conversations for the authenticated user
-export const getConversationsForUser = wrapAsync(async (req, res) => {
-  const { userId } = req.query;
-
-  if (!userId) {
-    return res.status(401).json({ error: "Unauthorized" });
-  }
-
-  const conversations = await Conversation.find({ userId }).lean();
-
-  res.json({ conversations });
 });

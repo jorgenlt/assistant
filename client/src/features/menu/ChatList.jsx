@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { updateCurrentId, deleteConversation } from "../chat/chatSlice";
+import { updateCurrentId, deleteConversationThunk } from "../chat/chatSlice";
 import { useMemo } from "react";
 import ListItem from "./components/ListItem";
 
@@ -30,7 +30,7 @@ function ChatList() {
     });
 
     const handleDeleteConversation = (id) => {
-      dispatch(deleteConversation(id));
+      dispatch(deleteConversationThunk(id));
     };
 
     return sorted.map((conv) => {

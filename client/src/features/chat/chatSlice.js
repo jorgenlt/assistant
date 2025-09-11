@@ -85,6 +85,28 @@ export const generateConversationTitleThunk = createAsyncThunk(
   }
 );
 
+export const deleteConversationThunk = createAsyncThunk(
+  "chat/deleteConversation",
+  async (id, { getState }) => {
+    const userId = getState().auth.user._id;
+
+    try {
+      const url = `${BASE_API_URL}/conversations/${id}`;
+      const response = await axios.delete(url, {
+        data: { userId },
+      });
+
+      if (response.status === 200) {
+        return id;
+      } else {
+        throw new Error(response);
+      }
+    } catch (error) {
+      throw new Error("Failed to delete conversation", error);
+    }
+  }
+);
+
 // Chat slice of the Redux store
 export const chat = createSlice({
   name: "chat",
@@ -112,19 +134,6 @@ export const chat = createSlice({
           conv.messages.push(message);
         }
       }
-    },
-    deleteConversation: (state, action) => {
-      const id = action.payload;
-      // Filter the conversations array to exclude a specific conversation by id
-      state.conversations = state.conversations.filter(
-        (c) =>
-          // Use the nullish coalescing operator to get either c._id or c.id
-          // If c._id is not null or undefined, use it; otherwise, use c.id
-          (c._id ?? c.id) !== id // Check if the identifier does not match the given id
-        // If they don't match, keep the conversation in the new array
-      );
-
-      if (state.currentId === id) state.currentId = null;
     },
     deleteConversations: (state) => {
       state.conversations = [];
@@ -204,6 +213,23 @@ export const chat = createSlice({
       // Generate title failed
       .addCase(generateConversationTitleThunk.rejected, (state, action) => {
         state.error = action.error.message;
+      })
+      .addCase(deleteConversationThunk.fulfilled, (state, action) => {
+        const id = action.payload;
+
+        // Filter the conversations array to exclude a specific conversation by id
+        state.conversations = state.conversations.filter(
+          (c) =>
+            // Use the nullish coalescing operator to get either c._id or c.id
+            // If c._id is not null or undefined, use it; otherwise, use c.id
+            (c._id ?? c.id) !== id // Check if the identifier does not match the given id
+          // If they don't match, keep the conversation in the new array
+        );
+
+        if (state.currentId === id) state.currentId = null;
+      })
+      .addCase(deleteConversationThunk.rejected, (state, action) => {
+        state.error = action.error.message;
       });
   },
 });
@@ -212,7 +238,6 @@ export const chat = createSlice({
 export const {
   addConversation,
   updateMessages,
-  deleteConversation,
   deleteConversations,
   getTitle,
   updateCurrentId,
