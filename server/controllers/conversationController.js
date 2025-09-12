@@ -78,7 +78,6 @@ export const addMessage = wrapAsync(async (req, res) => {
 
   // Build context from existing messages
   const context = toContext(convo.messages);
-  console.log("🚀 ~ context:", context)
 
   // Fetch response from provider
   const fetchers = {

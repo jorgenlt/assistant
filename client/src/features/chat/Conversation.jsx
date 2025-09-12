@@ -5,6 +5,8 @@ import { PropagateLoader } from "react-spinners"; // loader
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { FaCopy } from "react-icons/fa6";
+import CodeBlock from "./components/CodeBlock";
+import normalizeMarkdown from "../../common/utils/normalizeMarkdown";
 
 const Conversation = () => {
   const { currentId, conversations, error, status } = useSelector(
@@ -25,6 +27,26 @@ const Conversation = () => {
     }
   };
 
+  const parseContent = (content) => {
+    const parts = content.split(/```/);
+    const result = [];
+
+    parts.forEach((part, i) => {
+      if (i % 2 === 1) {
+        // it's a code block
+        const lines = part.split("\n");
+        const lang = lines[0].trim();
+        const code = lines.slice(1).join("\n");
+        result.push({ type: "code", lang, code });
+      } else {
+        // it's normal markdown text
+        result.push({ type: "text", text: part });
+      }
+    });
+
+    return result;
+  };
+
   // Scroll to bottom when messages change
   const scrollRef = useRef();
   useEffect(() => {
@@ -38,6 +60,7 @@ const Conversation = () => {
       <div className="px-2 w-3/5 flex flex-col gap-4">
         {messages?.map((message, i) => {
           const { created, content, role } = message;
+          const blocks = parseContent(content);
 
           const formattedCreated = formatDate(created);
           const formattedPrevMsgCreated = messages[i - 1]?.created
@@ -63,7 +86,22 @@ const Conversation = () => {
                   // Assistant
                   <div className="cursor-default max-w-full">
                     <div className="prose prose-base dark:prose-invert max-w-full">
-                      <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>
+                      {blocks.map((block, i) =>
+                        block.type === "code" ? (
+                          <CodeBlock
+                            key={i}
+                            code={block.code}
+                            lang={block.lang}
+                            onCopy={() => handleCopyToClipboard(block.code)}
+                          />
+                        ) : (
+                          <Markdown key={i} remarkPlugins={[remarkGfm]}>
+                            {block.text}
+                          </Markdown>
+                        )
+                      )}
+
+                      {/* <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown> */}
                     </div>
                     <div
                       onClick={() => handleCopyToClipboard(content)}
@@ -76,7 +114,9 @@ const Conversation = () => {
                   // User
                   <div className="cursor-default bg-[var(--bg-chat-bubble)] rounded-2xl py-2 pl-4 pr-2 rounded-tr-sm max-w-[90%]">
                     <div className="prose prose-base max-w-full text-[var(--text-chat-bubble)]">
-                      <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>
+                      <Markdown remarkPlugins={[remarkGfm]}>
+                        {normalizeMarkdown(content)}
+                      </Markdown>
                     </div>
                   </div>
                 )}
