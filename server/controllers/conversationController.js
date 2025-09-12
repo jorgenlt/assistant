@@ -44,8 +44,7 @@ export const getConversationsForUser = wrapAsync(async (req, res) => {
 export const deleteConversation = wrapAsync(async (req, res) => {
   const { id } = req.params;
   const { userId } = req.body;
-  console.log(req.params)
-  console.log(req.body)
+
   if (!userId) {
     return res.status(400).json({ error: "userId is required" });
   }
