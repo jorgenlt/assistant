@@ -123,9 +123,11 @@ export const updateTitle = wrapAsync(async (req, res) => {
 });
 
 export const generateTitle = wrapAsync(async (req, res) => {
-  const { id, prompt } = req.body;
+  const { id, prompt, userId } = req.body;
 
-  const generatedTitle = await generateConversationTitle(prompt);
+  const apiKey = await getApiKey(userId, "openAi");
+
+  const generatedTitle = await generateConversationTitle(prompt, apiKey);
 
   const updated = await Conversation.findByIdAndUpdate(
     id,

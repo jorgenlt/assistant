@@ -1,7 +1,6 @@
 import OpenAI from "openai";
 
-async function generateConversationTitle(prompt) {
-  const apiKey = process.env.OPENAI_API_KEY;
+async function generateConversationTitle(prompt, apiKey) {
   const model = "gpt-5-nano";
 
   const client = new OpenAI({

@@ -71,9 +71,10 @@ export const generateConversationTitleThunk = createAsyncThunk(
   "chat/generateTitle",
   async (prompt, { getState }) => {
     const id = getState().chat.currentId;
+    const userId = getState().auth.user._id;
 
     try {
-      const title = await generateConversationTitle(id, prompt);
+      const title = await generateConversationTitle(id, prompt, userId);
 
       return { id, title };
     } catch (error) {
