@@ -33,6 +33,10 @@ input:focus {
   outline: none;
 }
 
+p {
+  margin: 0;
+}
+
 /* THEMES */
 /* Base (light/default) theme */
 :root {

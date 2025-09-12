@@ -57,7 +57,7 @@ const Conversation = () => {
 
   return (
     <div ref={scrollRef} className="flex justify-center flex-1 overflow-y-auto">
-      <div className="px-2 w-3/5 flex flex-col gap-4">
+      <div className="px-2 w-3/5 flex flex-col">
         {messages?.map((message, i) => {
           const { created, content, role } = message;
           const blocks = parseContent(content);
@@ -71,14 +71,14 @@ const Conversation = () => {
             <div key={i}>
               {/* Date separator */}
               {formattedCreated !== formattedPrevMsgCreated && (
-                <div className="w-full text-center my-6">
+                <div className="w-full text-center mt-20 mb-10">
                   <span className="text-gray-400">{formattedCreated}</span>
                 </div>
               )}
 
-              {/* Message bubble */}
+              {/* Message */}
               <div
-                className={`flex my-1 ${
+                className={`flex mb-20 ${
                   role === "assistant" ? "justify-start" : "justify-end"
                 }`}
               >
@@ -100,8 +100,6 @@ const Conversation = () => {
                           </Markdown>
                         )
                       )}
-
-                      {/* <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown> */}
                     </div>
                     <div
                       onClick={() => handleCopyToClipboard(content)}
@@ -112,11 +110,21 @@ const Conversation = () => {
                   </div>
                 ) : (
                   // User
-                  <div className="cursor-default bg-[var(--bg-chat-bubble)] rounded-2xl py-2 pl-4 pr-2 rounded-tr-sm max-w-[90%]">
-                    <div className="prose prose-base max-w-full text-[var(--text-chat-bubble)]">
-                      <Markdown remarkPlugins={[remarkGfm]}>
-                        {normalizeMarkdown(content)}
-                      </Markdown>
+                  <div className="group cursor-default max-w-[90%]">
+                    <div className="bg-[var(--bg-chat-bubble)] rounded-2xl py-2 pl-4 pr-2 rounded-tr-sm">
+                      <div className="prose prose-base max-w-full text-[var(--text-chat-bubble)]">
+                        <Markdown remarkPlugins={[remarkGfm]}>
+                          {normalizeMarkdown(content)}
+                        </Markdown>
+                      </div>
+                    </div>
+                    <div className="w-full flex justify-end mt-3">
+                      <button
+                        onClick={() => handleCopyToClipboard(content)}
+                        className="active:scale-90 p-1.5 px-2 py-2 cursor-pointer w-fit rounded-xl hover:bg-[var(--hover)] hover:text-[var(--text-hover)] opacity-0 group-hover:opacity-100 transition"
+                      >
+                        <FaCopy size={16} />
+                      </button>
                     </div>
                   </div>
                 )}
