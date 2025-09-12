@@ -137,7 +137,9 @@ export default function Dropdown() {
               value={apiKey}
               onChange={(e) => setApiKey(e.target.value)}
               placeholder={
-                activeProvider.key ? activeProvider.key : "Enter your API key"
+                activeProvider.key
+                  ? "The key is stored in the database. To update it, save again."
+                  : "Enter your API key"
               }
               className="w-full rounded-xl px-3 py-2 text-sm outline-none bg-[var(--bg3)] text-[var(--text)]"
               required
