@@ -1,6 +1,8 @@
 import Conversation from "../models/Conversation.js";
 import wrapAsync from "../utils/wrapAsync.js";
 import fetchOpenAiChatCompletion from "../services/fetchOpenAiChatCompletion.js";
+import fetchAnthropicChatCompletion from "../services/fetchAnthropicChatCompletion.js";
+import fetchMistralChatCompletion from "../services/fetchMistralChatCompletion.js";
 import generateConversationTitle from "../utils/generateConversationTitle.js";
 import { getApiKey } from "./userController.js";
 
@@ -60,7 +62,7 @@ export const deleteConversation = wrapAsync(async (req, res) => {
 });
 
 export const addMessage = wrapAsync(async (req, res) => {
-  const { role, content, provider, currentId: id, userId } = req.body;
+  const { role, content, provider, model, currentId: id, userId } = req.body;
   if (!role || !content)
     return res.status(400).json({ error: "Role and content required" });
 
@@ -76,12 +78,13 @@ export const addMessage = wrapAsync(async (req, res) => {
 
   // Build context from existing messages
   const context = toContext(convo.messages);
+  console.log("🚀 ~ context:", context)
 
   // Fetch response from provider
   const fetchers = {
     openAi: fetchOpenAiChatCompletion,
-    // anthropic: fetchAnthropicChatCompletion,
-    // mistral: fetchMistralChatCompletion,
+    anthropic: fetchAnthropicChatCompletion,
+    mistral: fetchMistralChatCompletion,
   };
 
   const apiKey = await getApiKey(userId, provider);
@@ -95,7 +98,7 @@ export const addMessage = wrapAsync(async (req, res) => {
     throw new Error("API key missing: " + provider);
   }
 
-  const response = await fetcher(context, content, apiKey);
+  const response = await fetcher(context, apiKey, model);
 
   // Save assistant's reply
   await Conversation.findByIdAndUpdate(

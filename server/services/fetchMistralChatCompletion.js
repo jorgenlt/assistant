@@ -1,7 +1,7 @@
-import OpenAI from "openai";
+import { Mistral } from "@mistralai/mistralai";
 import systemPrompt from "./systemPrompt.js";
 
-const fetchOpenAiChatCompletion = async (context, apiKey, model) => {
+const fetchMistralChatCompletion = async (context, apiKey, model) => {
   try {
     const systemMessage = {
       role: "system",
@@ -10,16 +10,19 @@ const fetchOpenAiChatCompletion = async (context, apiKey, model) => {
 
     const messages = [systemMessage, ...context];
 
-    const client = new OpenAI({ apiKey, dangerouslyAllowBrowser: false });
+    const client = new Mistral({ apiKey });
 
-    const response = await client.chat.completions.create({
+    const response = await client.chat.complete({
       model,
       messages,
     });
 
-    const { role, content } = response.choices[0].message;
+    const { content, role } = response.choices[0].message;
 
-    return { role, content };
+    return {
+      role,
+      content,
+    };
   } catch (error) {
     console.error(
       "Error in fetchMistralChatCompletion:",
@@ -29,4 +32,4 @@ const fetchOpenAiChatCompletion = async (context, apiKey, model) => {
   }
 };
 
-export default fetchOpenAiChatCompletion;
+export default fetchMistralChatCompletion;

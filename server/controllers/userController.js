@@ -74,6 +74,6 @@ export const getApiKey = async (userId, provider) => {
 
     return decryptedKey;
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(`Cannot get API key for ${provider}.`, error.message);
   }
 };
