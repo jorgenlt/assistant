@@ -25,7 +25,7 @@ app.use(cors(corsOptions));
 // Defining routes
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
-app.use("/conversations", conversationRoutes)
+app.use("/conversations", conversationRoutes);
 
 // Default Route Handler
 app.use((req, res, next) => {
