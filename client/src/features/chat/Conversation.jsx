@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, memo } from "react";
 import { useSelector } from "react-redux";
 import {
   selectCurrentConversation,
@@ -7,7 +7,7 @@ import {
 } from "./chatSelectors.js";
 import { formatDate } from "../../common/utils/formatDate.js";
 import { PropagateLoader } from "react-spinners";
-import AssistantMessage from "./components/AssistantMessag.jsx";
+import AssistantMessage from "./components/AssistantMessage.jsx";
 import UserMessage from "./components/UserMessage.jsx";
 
 const Conversation = () => {
@@ -84,4 +84,4 @@ const Conversation = () => {
   );
 };
 
-export default Conversation;
+export default memo(Conversation);

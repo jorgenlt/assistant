@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, memo } from "react";
 import copyToClipboard from "../../../common/utils/copyToClipboard";
 import parseContent from "../utils/parseContent";
 import CodeBlock from "./CodeBlock";
@@ -39,4 +39,4 @@ const AssistantMessage = ({ content }) => {
   );
 };
 
-export default AssistantMessage;
+export default memo(AssistantMessage);

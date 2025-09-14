@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, memo } from "react";
 import copyToClipboard from "../../../common/utils/copyToClipboard";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -29,4 +29,4 @@ const UserMessage = ({ content }) => {
   );
 };
 
-export default UserMessage;
+export default memo(UserMessage);
