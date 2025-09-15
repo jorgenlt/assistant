@@ -3,7 +3,7 @@ import { updateCurrentId, deleteConversationThunk } from "../chat/chatSlice";
 import { useMemo } from "react";
 import ListItem from "./components/ListItem";
 
-function ChatList() {
+const ConversationsList = () => {
   const conversations = useSelector((state) => state.chat.conversations);
 
   const dispatch = useDispatch();
@@ -55,6 +55,6 @@ function ChatList() {
       {conversationElements}
     </div>
   );
-}
+};
 
-export default ChatList;
+export default ConversationsList;
