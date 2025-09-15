@@ -1,5 +1,4 @@
 import Conversation from "../models/Conversation.js";
-import wrapAsync from "../utils/wrapAsync.js";
 import fetchOpenAiChatCompletion from "../services/fetchOpenAiChatCompletion.js";
 import fetchAnthropicChatCompletion from "../services/fetchAnthropicChatCompletion.js";
 import fetchMistralChatCompletion from "../services/fetchMistralChatCompletion.js";
@@ -11,130 +10,155 @@ const toContext = (messages) => {
   return messages.map((m) => ({ role: m.role, content: m.content }));
 };
 
-export const createConversation = wrapAsync(async (req, res) => {
-  const { userId } = req.body;
+export const createConversation = async (req, res) => {
+  try {
+    const { userId } = req.body;
 
-  if (!userId) return res.status(400).json({ error: "userId is required" });
+    if (!userId) return res.status(400).json({ error: "userId is required" });
 
-  const convo = await new Conversation({ userId }).save();
+    const conversation = await new Conversation({ userId }).save();
 
-  res.status(201).json(convo);
-});
-
-export const getConversation = wrapAsync(async (req, res) => {
-  const { id } = req.params;
-  const convo = await Conversation.findById(id).lean();
-
-  if (!convo) return res.status(404).json({ error: "Not found" });
-
-  res.json(convo);
-});
-
-// Get all conversations for the authenticated user
-export const getConversationsForUser = wrapAsync(async (req, res) => {
-  const { userId } = req.query;
-
-  if (!userId) {
-    return res.status(401).json({ error: "Unauthorized" });
+    res.status(201).json(conversation);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
+};
 
-  const conversations = await Conversation.find({ userId }).lean();
+export const getConversation = async (req, res) => {
+  try {
+    const { id } = req.params;
 
-  res.json({ conversations });
-});
+    const conversation = await Conversation.findById(id).lean();
 
-export const deleteConversation = wrapAsync(async (req, res) => {
-  const { id } = req.params;
-  const { userId } = req.body;
+    if (!conversation) return res.status(404).json({ error: "Not found" });
 
-  if (!userId) {
-    return res.status(400).json({ error: "userId is required" });
+    res.json(conversation);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
+};
 
-  const result = await Conversation.deleteOne({ _id: id, userId });
+export const getConversationsForUser = async (req, res) => {
+  try {
+    const { userId } = req.query;
 
-  if (result.deletedCount === 0) {
-    // Not found or not owned by this user
-    return res.status(404).json({ error: "Not found or not authorized" });
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const conversations = await Conversation.find({ userId }).lean();
+
+    res.json({ conversations });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
+};
 
-  res.status(200).json({ id });
-});
+export const deleteConversation = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { userId } = req.body;
 
-export const addMessage = wrapAsync(async (req, res) => {
-  const { role, content, provider, model, currentId: id, userId } = req.body;
-  if (!role || !content)
-    return res.status(400).json({ error: "Role and content required" });
+    if (!userId) {
+      return res.status(400).json({ error: "userId is required" });
+    }
 
-  // Push user message and update last activity
-  const convo = await Conversation.findByIdAndUpdate(
-    id,
-    {
-      $push: { messages: { role, content, created: new Date() } },
-      lastMessageAt: new Date(),
-    },
-    { new: true }
-  ).lean();
+    const result = await Conversation.deleteOne({ _id: id, userId });
 
-  // Build context from existing messages
-  const context = toContext(convo.messages);
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ error: "Not found or not authorized" });
+    }
 
-  // Fetch response from provider
-  const fetchers = {
-    openAi: fetchOpenAiChatCompletion,
-    anthropic: fetchAnthropicChatCompletion,
-    mistral: fetchMistralChatCompletion,
-  };
-
-  const apiKey = await getApiKey(userId, provider);
-
-  const fetcher = fetchers[provider];
-
-  if (!fetcher) {
-    throw new Error("Unsupported chat completion provider: " + provider);
+    res.status(200).json({ id });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
-  if (!apiKey) {
-    throw new Error("API key missing: " + provider);
+};
+
+export const addMessage = async (req, res) => {
+  try {
+    const { role, content, provider, model, currentId: id, userId } = req.body;
+
+    if (!role || !content)
+      return res.status(400).json({ error: "Role and content required" });
+
+    // Push user message and update last activity
+    const convo = await Conversation.findByIdAndUpdate(
+      id,
+      {
+        $push: { messages: { role, content, created: new Date() } },
+        lastMessageAt: new Date(),
+      },
+      { new: true }
+    ).lean();
+
+    // Build context from existing messages
+    const context = toContext(convo.messages);
+
+    // Fetch response from provider
+    const fetchers = {
+      openAi: fetchOpenAiChatCompletion,
+      anthropic: fetchAnthropicChatCompletion,
+      mistral: fetchMistralChatCompletion,
+    };
+
+    const apiKey = await getApiKey(userId, provider);
+
+    const fetcher = fetchers[provider];
+
+    if (!fetcher) {
+      throw new Error("Unsupported chat completion provider: " + provider);
+    }
+
+    if (!apiKey) {
+      throw new Error("API key missing: " + provider);
+    }
+
+    const response = await fetcher(context, apiKey, model);
+
+    // Save assistant's reply
+    await Conversation.findByIdAndUpdate(
+      id,
+      { $push: { messages: { ...response, created: new Date() } } },
+      { new: true }
+    );
+
+    res.json({ response });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
+};
 
-  const response = await fetcher(context, apiKey, model);
+export const generateTitle = async (req, res) => {
+  try {
+    const { id, prompt, userId } = req.body;
 
-  // Save assistant's reply
-  await Conversation.findByIdAndUpdate(
-    id,
-    { $push: { messages: { ...response, created: new Date() } } },
-    { new: true }
-  );
+    if (!id || !prompt || !userId) {
+      return res
+        .status(400)
+        .json({ error: "ID, prompt, and userId are required" });
+    }
 
-  res.json({ response });
-});
+    const apiKey = await getApiKey(userId, "openAi");
 
-export const updateTitle = wrapAsync(async (req, res) => {
-  const { id } = req.params;
-  const { title } = req.body;
+    if (!apiKey) {
+      throw new Error("API key missing for user: " + userId);
+    }
 
-  const convo = await Conversation.findByIdAndUpdate(
-    id,
-    { title },
-    { new: true }
-  ).lean();
-  if (!convo) return res.status(404).json({ error: "Not found" });
+    const generatedTitle = await generateConversationTitle(prompt, apiKey);
 
-  res.json(convo);
-});
+    const updated = await Conversation.findByIdAndUpdate(
+      id,
+      { title: generatedTitle },
+      { new: true }
+    ).lean();
 
-export const generateTitle = wrapAsync(async (req, res) => {
-  const { id, prompt, userId } = req.body;
+    if (!updated) {
+      return res.status(404).json({ error: "Conversation not found" });
+    }
 
-  const apiKey = await getApiKey(userId, "openAi");
-
-  const generatedTitle = await generateConversationTitle(prompt, apiKey);
-
-  const updated = await Conversation.findByIdAndUpdate(
-    id,
-    { title: generatedTitle },
-    { new: true }
-  ).lean();
-
-  res.json(updated);
-});
+    res.json(updated);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
