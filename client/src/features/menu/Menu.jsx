@@ -5,11 +5,11 @@ import { toggleTheme } from "./menuSlice.js";
 import { setLogout } from "../auth/authSlice.js";
 import { FaPenToSquare, FaGear, FaMoon } from "react-icons/fa6";
 import MenuHeader from "./MenuHeader.jsx";
-import ChatList from "./ChatList.jsx";
+import ConversationsList from "./ConversationsList.jsx";
 import SidebarItem from "./components/SidebarItem.jsx";
 import Modal from "../../components/Modal.jsx";
 
-function Menu() {
+const Menu = () => {
   const theme = useSelector((state) => state.menu.theme);
   const [isThemeHover, setIsThemeHover] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,8 +26,10 @@ function Menu() {
 
   return (
     <div className="py-2 flex flex-col w-1/5 bg-[var(--bg1)]">
+      {/* Header */}
       <MenuHeader action={handleResetId} />
 
+      {/* Sidebar */}
       <div className="mb-4">
         <SidebarItem
           action={handleResetId}
@@ -36,13 +38,14 @@ function Menu() {
         />
       </div>
 
-      {/* Chats */}
+      {/* Conversations list */}
       <div className="chat-list flex flex-col h-[calc(100vh-12rem)]">
         <div className="flex-1 overflow-y-auto border-t border-b border-[#83838326]">
-          <ChatList />
+          <ConversationsList />
         </div>
       </div>
 
+      {/* Theme selector */}
       <div
         onMouseEnter={() => setIsThemeHover(true)}
         onMouseLeave={() => setIsThemeHover(false)}
@@ -53,12 +56,15 @@ function Menu() {
           Icon={FaMoon}
         />
       </div>
+
+      {/* Settings */}
       <SidebarItem
         action={() => setIsModalOpen(true)}
         title="Settings"
         Icon={FaGear}
       />
 
+      {/* Settings modal */}
       <Modal
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -72,6 +78,6 @@ function Menu() {
       </Modal>
     </div>
   );
-}
+};
 
 export default Menu;

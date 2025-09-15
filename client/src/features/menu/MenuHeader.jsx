@@ -1,6 +1,6 @@
 import { FaWorm, FaAnglesLeft } from "react-icons/fa6";
 
-function MenuHeader({ action }) {
+const MenuHeader = ({ action }) => {
   return (
     <div className="mb-4 flex justify-between">
       <div
