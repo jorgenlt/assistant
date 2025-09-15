@@ -8,7 +8,7 @@ import {
 import axios from "axios";
 import { BASE_API_URL } from "../../../app/config";
 import { FaChevronDown, FaCheck, FaGear } from "react-icons/fa6";
-import Modal from "../../../components/Modal";
+import DropdownModal from "./DropdownModal";
 
 const Dropdown = () => {
   const { current, openAi, anthropic, mistral } = useSelector(
@@ -18,7 +18,6 @@ const Dropdown = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [activeProvider, setActiveProvider] = useState(null); // null means no modal
-  const [apiKey, setApiKey] = useState("");
 
   const providers = [openAi, anthropic, mistral];
 
@@ -29,14 +28,14 @@ const Dropdown = () => {
     dispatch(setModel({ provider, model }));
   };
 
-  const addKey = async () => {
+  const addKey = async (key) => {
     try {
       const { provider } = activeProvider;
 
       const url = `${BASE_API_URL}/users/${userId}/apikeys`;
       const response = await axios.patch(url, {
         provider,
-        key: apiKey,
+        key,
       });
 
       if (response.status === 200) {
@@ -47,12 +46,11 @@ const Dropdown = () => {
     }
   };
 
-  const handleAddKey = () => {
-    addKey();
+  const handleAddKey = (key) => {
+    addKey(key);
 
     dispatch(setKeyStatus({ provider: activeProvider.provider, status: true }));
 
-    setApiKey("");
     setActiveProvider(null);
   };
 
@@ -125,40 +123,15 @@ const Dropdown = () => {
 
       {/* Modal */}
       {activeProvider && (
-        <Modal
+        <DropdownModal
           open={activeProvider}
           onClose={() => setActiveProvider(null)}
-          title={`Set API key for ${activeProvider.name}`}
-        >
-          <form className="space-y-4">
-            <input
-              type="text"
-              value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
-              placeholder={
-                activeProvider.key
-                  ? "The key is stored in the database. To update it, save again."
-                  : "Enter your API key"
-              }
-              className="w-full rounded-xl px-3 py-2 text-sm outline-none bg-[var(--bg3)] text-[var(--text)]"
-              required
-            />
-            <div className="flex justify-end gap-2">
-              <div
-                onClick={() => setActiveProvider(null)}
-                className="cursor-pointer rounded-xl px-4 py-2 text-sm hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
-              >
-                Cancel
-              </div>
-              <div
-                onClick={handleAddKey}
-                className="cursor-pointer rounded-xl px-4 py-2 text-sm bg-[var(--bg2)] hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
-              >
-                Save
-              </div>
-            </div>
-          </form>
-        </Modal>
+          providerName={activeProvider.name}
+          providerPricingLink={activeProvider.pricingLink}
+          providerApiLink={activeProvider.getApiLink}
+          handleAddKey={handleAddKey}
+          hasKey={activeProvider.key}
+        />
       )}
     </div>
   );
