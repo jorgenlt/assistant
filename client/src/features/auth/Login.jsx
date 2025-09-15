@@ -171,17 +171,17 @@ const Login = () => {
           </button>
         </form>
 
-        <p className="text-sm text-center mt-4">
+        <div className="text-sm text-center mt-4">
           <button
             type="button"
             onClick={toggleScreen}
-            className="cursor-pointer hover:underline mt-2"
+            className="cursor-pointer hover:underline"
           >
             {isSignup
               ? "Already have an account? Sign in"
               : "Don't have an account? Click here to sign up"}
           </button>
-        </p>
+        </div>
       </div>
     </div>
   );
