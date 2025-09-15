@@ -5,20 +5,46 @@ import { BASE_API_URL } from "../../../app/config";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
-const DropdownModal = ({
-  open,
-  onClose,
-  provider,
-  providerName,
-  providerPricingLink,
-  providerApiLink,
-  handleAddKey,
-}) => {
+const DropdownModal = ({ open, onClose, activeProvider }) => {
   const { token, user } = useSelector((state) => state.auth);
+
   const userId = user._id;
+
+  const { provider, providerName, providerPricingLink, providerApiLink } =
+    activeProvider;
 
   const [apiKey, setApiKey] = useState("");
   const [apiKeyExists, setApiKeyExists] = useState(false);
+
+  const addKey = async (provider, key, token) => {
+    try {
+      const url = `${BASE_API_URL}/users/${userId}/apikeys`;
+      const response = await axios.patch(
+        url,
+        { provider, key },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        console.error(`Unexpected response status: ${response.status}`);
+        return null;
+      }
+    } catch (error) {
+      console.error("An error occurred:", error.message);
+    }
+  };
+
+  const handleAddKey = () => {
+    addKey(provider, apiKey, token);
+
+    onClose();
+  };
 
   const hasApiKey = async (userId, token, provider) => {
     try {
@@ -67,7 +93,7 @@ const DropdownModal = ({
             Cancel
           </div>
           <div
-            onClick={() => handleAddKey(apiKey)}
+            onClick={handleAddKey}
             className="cursor-pointer rounded-xl px-4 py-2 text-sm bg-[var(--bg2)] hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
           >
             Save

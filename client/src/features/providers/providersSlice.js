@@ -6,16 +6,14 @@ const initialState = {
   openAi: {
     name: "OpenAI",
     provider: "openAi",
-    key: false,
     model: "gpt-5-nano",
     models: ["gpt-5", "gpt-5-mini", "gpt-5-nano"],
     pricingLink: "https://openai.com/api/pricing/",
-    getApiLink: "https://auth.openai.com/create-account"
+    getApiLink: "https://auth.openai.com/create-account",
   },
   anthropic: {
     name: "Anthropic",
     provider: "anthropic",
-    key: false,
     model: "claude-3-7-sonnet-20250219",
     models: [
       "claude-3-5-haiku-20241022",
@@ -23,16 +21,15 @@ const initialState = {
       "claude-opus-4-1-20250805",
     ],
     pricingLink: "https://www.anthropic.com/pricing#api",
-    getApiLink: "https://docs.anthropic.com/en/docs/get-started"
+    getApiLink: "https://docs.anthropic.com/en/docs/get-started",
   },
   mistral: {
     name: "Mistral",
     provider: "mistral",
-    key: false,
     model: "mistral-small-latest",
     models: ["mistral-small-latest", "mistral-large-latest"],
     pricingLink: "https://mistral.ai/pricing#api-pricing",
-    getApiLink: "https://console.mistral.ai"
+    getApiLink: "https://console.mistral.ai",
   },
 };
 
@@ -43,10 +40,6 @@ export const providers = createSlice({
     deleteKey: (state, action) => {
       const { provider } = action.payload;
       state[provider].key = null;
-    },
-    setKeyStatus: (state, action) => {
-      const { provider, status } = action.payload;
-      state[provider].key = status;
     },
     setProvider: (state, action) => {
       const { provider } = action.payload;
@@ -81,7 +74,7 @@ export const providers = createSlice({
   },
 });
 
-export const { deleteKey, setKeyStatus, setProvider, resetProviderSlice, setModel } =
+export const { deleteKey, setProvider, resetProviderSlice, setModel } =
   providers.actions;
 
 export default providers.reducer;

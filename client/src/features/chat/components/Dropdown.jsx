@@ -1,12 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setModel,
-  setProvider,
-  setKeyStatus,
-} from "../../providers/providersSlice";
-import axios from "axios";
-import { BASE_API_URL } from "../../../app/config";
+import { setModel, setProvider } from "../../providers/providersSlice";
 import { FaChevronDown, FaCheck, FaGear } from "react-icons/fa6";
 import DropdownModal from "./DropdownModal";
 
@@ -14,7 +8,6 @@ const Dropdown = () => {
   const { current, openAi, anthropic, mistral } = useSelector(
     (state) => state.providers
   );
-  const userId = useSelector((state) => state.auth.user._id);
 
   const [isOpen, setIsOpen] = useState(false);
   const [activeProvider, setActiveProvider] = useState(null); // null means no modal
@@ -26,32 +19,6 @@ const Dropdown = () => {
   const handleSetModel = (provider, model) => {
     dispatch(setProvider({ provider }));
     dispatch(setModel({ provider, model }));
-  };
-
-  const addKey = async (key) => {
-    try {
-      const { provider } = activeProvider;
-
-      const url = `${BASE_API_URL}/users/${userId}/apikeys`;
-      const response = await axios.patch(url, {
-        provider,
-        key,
-      });
-
-      if (response.status === 200) {
-        return response.data;
-      }
-    } catch (error) {
-      console.error("An error occurred:", error.message);
-    }
-  };
-
-  const handleAddKey = (key) => {
-    addKey(key);
-
-    dispatch(setKeyStatus({ provider: activeProvider.provider, status: true }));
-
-    setActiveProvider(null);
   };
 
   const dropdownRef = useRef(null);
@@ -126,12 +93,7 @@ const Dropdown = () => {
         <DropdownModal
           open={activeProvider}
           onClose={() => setActiveProvider(null)}
-          provider={activeProvider.provider}
-          providerName={activeProvider.name}
-          providerPricingLink={activeProvider.pricingLink}
-          providerApiLink={activeProvider.getApiLink}
-          handleAddKey={handleAddKey}
-          
+          activeProvider={activeProvider}
         />
       )}
     </div>
