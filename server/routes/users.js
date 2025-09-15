@@ -1,5 +1,5 @@
 import express from "express";
-import { getUser, addApiKey } from "../controllers/userController.js";
+import { getUser, addApiKey, hasApiKey } from "../controllers/userController.js";
 
 // Importing verifyToken middleware function from auth middleware
 import { verifyToken } from "../middleware/auth.js";
@@ -12,6 +12,7 @@ const router = express.Router();
 // If authentication passes, the getUser function is executed to fetch specific user details
 router.get("/:id", verifyToken, getUser);
 router.patch("/:id/apikeys/", addApiKey);
+router.get("/:id/apikeys/exists", verifyToken, hasApiKey);
 
 // Exporting the router object so it can be used by other modules
 export default router;

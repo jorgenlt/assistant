@@ -23,7 +23,6 @@ export const getUser = async (req, res) => {
 };
 
 export const addApiKey = async (req, res) => {
-  console.log("hello from addApiKey");
   try {
     const { id } = req.params;
     const { provider, key } = req.body;
@@ -75,5 +74,24 @@ export const getApiKey = async (userId, provider) => {
     return decryptedKey;
   } catch (error) {
     throw new Error(`Cannot get API key for ${provider}.`, error.message);
+  }
+};
+
+export const hasApiKey = async (req, res) => {
+  const { id } = req.params;
+  const provider = req.header("provider");
+
+  try {
+    if (!id) {
+      throw new Error("id is invalid");
+    }
+
+    const user = await User.findById(id);
+
+    const result = Boolean(user.apiKeys[provider]);
+
+    res.status(200).json(result);
+  } catch (error) {
+    throw new Error(`Cannot check API key for ${provider}.`, error.message);
   }
 };

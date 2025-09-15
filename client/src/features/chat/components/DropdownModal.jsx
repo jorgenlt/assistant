@@ -1,17 +1,44 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Modal from "../../../components/Modal";
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
+import { BASE_API_URL } from "../../../app/config";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 const DropdownModal = ({
   open,
   onClose,
+  provider,
   providerName,
   providerPricingLink,
   providerApiLink,
   handleAddKey,
-  hasKey,
 }) => {
+  const { token, user } = useSelector((state) => state.auth);
+  const userId = user._id;
+
   const [apiKey, setApiKey] = useState("");
+  const [apiKeyExists, setApiKeyExists] = useState(false);
+
+  const hasApiKey = async (userId, token, provider) => {
+    try {
+      const url = `${BASE_API_URL}/users/${userId}/apiKeys/exists`;
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          provider: provider,
+        },
+      });
+
+      if (response) setApiKeyExists(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    hasApiKey(userId, token, provider);
+  }, [provider, token, userId]);
 
   return (
     <Modal
@@ -25,7 +52,7 @@ const DropdownModal = ({
           value={apiKey}
           onChange={(e) => setApiKey(e.target.value)}
           placeholder={
-            hasKey
+            apiKeyExists
               ? "The key is stored in the database. To update it, save again."
               : "Enter your API key"
           }

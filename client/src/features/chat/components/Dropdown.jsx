@@ -126,11 +126,12 @@ const Dropdown = () => {
         <DropdownModal
           open={activeProvider}
           onClose={() => setActiveProvider(null)}
+          provider={activeProvider.provider}
           providerName={activeProvider.name}
           providerPricingLink={activeProvider.pricingLink}
           providerApiLink={activeProvider.getApiLink}
           handleAddKey={handleAddKey}
-          hasKey={activeProvider.key}
+          
         />
       )}
     </div>
