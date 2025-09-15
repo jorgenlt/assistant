@@ -10,26 +10,24 @@ import { BASE_API_URL } from "../../../app/config";
 import { FaChevronDown, FaCheck, FaGear } from "react-icons/fa6";
 import Modal from "../../../components/Modal";
 
-export default function Dropdown() {
+const Dropdown = () => {
   const { current, openAi, anthropic, mistral } = useSelector(
     (state) => state.providers
   );
-
   const userId = useSelector((state) => state.auth.user._id);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [activeProvider, setActiveProvider] = useState(null); // null means no modal
+  const [apiKey, setApiKey] = useState("");
 
   const providers = [openAi, anthropic, mistral];
 
   const dispatch = useDispatch();
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [activeProvider, setActiveProvider] = useState(null); // null means no modal
-
   const handleSetModel = (provider, model) => {
     dispatch(setProvider({ provider }));
     dispatch(setModel({ provider, model }));
   };
-
-  const [apiKey, setApiKey] = useState("");
 
   const addKey = async () => {
     try {
@@ -40,8 +38,6 @@ export default function Dropdown() {
         provider,
         key: apiKey,
       });
-
-      console.log(response.data.message);
 
       if (response.status === 200) {
         return response.data;
@@ -90,6 +86,7 @@ export default function Dropdown() {
       {isOpen && (
         <div className="ml-2 absolute min-w-max *:left-0 origin-top-left divide-y rounded-xl shadow-lg bg-[var(--bg1)]">
           <div className="py-1">
+            {/* Providers */}
             {providers.map((provider) => (
               <div
                 key={provider.name}
@@ -105,6 +102,7 @@ export default function Dropdown() {
                   </div>
                 </div>
 
+                {/* Models */}
                 {provider.models.map((model) => (
                   <div
                     key={model}
@@ -125,6 +123,7 @@ export default function Dropdown() {
         </div>
       )}
 
+      {/* Modal */}
       {activeProvider && (
         <Modal
           open={activeProvider}
@@ -163,4 +162,6 @@ export default function Dropdown() {
       )}
     </div>
   );
-}
+};
+
+export default Dropdown;

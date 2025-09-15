@@ -1,17 +1,20 @@
 import ChatInput from "./ChatInput";
 import { useSelector } from "react-redux";
+import Error from "./components/Error";
+import { selectStatusError } from "./chatSelectors";
 
-function ChatHome() {
-  const error = useSelector((state) => state.chat.error);
-  
+const ChatHome = () => {
+  const { error } = useSelector(selectStatusError);
+
   return (
     <div className="h-full w-full flex flex-col justify-center items-center">
+      {/* Welcome message */}
       <h1 className="text-2xl font-bold mb-4">Welcome to Assistant</h1>
-      {error && (
-        <div>
-          <p className="text-red-500">{error}</p>
-        </div>
-      )}
+
+      {/* Error */}
+      {error && <Error error={error} />}
+
+      {/* Chat input */}
       <div className="w-full text-center bg-[var(--bg)] text-[var(--text)] mb-6">
         <ChatInput />
       </div>

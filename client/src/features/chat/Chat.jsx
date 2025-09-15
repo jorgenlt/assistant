@@ -4,7 +4,7 @@ import ChatInput from "./ChatInput";
 import Conversation from "./Conversation";
 import ChatHome from "./ChatHome";
 
-function Chat() {
+const Chat = () => {
   const currentId = useSelector((state) => state.chat.currentId);
 
   return (

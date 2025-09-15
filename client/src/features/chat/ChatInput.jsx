@@ -10,11 +10,9 @@ import { FaArrowUp, FaPaperclip } from "react-icons/fa6";
 import axios from "axios";
 import { BASE_API_URL } from "../../app/config.js";
 
-function ChatInput() {
+const ChatInput = () => {
   const { name, model } = useSelector((state) => state.providers.current);
-
   const currentId = useSelector((state) => state.chat.currentId);
-
   const userId = useSelector((state) => state.auth.user._id);
 
   const [prompt, setPrompt] = useState("");
@@ -48,7 +46,7 @@ function ChatInput() {
 
   const handleKeyDown = (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
-      e.preventDefault(); // prevents newline in textarea
+      e.preventDefault();
       handleSendPrompt();
       return;
     }
@@ -105,6 +103,6 @@ function ChatInput() {
       </div>
     </div>
   );
-}
+};
 
 export default ChatInput;

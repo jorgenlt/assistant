@@ -6,12 +6,13 @@ import {
   selectStatusError,
 } from "./chatSelectors.js";
 import { formatDate } from "../../common/utils/formatDate.js";
-import { PropagateLoader } from "react-spinners";
 import AssistantMessage from "./components/AssistantMessage.jsx";
 import UserMessage from "./components/UserMessage.jsx";
+import ConversationLoader from "./components/ConversationLoader.jsx";
+import ConversationDate from "./components/ConversationDate.jsx";
+import Error from "./components/Error.jsx";
 
 const Conversation = () => {
-  const isThemeDark = useSelector((state) => state.menu.isThemeDark);
   const { error, status } = useSelector(selectStatusError);
   const conversation = useSelector(selectCurrentConversation);
   const messages = useSelector(selectCurrentConversationMessages);
@@ -39,9 +40,7 @@ const Conversation = () => {
             <div key={i}>
               {/* Date separator */}
               {formattedCreated !== formattedPrevMsgCreated && (
-                <div className="w-full text-center mt-20 mb-10">
-                  <span className="text-gray-400">{formattedCreated}</span>
-                </div>
+                <ConversationDate created={formattedCreated} />
               )}
 
               {/* Message */}
@@ -51,34 +50,20 @@ const Conversation = () => {
                 }`}
               >
                 {role === "assistant" ? (
-                  // Assistant
                   <AssistantMessage content={content} />
                 ) : (
-                  // User
                   <UserMessage content={content} />
                 )}
               </div>
 
-              {error && (
-                <div>
-                  <p className="text-red-500">{error}</p>
-                </div>
-              )}
+              {/* Error */}
+              {error && <Error error={error} />}
             </div>
           );
         })}
 
         {/* Loading state */}
-        {status === "loading" && (
-          <div className="flex justify-center align-start pb-10">
-            <div className="p-3">
-              <PropagateLoader
-                size={12}
-                color={isThemeDark ? "#fafafa" : "#121416"}
-              />
-            </div>
-          </div>
-        )}
+        {status === "loading" && <ConversationLoader />}
       </div>
     </div>
   );
