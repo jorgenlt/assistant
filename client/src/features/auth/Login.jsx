@@ -27,7 +27,6 @@ const Login = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  // Function to handle login form submission
   const login = async () => {
     try {
       const url = `${BASE_API_URL}/auth/login`;
@@ -38,9 +37,7 @@ const Login = () => {
       });
 
       if (response.status === 200) {
-        // Store the JWT and user data in your application's state or local storage
         const { token, user } = response.data;
-
         dispatch(setLogin({ token, user }));
       }
     } catch (err) {
@@ -49,17 +46,15 @@ const Login = () => {
     }
   };
 
-  // Function to handle signup form submission
   const signup = async () => {
     const { firstName, lastName, email, password, confirmPassword } = formData;
 
-    // Check if any required fields are missing
     if (!firstName || !lastName || !email || !password || !confirmPassword) {
       setError("Please fill in all required fields");
       return;
     }
 
-    // Additional password validation
+    // Password validation
     if (password.length < 8) {
       setError("Password must be at least 8 characters");
       return;
@@ -72,7 +67,6 @@ const Login = () => {
       const url = `${BASE_API_URL}/auth/register`;
       const response = await axios.post(url, formData);
 
-      // If signup is successfull, login the user
       if (response.status === 201) {
         login();
       }
@@ -97,40 +91,38 @@ const Login = () => {
   return (
     <div className="h-full w-full min-h-screen flex items-center justify-center">
       <div className="bg-[var(--bg1)] rounded-xl shadow-lg p-8 w-full max-w-md">
-        <h3 className="text-xl font-medium mb-6">
+        <h1 className="text-xl font-medium mb-6">
           Sign {isSignup ? "up" : "in"}
-        </h3>
+        </h1>
 
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           {error && <p className="text-sm text-red-500">{error}</p>}
 
           {isSignup && (
-            <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <input
-                    id="firstName"
-                    name="firstName"
-                    placeholder="First Name"
-                    type="text"
-                    value={formData.firstName}
-                    onChange={handleInputChange}
-                    className="mt-1 block w-full p-2 rounded-xl bg-[var(--bg3)]"
-                  />
-                </div>
-                <div>
-                  <input
-                    id="lastName"
-                    name="lastName"
-                    type="text"
-                    placeholder="Last Name"
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                    className="mt-1 block w-full p-2 rounded-xl bg-[var(--bg3)]"
-                  />
-                </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <input
+                  id="firstName"
+                  name="firstName"
+                  placeholder="First Name"
+                  type="text"
+                  value={formData.firstName}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-full p-2 rounded-xl bg-[var(--bg3)]"
+                />
               </div>
-            </>
+              <div>
+                <input
+                  id="lastName"
+                  name="lastName"
+                  type="text"
+                  placeholder="Last Name"
+                  value={formData.lastName}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-full p-2 rounded-xl bg-[var(--bg3)]"
+                />
+              </div>
+            </div>
           )}
 
           <div>
@@ -183,7 +175,7 @@ const Login = () => {
           <button
             type="button"
             onClick={toggleScreen}
-            className="cursor-pointer hover:underline"
+            className="cursor-pointer hover:underline mt-2"
           >
             {isSignup
               ? "Already have an account? Sign in"
