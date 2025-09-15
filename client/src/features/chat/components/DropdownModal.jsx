@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Modal from "../../../components/Modal";
+import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 
 const DropdownModal = ({
   open,
@@ -52,17 +53,19 @@ const DropdownModal = ({
           href={providerPricingLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="cursor-pointer hover:underline my-2"
+          className="cursor-pointer hover:underline my-2 gap-2 flex items-center"
         >
           {providerName} API pricing
+          <FaArrowUpRightFromSquare size={12} />
         </a>
         <a
           href={providerApiLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="cursor-pointer hover:underline my-2"
+          className="cursor-pointer hover:underline my-2 gap-2 flex items-center"
         >
           Get {providerName} API key
+          <FaArrowUpRightFromSquare size={12} />
         </a>
       </div>
     </Modal>
