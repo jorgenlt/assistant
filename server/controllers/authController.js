@@ -55,9 +55,10 @@ export const login = async (req, res) => {
     // Generation a json web token for the authenticated user
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
-    // Remove the user password before sending a response
+    // Remove the user password and api keys before sending a response
     const userObj = user.toObject(); // Convert to plain js object
     delete userObj.password;
+    delete userObj.apiKeys;
 
     // Sending a response with the generated token and user's details
     res.status(200).json({ token, user: userObj });
