@@ -107,6 +107,7 @@ const Login = () => {
                   name="firstName"
                   placeholder="First Name"
                   type="text"
+                  autoComplete="given-name"
                   value={formData.firstName}
                   onChange={handleInputChange}
                   className="mt-1 block w-full p-2 rounded-xl bg-[var(--bg3)]"
@@ -117,6 +118,7 @@ const Login = () => {
                   id="lastName"
                   name="lastName"
                   type="text"
+                  autoComplete="family-name"
                   placeholder="Last Name"
                   value={formData.lastName}
                   onChange={handleInputChange}
@@ -131,6 +133,7 @@ const Login = () => {
               id="email"
               name="email"
               type="email"
+              autoComplete="email"
               placeholder="Email"
               value={formData.email}
               onChange={handleInputChange}
@@ -143,6 +146,7 @@ const Login = () => {
               id="password"
               name="password"
               type="password"
+              autoComplete="current-password"
               placeholder="Password"
               value={formData.password}
               onChange={handleInputChange}
@@ -157,6 +161,7 @@ const Login = () => {
                 name="confirmPassword"
                 type="password"
                 placeholder="Confirm password"
+                autoComplete="new-password"
                 value={formData.confirmPassword}
                 onChange={handleInputChange}
                 className="mt-1 block w-full p-2 rounded-xl bg-[var(--bg3)]"
