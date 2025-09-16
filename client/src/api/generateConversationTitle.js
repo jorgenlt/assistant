@@ -1,14 +1,22 @@
 import axios from "axios";
 import { BASE_API_URL } from "../app/config";
 
-async function generateConversationTitle(id, prompt, userId) {
+const generateConversationTitle = async (id, prompt, userId, token) => {
   try {
     const url = `${BASE_API_URL}/conversations/id/title/generate`;
-    const response = await axios.post(url, {
-      id,
-      prompt,
-      userId,
-    });
+    const response = await axios.post(
+      url,
+      {
+        id,
+        prompt,
+        userId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     return response.data.title;
   } catch (error) {

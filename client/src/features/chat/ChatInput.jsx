@@ -14,6 +14,7 @@ const ChatInput = () => {
   const { name, model } = useSelector((state) => state.providers.current);
   const currentId = useSelector((state) => state.chat.currentId);
   const userId = useSelector((state) => state.auth.user._id);
+  const token = useSelector((state) => state.auth.token);
 
   const [prompt, setPrompt] = useState("");
 
@@ -22,9 +23,15 @@ const ChatInput = () => {
   const createConversation = async () => {
     try {
       const url = `${BASE_API_URL}/conversations`;
-      const response = await axios.post(url, {
-        userId,
-      });
+      const response = await axios.post(
+        url,
+        { userId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response.status === 201) {
         dispatch(addConversation(response.data));

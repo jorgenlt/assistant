@@ -16,7 +16,7 @@ export const getChatResponseThunk = createAsyncThunk(
   async (prompt, { getState, dispatch }) => {
     const {
       chat: { currentId },
-      auth: { user },
+      auth: { token, user },
       providers,
     } = getState();
 
@@ -33,7 +33,8 @@ export const getChatResponseThunk = createAsyncThunk(
       user._id,
       prompt,
       provider,
-      model
+      model,
+      token
     );
 
     return response;
@@ -44,7 +45,7 @@ export const fetchConversationsThunk = createAsyncThunk(
   "chat/fetchConversations",
   async (_, { getState }) => {
     const {
-      auth: { user }, // adjust to how you store user/token
+      auth: { token, user },
     } = getState();
 
     try {
@@ -53,9 +54,10 @@ export const fetchConversationsThunk = createAsyncThunk(
       const userId = user._id;
 
       const response = await axios.get(url, {
-        params: { userId }, // send userId as query param
-
-        // withCredentials: true, // uncomment if your API uses cookies
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: { userId },
       });
 
       if (response.status === 200) {
@@ -71,10 +73,13 @@ export const generateConversationTitleThunk = createAsyncThunk(
   "chat/generateTitle",
   async (prompt, { getState }) => {
     const id = getState().chat.currentId;
-    const userId = getState().auth.user._id;
+    const {
+      auth: { token, user },
+    } = getState();
+    const userId = user._id;
 
     try {
-      const title = await generateConversationTitle(id, prompt, userId);
+      const title = await generateConversationTitle(id, prompt, userId, token);
 
       return { id, title };
     } catch (error) {
@@ -89,11 +94,18 @@ export const generateConversationTitleThunk = createAsyncThunk(
 export const deleteConversationThunk = createAsyncThunk(
   "chat/deleteConversation",
   async (id, { getState }) => {
-    const userId = getState().auth.user._id;
+    const {
+      auth: { token, user },
+    } = getState();
+
+    const userId = user._id;
 
     try {
       const url = `${BASE_API_URL}/conversations/${id}`;
       const response = await axios.delete(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         data: { userId },
       });
 

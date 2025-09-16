@@ -7,14 +7,15 @@ import {
   generateTitle,
   deleteConversation,
 } from "../controllers/conversationController.js";
+import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.post("/", createConversation);
-router.get("/", getConversationsForUser);
-router.get("/:id", getConversation);
-router.delete("/:id", deleteConversation);
-router.post("/:id/messages", addMessage);
-router.post("/:id/title/generate", generateTitle);
+router.post("/", verifyToken, createConversation);
+router.get("/", verifyToken, getConversationsForUser);
+// router.get("/:id", getConversation);
+router.delete("/:id", verifyToken, deleteConversation);
+router.post("/:id/messages", verifyToken, addMessage);
+router.post("/:id/title/generate", verifyToken, generateTitle);
 
 export default router;
