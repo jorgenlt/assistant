@@ -72,21 +72,30 @@ export const fetchConversationsThunk = createAsyncThunk(
 export const generateConversationTitleThunk = createAsyncThunk(
   "chat/generateTitle",
   async (prompt, { getState }) => {
-    const id = getState().chat.currentId;
+    const conversationId = getState().chat.currentId;
     const {
       auth: { token, user },
     } = getState();
     const userId = user._id;
 
     try {
-      const title = await generateConversationTitle(id, prompt, userId, token);
-
-      return { id, title };
-    } catch (error) {
-      throw new Error(
-        "Title generation failed. OpenAI key is required for generating titles: " +
-          error
+      const title = await generateConversationTitle(
+        conversationId,
+        prompt,
+        userId,
+        token
       );
+
+      if (!title) {
+        return {
+          conversationId,
+          title: "Error: title could not be generated.",
+        };
+      }
+
+      return { conversationId, title };
+    } catch (error) {
+      throw new Error(error);
     }
   }
 );
@@ -216,11 +225,14 @@ export const chat = createSlice({
       })
       // Generate title finished
       .addCase(generateConversationTitleThunk.fulfilled, (state, action) => {
-        const { id, title } = action.payload;
+        const { conversationId, title } = action.payload;
 
-        const convo = state.conversations.find((c) => c._id === id);
-        if (convo) {
-          convo.title = title;
+        const conversation = state.conversations.find(
+          (c) => c._id === conversationId
+        );
+
+        if (conversation) {
+          conversation.title = title;
         }
       })
       // Generate title failed

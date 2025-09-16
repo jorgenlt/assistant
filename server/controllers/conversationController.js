@@ -2,8 +2,9 @@ import Conversation from "../models/Conversation.js";
 import fetchOpenAiChatCompletion from "../services/fetchOpenAiChatCompletion.js";
 import fetchAnthropicChatCompletion from "../services/fetchAnthropicChatCompletion.js";
 import fetchMistralChatCompletion from "../services/fetchMistralChatCompletion.js";
-import generateConversationTitle from "../utils/generateConversationTitle.js";
-import { getApiKey } from "./userController.js";
+import generateConversationTitle from "../services/generateConversationTitle.js";
+import { hasApiKeyForProvider } from "../services/hasApiKeyForProvider.js";
+import { getDecryptedApiKey } from "../services/getDecryptedApiKey.js";
 
 // Build context from existing messages
 const toContext = (messages) => {
@@ -102,7 +103,7 @@ export const addMessage = async (req, res) => {
       mistral: fetchMistralChatCompletion,
     };
 
-    const apiKey = await getApiKey(userId, provider);
+    const apiKey = await getDecryptedApiKey(userId, provider);
 
     const fetcher = fetchers[provider];
 
@@ -131,24 +132,40 @@ export const addMessage = async (req, res) => {
 
 export const generateTitle = async (req, res) => {
   try {
-    const { id, prompt, userId } = req.body;
+    const { conversationId, prompt, userId } = req.body;
 
-    if (!id || !prompt || !userId) {
+    if (!conversationId || !prompt || !userId) {
       return res
         .status(400)
         .json({ error: "ID, prompt, and userId are required" });
     }
 
-    const apiKey = await getApiKey(userId, "openAi");
+    const providers = [
+      { provider: "mistral", model: "mistral-small-latest" },
+      { provider: "openAi", model: "gpt-5-nano" },
+    ];
 
-    if (!apiKey) {
-      throw new Error("API key missing for user: " + userId);
+    let generatedTitle = null;
+
+    for (const { provider, model } of providers) {
+      if (await hasApiKeyForProvider(userId, provider)) {
+        const apiKey = await getDecryptedApiKey(userId, provider);
+        generatedTitle = await generateConversationTitle(
+          prompt,
+          apiKey,
+          provider,
+          model
+        );
+        break;
+      }
     }
 
-    const generatedTitle = await generateConversationTitle(prompt, apiKey);
+    if (!generatedTitle) {
+      return res.status(500).json({ error: "Title could not be generated" });
+    }
 
     const updated = await Conversation.findByIdAndUpdate(
-      id,
+      conversationId,
       { title: generatedTitle },
       { new: true }
     ).lean();

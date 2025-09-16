@@ -1,5 +1,6 @@
 import User from "../models/User.js";
-import { encryptKey, decryptKey } from "../utils/crypto.js";
+import { encryptKey } from "../utils/crypto.js";
+import { hasApiKeyForProvider } from "../services/hasApiKeyForProvider.js";
 
 export const getUser = async (req, res) => {
   try {
@@ -56,22 +57,6 @@ export const addApiKey = async (req, res) => {
   }
 };
 
-export const getApiKey = async (userId, provider) => {
-  try {
-    if (!userId || !provider) {
-      throw new Error("userId or provider is invalid");
-    }
-
-    const user = await User.findById(userId);
-    const key = user.apiKeys[provider];
-    const decryptedKey = decryptKey(key);
-
-    return decryptedKey;
-  } catch (error) {
-    throw new Error(`Cannot get API key for ${provider}.`, error.message);
-  }
-};
-
 export const hasApiKey = async (req, res) => {
   const { id } = req.params;
   const provider = req.header("provider");
@@ -81,9 +66,7 @@ export const hasApiKey = async (req, res) => {
       throw new Error("id is invalid");
     }
 
-    const user = await User.findById(id);
-
-    const result = Boolean(user.apiKeys[provider]);
+    const result = await hasApiKeyForProvider(id, provider);
 
     res.status(200).json(result);
   } catch (error) {
