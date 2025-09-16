@@ -10,8 +10,7 @@ const DropdownModal = ({ open, onClose, activeProvider }) => {
 
   const userId = user._id;
 
-  const { provider, providerName, providerPricingLink, providerApiLink } =
-    activeProvider;
+  const { provider, name, pricingLink, getApiLink } = activeProvider;
 
   const [apiKey, setApiKey] = useState("");
   const [apiKeyExists, setApiKeyExists] = useState(false);
@@ -67,11 +66,7 @@ const DropdownModal = ({ open, onClose, activeProvider }) => {
   }, [provider, token, userId]);
 
   return (
-    <Modal
-      open={open}
-      onClose={onClose}
-      title={`Set API key for ${providerName}`}
-    >
+    <Modal open={open} onClose={onClose} title={`Set API key for ${name}`}>
       <form className="space-y-4">
         <input
           type="text"
@@ -103,21 +98,21 @@ const DropdownModal = ({ open, onClose, activeProvider }) => {
 
       <div className="flex flex-col w-fit">
         <a
-          href={providerPricingLink}
+          href={pricingLink}
           target="_blank"
           rel="noopener noreferrer"
           className="cursor-pointer hover:underline my-2 gap-2 flex items-center"
         >
-          {providerName} API pricing
+          {name} API pricing
           <FaArrowUpRightFromSquare size={12} />
         </a>
         <a
-          href={providerApiLink}
+          href={getApiLink}
           target="_blank"
           rel="noopener noreferrer"
           className="cursor-pointer hover:underline my-2 gap-2 flex items-center"
         >
-          Get {providerName} API key
+          Get {name} API key
           <FaArrowUpRightFromSquare size={12} />
         </a>
       </div>
