@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { setLogin } from "./authSlice";
 import axios from "axios";
 import { BASE_API_URL } from "../../app/config";
+import { FaGithub } from "react-icons/fa6";
 
 const Login = () => {
   const [isSignup, setIsSignup] = useState(false);
@@ -181,6 +182,17 @@ const Login = () => {
               ? "Already have an account? Sign in"
               : "Don't have an account? Click here to sign up"}
           </button>
+        </div>
+
+        <div className="mt-4 w-fit">
+          <a
+            href="https://github.com/jorgenlt/assistant"
+            target="_blank"
+            aria-label="Source Code"
+            rel="noopener noreferrer"
+          >
+            <FaGithub size={33} />
+          </a>
         </div>
       </div>
     </div>
