@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentId } from "../chat/chatSlice.js";
 import { toggleTheme } from "./menuSlice.js";
-import { setLogout } from "../auth/authSlice.js";
 import { FaPenToSquare, FaGear, FaMoon } from "react-icons/fa6";
 import MenuHeader from "./MenuHeader.jsx";
 import ConversationsList from "./ConversationsList.jsx";
@@ -22,6 +21,11 @@ const Menu = () => {
 
   const handleResetId = () => {
     dispatch(updateCurrentId(null));
+  };
+
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.href = "/";
   };
 
   return (
@@ -71,7 +75,7 @@ const Menu = () => {
         title="Settings"
       >
         <div className="flex flex-col">
-          <div onClick={() => dispatch(setLogout())}>Log out</div>
+          <div onClick={handleLogout}>Log out</div>
           <div>Setting 3</div>
           <div>Setting 4</div>
         </div>
