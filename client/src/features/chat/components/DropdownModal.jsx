@@ -3,6 +3,7 @@ import Modal from "../../../components/Modal";
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { BASE_API_URL } from "../../../app/config";
 import { useSelector } from "react-redux";
+import Button from "../../../components/Button";
 import axios from "axios";
 
 const DropdownModal = ({ open, onClose, activeProvider }) => {
@@ -81,18 +82,16 @@ const DropdownModal = ({ open, onClose, activeProvider }) => {
           required
         />
         <div className="flex justify-end gap-2">
-          <div
-            onClick={onClose}
-            className="cursor-pointer rounded-xl px-4 py-2 text-sm hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
-          >
-            Cancel
-          </div>
-          <div
+          <Button
+            onClick={onClose} 
+            title="Cancel"
+            faIcon="FaTrashCan"
+          />
+          <Button 
             onClick={handleAddKey}
-            className="cursor-pointer rounded-xl px-4 py-2 text-sm bg-[var(--bg2)] hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
-          >
-            Save
-          </div>
+            title="Save"
+            faIcon="FaFloppyDisk"
+          />
         </div>
       </form>
 
