@@ -68,11 +68,4 @@ export const login = async (req, res) => {
 };
 
 // User logout
-export const logout = async (req, res) => {
-  try {
-    res.clearCookie("token");
-    res.status(200).json({ msg: "Logged out successfully" });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
+// Handled on the client side by clearing local storage
