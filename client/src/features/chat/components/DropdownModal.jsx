@@ -85,7 +85,7 @@ const DropdownModal = ({ open, onClose, activeProvider }) => {
           <Button
             onClick={onClose} 
             title="Cancel"
-            faIcon="FaTrashCan"
+            faIcon="FaXmark"
           />
           <Button 
             onClick={handleAddKey}
