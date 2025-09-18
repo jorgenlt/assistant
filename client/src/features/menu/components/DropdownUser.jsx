@@ -27,10 +27,24 @@ const DropdownUser = ({ user, logout }) => {
         Icon={FaUser}
       />
       {isOpen && (
-        <div className="absolute bottom-10 left-2 p-2 rounded-xl bg-[var(--bg2)]">
-          <Button title="Logout" faIcon="FaRightFromBracket" onClick={logout} />
-          <Button title="Logout" faIcon="FaRightFromBracket" onClick={logout} />
-          <Button title="Logout" faIcon="FaRightFromBracket" onClick={logout} />
+        <div className="absolute bottom-8 left-0 p-2">
+          <div className="p-2 rounded-xl bg-[var(--bg2)]">
+            <Button
+              title="Logout"
+              faIcon="FaRightFromBracket"
+              onClick={logout}
+            />
+            <Button
+              title="Logout"
+              faIcon="FaRightFromBracket"
+              onClick={logout}
+            />
+            <Button
+              title="Logout"
+              faIcon="FaRightFromBracket"
+              onClick={logout}
+            />
+          </div>
         </div>
       )}
     </div>
