@@ -7,18 +7,23 @@ import {
   FaGear,
   FaMoon,
   FaMagnifyingGlass,
+  FaUser,
 } from "react-icons/fa6";
 import MenuHeader from "./MenuHeader.jsx";
 import ConversationsList from "./ConversationsList.jsx";
 import SidebarItem from "./components/SidebarItem.jsx";
 import Modal from "../../components/Modal.jsx";
 import SearchChats from "./components/SearchChats.jsx";
+import DropdownUser from "./components/DropdownUser.jsx";
 
 const Menu = () => {
   const theme = useSelector((state) => state.menu.theme);
+  const user = useSelector((state) => state.auth.user);
+
   const [isThemeHover, setIsThemeHover] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isDropdownUserOpen, setIsDropdownUserOpen] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -75,6 +80,10 @@ const Menu = () => {
 
       {/* Settings */}
       <SidebarItem action={setIsModalOpen} title="Settings" Icon={FaGear} />
+
+      {/* Profile */}
+      <SidebarItem action={setIsDropdownUserOpen} title={`${user.firstName} ${user.lastName}`} Icon={FaUser} />
+      {isDropdownUserOpen && <DropdownUser user={user} />}
 
       {/* Settings modal */}
       <Modal
