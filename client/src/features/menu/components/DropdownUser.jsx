@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { FaUser } from "react-icons/fa6";
+import { FaRightFromBracket, FaUser } from "react-icons/fa6";
 import SidebarItem from "./SidebarItem";
 
 import Button from "../../../components/Button";
@@ -28,22 +28,24 @@ const DropdownUser = ({ user, logout }) => {
       />
       {isOpen && (
         <div className="absolute bottom-8 left-0 p-2">
-          <div className="p-2 rounded-xl bg-[var(--bg2)]">
-            <Button
+          <div className="py-2 rounded-2xl bg-[var(--bg2)] min-w-40">
+            <SidebarItem 
               title="Logout"
-              faIcon="FaRightFromBracket"
+              Icon={FaRightFromBracket}
               onClick={logout}
             />
-            <Button
+            <SidebarItem 
               title="Logout"
-              faIcon="FaRightFromBracket"
+              Icon={FaRightFromBracket}
               onClick={logout}
             />
-            <Button
+            <SidebarItem 
               title="Logout"
-              faIcon="FaRightFromBracket"
+              Icon={FaRightFromBracket}
               onClick={logout}
             />
+            
+
           </div>
         </div>
       )}
