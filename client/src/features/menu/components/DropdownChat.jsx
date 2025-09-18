@@ -26,7 +26,7 @@ const DropdownChat = ({ cancelDelete, confirmDelete }) => {
     >
       <div className="py-2 bg-[var(--bg2)] rounded-2xl">
         <SidebarItem title="Cancel" action={cancelDelete} Icon={FaXmark} />
-        <SidebarItem title="Delete" onClick={confirmDelete} Icon={FaTrashCan} />
+        <SidebarItem title="Delete" action={confirmDelete} Icon={FaTrashCan} />
       </div>
     </div>
   );
