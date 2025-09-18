@@ -33,16 +33,6 @@ const DropdownUser = ({ user, logout }) => {
               Icon={FaRightFromBracket}
               onClick={logout}
             />
-            <SidebarItem
-              title="Logout"
-              Icon={FaRightFromBracket}
-              onClick={logout}
-            />
-            <SidebarItem
-              title="Logout"
-              Icon={FaRightFromBracket}
-              onClick={logout}
-            />
           </div>
         </div>
       )}
