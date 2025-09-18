@@ -2,7 +2,7 @@ import { FaTrashCan } from "react-icons/fa6";
 import { PulseLoader } from "react-spinners";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import DeleteModal from "./DeleteModal";
+import DropdownChat from "./DropdownChat";
 
 function ListItem({ action, title, id, onDelete }) {
   const isThemeDark = useSelector((state) => state.menu.isThemeDark);
@@ -43,7 +43,7 @@ function ListItem({ action, title, id, onDelete }) {
       </div>
 
       {showConfirm && (
-        <DeleteModal
+        <DropdownChat
           cancelDelete={cancelDelete}
           confirmDelete={confirmDelete}
         />
