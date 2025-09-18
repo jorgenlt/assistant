@@ -83,7 +83,7 @@ const Menu = () => {
 
       {/* Profile */}
       <SidebarItem action={setIsDropdownUserOpen} title={`${user.firstName} ${user.lastName}`} Icon={FaUser} />
-      {isDropdownUserOpen && <DropdownUser user={user} />}
+      {isDropdownUserOpen && <DropdownUser user={user} logout={handleLogout} />}
 
       {/* Settings modal */}
       <Modal
