@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { FaRightFromBracket, FaUser } from "react-icons/fa6";
 import SidebarItem from "./SidebarItem";
 
-import Button from "../../../components/Button";
 const DropdownUser = ({ user, logout }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -22,30 +21,28 @@ const DropdownUser = ({ user, logout }) => {
   return (
     <div ref={dropdownRef} className="relative">
       <SidebarItem
-        action={() => setIsOpen(!isOpen)}
+        onClick={() => setIsOpen(!isOpen)}
         title={`${user.firstName} ${user.lastName}`}
         Icon={FaUser}
       />
       {isOpen && (
         <div className="absolute bottom-8 left-0 p-2">
           <div className="py-2 rounded-2xl bg-[var(--bg2)] min-w-40">
-            <SidebarItem 
+            <SidebarItem
               title="Logout"
               Icon={FaRightFromBracket}
-              action={logout}
+              onClick={logout}
             />
-            <SidebarItem 
+            <SidebarItem
               title="Logout"
               Icon={FaRightFromBracket}
-              action={logout}
+              onClick={logout}
             />
-            <SidebarItem 
+            <SidebarItem
               title="Logout"
               Icon={FaRightFromBracket}
-              action={logout}
+              onClick={logout}
             />
-            
-
           </div>
         </div>
       )}

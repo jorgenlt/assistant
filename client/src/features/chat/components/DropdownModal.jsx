@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import Modal from "../../../components/Modal";
-import { FaArrowUpRightFromSquare } from "react-icons/fa6";
+import {
+  FaArrowUpRightFromSquare,
+  FaFloppyDisk,
+  FaXmark,
+} from "react-icons/fa6";
 import { BASE_API_URL } from "../../../app/config";
 import { useSelector } from "react-redux";
 import Button from "../../../components/Button";
@@ -82,16 +86,8 @@ const DropdownModal = ({ open, onClose, activeProvider }) => {
           required
         />
         <div className="flex justify-end gap-2">
-          <Button
-            onClick={onClose} 
-            title="Cancel"
-            faIcon="FaXmark"
-          />
-          <Button 
-            onClick={handleAddKey}
-            title="Save"
-            faIcon="FaFloppyDisk"
-          />
+          <Button onClick={onClose} title="Cancel" Icon={FaXmark} />
+          <Button onClick={handleAddKey} title="Save" Icon={FaFloppyDisk} />
         </div>
       </form>
 

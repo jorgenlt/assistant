@@ -1,8 +1,4 @@
-import * as FaIcons from "react-icons/fa6";
-
-const Button = ({ onClick, title, faIcon }) => {
-  const Icon = FaIcons[faIcon];
-
+const Button = ({ onClick, title, Icon }) => {
   return (
     <button
       onClick={onClick}

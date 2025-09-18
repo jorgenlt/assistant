@@ -46,13 +46,13 @@ const Menu = () => {
       {/* Sidebar */}
       <div className="mb-4">
         <SidebarItem
-          action={handleResetId}
+          onClick={handleResetId}
           title="New Chat"
           Icon={FaPenToSquare}
         />
         <SidebarItem
           title="Search chats"
-          action={setIsSearchOpen}
+          onClick={setIsSearchOpen}
           Icon={FaMagnifyingGlass}
         />
       </div>
@@ -70,14 +70,14 @@ const Menu = () => {
         onMouseLeave={() => setIsThemeHover(false)}
       >
         <SidebarItem
-          action={handleToggleTheme}
+          onClick={handleToggleTheme}
           title={isThemeHover ? theme : "Toggle Themes"}
           Icon={FaMoon}
         />
       </div>
 
       {/* Settings */}
-      <SidebarItem action={setIsModalOpen} title="Settings" Icon={FaGear} />
+      <SidebarItem onClick={setIsModalOpen} title="Settings" Icon={FaGear} />
 
       {/* Profile */}
       <DropdownUser user={user} logout={handleLogout} />
