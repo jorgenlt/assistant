@@ -2,16 +2,23 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentId } from "../chat/chatSlice.js";
 import { toggleTheme } from "./menuSlice.js";
-import { FaPenToSquare, FaGear, FaMoon } from "react-icons/fa6";
+import {
+  FaPenToSquare,
+  FaGear,
+  FaMoon,
+  FaMagnifyingGlass,
+} from "react-icons/fa6";
 import MenuHeader from "./MenuHeader.jsx";
 import ConversationsList from "./ConversationsList.jsx";
 import SidebarItem from "./components/SidebarItem.jsx";
 import Modal from "../../components/Modal.jsx";
+import SearchChats from "./components/SearchChats.jsx";
 
 const Menu = () => {
   const theme = useSelector((state) => state.menu.theme);
   const [isThemeHover, setIsThemeHover] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -40,6 +47,11 @@ const Menu = () => {
           title="New Chat"
           Icon={FaPenToSquare}
         />
+        <SidebarItem
+          title="Search chats"
+          action={setIsSearchOpen}
+          Icon={FaMagnifyingGlass}
+        />
       </div>
 
       {/* Conversations list */}
@@ -62,11 +74,7 @@ const Menu = () => {
       </div>
 
       {/* Settings */}
-      <SidebarItem
-        action={() => setIsModalOpen(true)}
-        title="Settings"
-        Icon={FaGear}
-      />
+      <SidebarItem action={setIsModalOpen} title="Settings" Icon={FaGear} />
 
       {/* Settings modal */}
       <Modal
@@ -79,6 +87,15 @@ const Menu = () => {
           <div>Setting 3</div>
           <div>Setting 4</div>
         </div>
+      </Modal>
+
+      {/* Search modal */}
+      <Modal
+        open={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+        title="Search chats"
+      >
+        <SearchChats />
       </Modal>
     </div>
   );
