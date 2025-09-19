@@ -77,7 +77,9 @@ const Menu = () => {
       </div>
 
       {/* Settings */}
-      <SidebarItem onClick={setIsModalOpen} title="Settings" Icon={FaGear} />
+      <div className="hidden">
+        <SidebarItem onClick={setIsModalOpen} title="Settings" Icon={FaGear} />
+      </div>
 
       {/* Profile */}
       <DropdownUser user={user} logout={handleLogout} />
