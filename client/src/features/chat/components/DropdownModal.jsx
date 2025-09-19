@@ -72,44 +72,46 @@ const DropdownModal = ({ open, onClose, activeProvider }) => {
 
   return (
     <Modal open={open} onClose={onClose} title={`Set API key for ${name}`}>
-      <form className="space-y-4">
-        <input
-          type="text"
-          value={apiKey}
-          onChange={(e) => setApiKey(e.target.value)}
-          placeholder={
-            apiKeyExists
-              ? "The key is stored in the database. To update it, save again."
-              : "Enter your API key"
-          }
-          className="w-full rounded-xl px-3 py-2 text-sm outline-none bg-[var(--bg3)] text-[var(--text)]"
-          required
-        />
-        <div className="flex justify-end gap-2">
-          <Button onClick={onClose} title="Cancel" Icon={FaXmark} />
-          <Button onClick={handleAddKey} title="Save" Icon={FaFloppyDisk} />
-        </div>
-      </form>
+      <div className="p-4">
+        <form className="space-y-4">
+          <input
+            type="text"
+            value={apiKey}
+            onChange={(e) => setApiKey(e.target.value)}
+            placeholder={
+              apiKeyExists
+                ? "The key is stored in the database. To update it, save again."
+                : "Enter your API key"
+            }
+            className="w-full rounded-xl px-3 py-2 text-sm outline-none bg-[var(--bg3)] text-[var(--text)]"
+            required
+          />
+          <div className="flex justify-end gap-2">
+            <Button onClick={onClose} title="Cancel" Icon={FaXmark} />
+            <Button onClick={handleAddKey} title="Save" Icon={FaFloppyDisk} />
+          </div>
+        </form>
 
-      <div className="flex flex-col w-fit">
-        <a
-          href={pricingLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="cursor-pointer hover:underline my-2 gap-2 flex items-center"
-        >
-          {name} API pricing
-          <FaArrowUpRightFromSquare size={12} />
-        </a>
-        <a
-          href={getApiLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="cursor-pointer hover:underline my-2 gap-2 flex items-center"
-        >
-          Get {name} API key
-          <FaArrowUpRightFromSquare size={12} />
-        </a>
+        <div className="flex flex-col w-fit">
+          <a
+            href={pricingLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cursor-pointer hover:underline my-2 gap-2 flex items-center"
+          >
+            {name} API pricing
+            <FaArrowUpRightFromSquare size={12} />
+          </a>
+          <a
+            href={getApiLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cursor-pointer hover:underline my-2 gap-2 flex items-center"
+          >
+            Get {name} API key
+            <FaArrowUpRightFromSquare size={12} />
+          </a>
+        </div>
       </div>
     </Modal>
   );

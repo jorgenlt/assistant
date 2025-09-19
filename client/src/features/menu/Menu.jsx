@@ -96,11 +96,7 @@ const Menu = () => {
       </Modal>
 
       {/* Search modal */}
-      <Modal
-        open={isSearchOpen}
-        onClose={() => setIsSearchOpen(false)}
-        title="Search chats"
-      >
+      <Modal open={isSearchOpen} onClose={() => setIsSearchOpen(false)}>
         <SearchChats />
       </Modal>
     </div>
