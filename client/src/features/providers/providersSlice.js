@@ -10,6 +10,7 @@ const initialState = {
     models: ["gpt-5", "gpt-5-mini", "gpt-5-nano"],
     pricingLink: "https://openai.com/api/pricing/",
     getApiLink: "https://auth.openai.com/create-account",
+    usageLink: "https://platform.openai.com/settings/organization/usage",
   },
   anthropic: {
     name: "Anthropic",
@@ -22,6 +23,7 @@ const initialState = {
     ],
     pricingLink: "https://www.anthropic.com/pricing#api",
     getApiLink: "https://docs.anthropic.com/en/docs/get-started",
+    usageLink: "https://console.anthropic.com/usage",
   },
   mistral: {
     name: "Mistral",
@@ -30,6 +32,7 @@ const initialState = {
     models: ["mistral-small-latest", "mistral-large-latest"],
     pricingLink: "https://mistral.ai/pricing#api-pricing",
     getApiLink: "https://console.mistral.ai",
+    usageLink: "https://console.mistral.ai/usage",
   },
 };
 

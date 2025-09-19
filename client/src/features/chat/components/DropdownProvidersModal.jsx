@@ -1,21 +1,18 @@
 import { useState, useEffect } from "react";
 import Modal from "../../../components/Modal";
-import {
-  FaArrowUpRightFromSquare,
-  FaFloppyDisk,
-  FaXmark,
-} from "react-icons/fa6";
+import { FaFloppyDisk, FaXmark } from "react-icons/fa6";
 import { BASE_API_URL } from "../../../app/config";
 import { useSelector } from "react-redux";
 import Button from "../../../components/Button";
 import axios from "axios";
+import ExternalLink from "../../../components/ExternalLink";
 
 const DropdownProvidersModal = ({ open, onClose, activeProvider }) => {
   const { token, user } = useSelector((state) => state.auth);
 
   const userId = user._id;
 
-  const { provider, name, pricingLink, getApiLink } = activeProvider;
+  const { provider, name, pricingLink, getApiLink, usageLink } = activeProvider;
 
   const [apiKey, setApiKey] = useState("");
   const [apiKeyExists, setApiKeyExists] = useState(false);
@@ -93,24 +90,9 @@ const DropdownProvidersModal = ({ open, onClose, activeProvider }) => {
         </form>
 
         <div className="flex flex-col w-fit">
-          <a
-            href={pricingLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="cursor-pointer hover:underline my-2 gap-2 flex items-center"
-          >
-            {name} API pricing
-            <FaArrowUpRightFromSquare size={12} />
-          </a>
-          <a
-            href={getApiLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="cursor-pointer hover:underline my-2 gap-2 flex items-center"
-          >
-            Get {name} API key
-            <FaArrowUpRightFromSquare size={12} />
-          </a>
+          <ExternalLink link={usageLink} title={`${name} usage`} />
+          <ExternalLink link={pricingLink} title={`${name} API pricing`} />
+          <ExternalLink link={getApiLink} title={`Get ${name} API key`} />
         </div>
       </div>
     </Modal>
