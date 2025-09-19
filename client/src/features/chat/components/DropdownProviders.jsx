@@ -2,9 +2,9 @@ import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setModel, setProvider } from "../../providers/providersSlice";
 import { FaChevronDown, FaCheck, FaGear } from "react-icons/fa6";
-import DropdownModal from "./DropdownModal";
+import DropdownProvidersModal from "./DropdownProvidersModal";
 
-const Dropdown = () => {
+const DropdownProviders = () => {
   const { current, openAi, anthropic, mistral } = useSelector(
     (state) => state.providers
   );
@@ -61,7 +61,7 @@ const Dropdown = () => {
                   <span>{provider.name}</span>
                   <div
                     onClick={() => setActiveProvider(provider)}
-                    className="cursor-pointer select-none p-3 rounded-xl hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
+                    className="cursor-pointer select-none p-2 rounded-full hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
                   >
                     <FaGear />
                   </div>
@@ -90,7 +90,7 @@ const Dropdown = () => {
 
       {/* Modal */}
       {activeProvider && (
-        <DropdownModal
+        <DropdownProvidersModal
           open={activeProvider}
           onClose={() => setActiveProvider(null)}
           activeProvider={activeProvider}
@@ -100,4 +100,4 @@ const Dropdown = () => {
   );
 };
 
-export default Dropdown;
+export default DropdownProviders;

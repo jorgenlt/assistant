@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import Button from "../../../components/Button";
 import axios from "axios";
 
-const DropdownModal = ({ open, onClose, activeProvider }) => {
+const DropdownProvidersModal = ({ open, onClose, activeProvider }) => {
   const { token, user } = useSelector((state) => state.auth);
 
   const userId = user._id;
@@ -117,4 +117,4 @@ const DropdownModal = ({ open, onClose, activeProvider }) => {
   );
 };
 
-export default DropdownModal;
+export default DropdownProvidersModal;
