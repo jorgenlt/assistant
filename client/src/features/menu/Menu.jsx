@@ -6,6 +6,7 @@ import {
   FaPenToSquare,
   FaGear,
   FaMoon,
+  FaSun,
   FaMagnifyingGlass,
 } from "react-icons/fa6";
 import MenuHeader from "./MenuHeader.jsx";
@@ -17,6 +18,7 @@ import DropdownUser from "./components/DropdownUser.jsx";
 
 const Menu = () => {
   const theme = useSelector((state) => state.menu.theme);
+  const isThemeDark = useSelector((state) => state.menu.isThemeDark);
   const user = useSelector((state) => state.auth.user);
 
   const [isThemeHover, setIsThemeHover] = useState(false);
@@ -72,7 +74,7 @@ const Menu = () => {
         <SidebarItem
           onClick={handleToggleTheme}
           title={isThemeHover ? theme : "Toggle Themes"}
-          Icon={FaMoon}
+          Icon={isThemeDark ? FaMoon : FaSun}
         />
       </div>
 
