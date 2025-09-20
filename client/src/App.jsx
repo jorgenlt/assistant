@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchConversationsThunk } from "./features/chat/chatSlice";
+import { setIsSearchOpen } from "./features/menu/menuSlice";
 import Menu from "./features/menu/Menu";
 import Chat from "./features/chat/Chat";
 import Login from "./features/auth/Login";
@@ -30,6 +31,22 @@ function App() {
       dispatch(fetchConversationsThunk());
     }
   }, [isAuth, dispatch]);
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if ((event.ctrlKey || event.metaKey) && event.key === "k") {
+        event.preventDefault();
+        dispatch(setIsSearchOpen(true));
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  });
 
   return (
     <div className="flex h-screen bg-[var(--bg2)] text-[var(--text)]">

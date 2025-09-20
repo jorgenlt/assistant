@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentId } from "../chat/chatSlice.js";
-import { toggleTheme } from "./menuSlice.js";
+import { toggleTheme, setIsSearchOpen } from "./menuSlice.js";
 import {
   FaPenToSquare,
   FaGear,
@@ -19,11 +19,11 @@ import DropdownUser from "./components/DropdownUser.jsx";
 const Menu = () => {
   const theme = useSelector((state) => state.menu.theme);
   const isThemeDark = useSelector((state) => state.menu.isThemeDark);
+  const isSearchOpen = useSelector((state) => state.menu.isSearchOpen);
   const user = useSelector((state) => state.auth.user);
 
   const [isThemeHover, setIsThemeHover] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -54,7 +54,7 @@ const Menu = () => {
         />
         <SidebarItem
           title="Search chats"
-          onClick={setIsSearchOpen}
+          onClick={() => dispatch(setIsSearchOpen(!isSearchOpen))}
           Icon={FaMagnifyingGlass}
         />
       </div>
@@ -100,8 +100,11 @@ const Menu = () => {
       </Modal>
 
       {/* Search modal */}
-      <Modal open={isSearchOpen} onClose={() => setIsSearchOpen(false)}>
-        <SearchChats onClose={() => setIsSearchOpen(false)} />
+      <Modal
+        open={isSearchOpen}
+        onClose={() => dispatch(setIsSearchOpen(false))}
+      >
+        <SearchChats onClose={() => dispatch(setIsSearchOpen(false))} />
       </Modal>
     </div>
   );

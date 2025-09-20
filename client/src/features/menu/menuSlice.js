@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   theme: "dark",
   isThemeDark: true,
+  isSearchOpen: false,
   themes: [
     "dark",
     "light",
@@ -43,6 +44,9 @@ export const menu = createSlice({
       state.theme = state.themes[nextIndex];
       state.isThemeDark = /dark/.test(state.theme);
     },
+    setIsSearchOpen: (state, action) => {
+      state.isSearchOpen = action.payload;
+    },
     toggleLargeText: (state) => {
       state.largeText = !state.largeText;
     },
@@ -50,7 +54,7 @@ export const menu = createSlice({
   extraReducers: () => {},
 });
 
-export const { resetMenuSlice, setTheme, toggleTheme, toggleLargeText } =
+export const { resetMenuSlice, setTheme, setIsSearchOpen, toggleTheme, toggleLargeText } =
   menu.actions;
 
 export default menu.reducer;
