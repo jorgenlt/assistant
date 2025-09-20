@@ -2,22 +2,30 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentId } from "../../chat/chatSlice";
 
-const SearchChats = ({onClose}) => {
+const SearchChats = ({ onClose }) => {
   const conversations = useSelector((state) => state.chat.conversations);
 
   const [query, setQuery] = useState("");
 
   const dispatch = useDispatch();
 
-  const filteredConversations = conversations.filter((conversation) =>
-    conversation.messages.some((message) =>
-      message.content.toLowerCase().includes(query.toLowerCase())
-    )
+  const filteredConversations = conversations.filter(
+    (conversation) =>
+      conversation.messages.some((message) =>
+        message.content.toLowerCase().includes(query.toLowerCase())
+      ) || conversation.title.toLowerCase().includes(query.toLowerCase())
   );
 
   const handleUpdateCurrentId = (id) => {
     dispatch(updateCurrentId(id));
-    onClose()
+    onClose();
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      const id = filteredConversations[0]?._id;
+      if (id) handleUpdateCurrentId(id);
+    }
   };
 
   const titleElements = filteredConversations.map((conversation, i) => {
@@ -32,8 +40,6 @@ const SearchChats = ({onClose}) => {
     );
   });
 
-  console.log(titleElements);
-
   return (
     <div className="w-xl">
       <div className="p-4 border-b-1 border-b-gray-700">
@@ -45,6 +51,7 @@ const SearchChats = ({onClose}) => {
           autoFocus
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
       </div>
       <div className="py-2">
