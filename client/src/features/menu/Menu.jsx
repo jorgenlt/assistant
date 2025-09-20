@@ -101,7 +101,7 @@ const Menu = () => {
 
       {/* Search modal */}
       <Modal open={isSearchOpen} onClose={() => setIsSearchOpen(false)}>
-        <SearchChats />
+        <SearchChats onClose={() => setIsSearchOpen(false)} />
       </Modal>
     </div>
   );
