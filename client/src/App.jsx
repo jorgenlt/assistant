@@ -7,10 +7,12 @@ import Chat from "./features/chat/Chat";
 import Login from "./features/auth/Login";
 import Loader from "./components/Loader";
 
-function App() {
+const App = () => {
   const isAuth = useSelector((state) => state.auth.isAuth);
   const { theme, isThemeDark } = useSelector((state) => state.menu);
-  const fetchConversationsStatus = useSelector((state) => state.chat.fetchConversationsStatus);
+  const fetchConversationsStatus = useSelector(
+    (state) => state.chat.fetchConversationsStatus
+  );
 
   const dispatch = useDispatch();
 
@@ -53,7 +55,7 @@ function App() {
   return (
     <div className="flex h-screen bg-[var(--bg2)] text-[var(--text)]">
       {fetchConversationsStatus === "loading" ? (
-        <Loader />
+        <Loader isThemeDark={isThemeDark} />
       ) : !isAuth ? (
         <Login />
       ) : (
@@ -64,6 +66,6 @@ function App() {
       )}
     </div>
   );
-}
+};
 
 export default App;
