@@ -1,9 +1,28 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import SidebarItem from "./SidebarItem";
 import { FaTrashCan, FaXmark } from "react-icons/fa6";
 
 const DropdownChat = ({ cancelDelete, confirmDelete }) => {
   const dropdownRef = useRef(null);
+  const [position, setPosition] = useState("top");
+
+  useEffect(() => {
+    const updatePosition = () => {
+      const el = dropdownRef.current;
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        const isBottom = rect.top > window.innerHeight * 0.75;
+        setPosition(isBottom ? "bottom" : "top");
+      }
+    };
+
+    updatePosition();
+    window.addEventListener("resize", updatePosition);
+
+    return () => {
+      window.removeEventListener("resize", updatePosition);
+    };
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -22,7 +41,9 @@ const DropdownChat = ({ cancelDelete, confirmDelete }) => {
   return (
     <div
       ref={dropdownRef}
-      className="absolute right-2 top-6 mt-2 py-2 z-1"
+      className={`absolute right-2 mt-2 py-2 z-10 opacity-0 fade-in ${
+        position === "bottom" ? "bottom-8" : "top-6"
+      }`}
     >
       <div className="py-2 bg-[var(--bg2)] rounded-2xl">
         <SidebarItem title="Cancel" onClick={cancelDelete} Icon={FaXmark} />
