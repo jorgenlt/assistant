@@ -60,7 +60,7 @@ const Menu = () => {
       </div>
 
       {/* Conversations list */}
-      <div className="chat-list flex flex-col overflow-y-auto">
+      <div className="chat-list h-full flex flex-col overflow-y-auto">
         <div className="flex-1  border-t border-b border-[#83838326]">
           <ConversationsList />
         </div>

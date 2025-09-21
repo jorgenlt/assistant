@@ -22,7 +22,7 @@ const DropdownChat = ({ cancelDelete, confirmDelete }) => {
   return (
     <div
       ref={dropdownRef}
-      className="absolute right-2 top-6 mt-2 py-2 z-20"
+      className="absolute right-2 top-6 mt-2 py-2 z-1"
     >
       <div className="py-2 bg-[var(--bg2)] rounded-2xl">
         <SidebarItem title="Cancel" onClick={cancelDelete} Icon={FaXmark} />
