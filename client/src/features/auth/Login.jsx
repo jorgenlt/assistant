@@ -42,7 +42,7 @@ const Login = () => {
         dispatch(setLogin({ token, user }));
       }
     } catch (err) {
-      setError("Wrong email or password");
+      setError(err.message);
       console.error("An error occurred during login:", err.message);
     }
   };

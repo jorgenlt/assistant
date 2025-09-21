@@ -23,7 +23,12 @@ export const selectConversationById = createSelector(
 
 export const selectCurrentConversation = createSelector(
   [selectConversations, selectCurrentId],
-  (conversations, currentId) => conversations.find((c) => c._id === currentId)
+  (conversations, currentId) => {
+    if (!Array.isArray(conversations) || !currentId) {
+      return null;
+    }
+    return conversations.find(({ _id }) => _id === currentId) || null;
+  }
 );
 
 // Selector for current conversation messages

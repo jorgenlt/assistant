@@ -43,7 +43,7 @@ export const getChatResponseThunk = createAsyncThunk(
 
 export const fetchConversationsThunk = createAsyncThunk(
   "chat/fetchConversations",
-  async (_, { getState }) => {
+  async (_, { getState, dispatch }) => {
     const {
       auth: { token, user },
     } = getState();
@@ -65,6 +65,7 @@ export const fetchConversationsThunk = createAsyncThunk(
       }
     } catch (error) {
       console.error(error.message);
+      dispatch(setError(error.message));
     }
   }
 );
