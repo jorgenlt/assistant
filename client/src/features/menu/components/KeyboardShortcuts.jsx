@@ -1,8 +1,18 @@
 const KeyboardShortcuts = () => {
+  const Shortcut = ({ description, keys }) => {
+    return (
+      <div className="flex justify-between">
+        <span>{description}</span>
+        <span>{keys}</span>
+      </div>
+    );
+  };
+
   return (
-    <div className="w-xl">
-      <div className="p-4">
-        <p>keyboard shortcuts</p>
+    <div>
+      <div className="p-4 flex flex-col gap-2">
+        <Shortcut description="Search chats" keys="Ctrl + K" />
+        <Shortcut description="New chat" keys="Ctrl + M" />
       </div>
     </div>
   );
