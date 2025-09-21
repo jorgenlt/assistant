@@ -3,7 +3,6 @@ import { useState, useRef, useEffect } from "react";
 import {
   getChatResponseThunk,
   addConversation,
-  updateCurrentId,
   generateConversationTitleThunk,
 } from "./chatSlice.js";
 import { FaArrowUp, FaPaperclip } from "react-icons/fa6";
@@ -55,12 +54,6 @@ const ChatInput = () => {
     if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
       e.preventDefault();
       handleSendPrompt();
-      return;
-    }
-
-    if (e.key === "Escape") {
-      e.preventDefault();
-      dispatch(updateCurrentId(null));
       return;
     }
   };

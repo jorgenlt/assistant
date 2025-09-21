@@ -49,7 +49,7 @@ const DropdownProviders = () => {
 
       {/* Dropdown menu */}
       {isOpen && (
-        <div className="ml-2 absolute min-w-max *:left-0 origin-top-left divide-y rounded-xl shadow-lg bg-[var(--bg1)]">
+        <div className="ml-2 absolute z-10 min-w-max *:left-0 origin-top-left divide-y rounded-xl shadow-lg bg-[var(--bg1)]">
           <div className="py-1">
             {/* Providers */}
             {providers.map((provider) => (

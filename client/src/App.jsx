@@ -1,6 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchConversationsThunk } from "./features/chat/chatSlice";
+import {
+  fetchConversationsThunk,
+  updateCurrentId,
+} from "./features/chat/chatSlice";
 import { setIsSearchOpen } from "./features/menu/menuSlice";
 import Menu from "./features/menu/Menu";
 import Chat from "./features/chat/Chat";
@@ -39,9 +42,16 @@ const App = () => {
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (event) => {
+      // Ctrl + k
       if ((event.ctrlKey || event.metaKey) && event.key === "k") {
         event.preventDefault();
         dispatch(setIsSearchOpen(true));
+      }
+
+      // Ctrl + m
+      if ((event.ctrlKey || event.metaKey) && event.key === "m") {
+        event.preventDefault();
+        dispatch(updateCurrentId(null));
       }
     };
 
