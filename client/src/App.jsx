@@ -5,10 +5,12 @@ import { setIsSearchOpen } from "./features/menu/menuSlice";
 import Menu from "./features/menu/Menu";
 import Chat from "./features/chat/Chat";
 import Login from "./features/auth/Login";
+import Loader from "./components/Loader";
 
 function App() {
   const isAuth = useSelector((state) => state.auth.isAuth);
   const { theme, isThemeDark } = useSelector((state) => state.menu);
+  const fetchConversationsStatus = useSelector((state) => state.chat.fetchConversationsStatus);
 
   const dispatch = useDispatch();
 
@@ -50,7 +52,9 @@ function App() {
 
   return (
     <div className="flex h-screen bg-[var(--bg2)] text-[var(--text)]">
-      {!isAuth ? (
+      {fetchConversationsStatus === "loading" ? (
+        <Loader />
+      ) : !isAuth ? (
         <Login />
       ) : (
         <>

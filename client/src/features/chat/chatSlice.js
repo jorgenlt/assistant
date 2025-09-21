@@ -8,6 +8,7 @@ const initialState = {
   conversations: [],
   currentId: null,
   status: "idle",
+  fetchConversationsStatus: "idle",
   error: null,
 };
 
@@ -207,18 +208,18 @@ export const chat = createSlice({
         state.error = action.error.message;
       })
       .addCase(fetchConversationsThunk.pending, (state) => {
-        state.status = "loading";
+        state.fetchConversationsStatus = "loading";
         state.error = null;
       })
       .addCase(fetchConversationsThunk.fulfilled, (state, action) => {
-        state.status = "idle";
+        state.fetchConversationsStatus = "idle";
 
         const conversations = action.payload;
 
         state.conversations = conversations;
       })
       .addCase(fetchConversationsThunk.rejected, (state, action) => {
-        state.status = "failed";
+        state.fetchConversationsStatus = "failed";
         state.error =
           action.payload ??
           action.error?.message ??
