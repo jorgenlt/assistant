@@ -42,7 +42,7 @@ function Modal({ open, onClose, title, children }) {
           </div>
         </div>
         {title && (
-          <div className="flex items-start justify-between gap-4 p-4">
+          <div className="flex items-start justify-between gap-4 p-4 select-none">
             <h2 id="modal-title" className="text-lg font-medium">
               {title}
             </h2>

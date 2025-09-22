@@ -1,7 +1,7 @@
 const KeyboardShortcuts = () => {
   const Shortcut = ({ description, keys }) => {
     return (
-      <div className="flex justify-between">
+      <div className="flex justify-between select-none">
         <span>{description}</span>
         <span>{keys}</span>
       </div>
