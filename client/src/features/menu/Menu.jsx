@@ -1,12 +1,7 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentId } from "../chat/chatSlice.js";
 import { setIsSearchOpen } from "./menuSlice.js";
-import {
-  FaPenToSquare,
-  FaGear,
-  FaMagnifyingGlass,
-} from "react-icons/fa6";
+import { FaPenToSquare, FaGear, FaMagnifyingGlass } from "react-icons/fa6";
 import MenuHeader from "./MenuHeader.jsx";
 import ConversationsList from "./ConversationsList.jsx";
 import SidebarItem from "./components/SidebarItem.jsx";
@@ -17,8 +12,6 @@ import DropdownUser from "./components/DropdownUser.jsx";
 const Menu = () => {
   const isSearchOpen = useSelector((state) => state.menu.isSearchOpen);
   const user = useSelector((state) => state.auth.user);
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -36,8 +29,8 @@ const Menu = () => {
       {/* Header */}
       <MenuHeader action={handleResetId} />
 
-      {/* Sidebar */}
-      <div className="mb-4">
+      {/* New Chat & Search Chats */}
+      <div className="border-b border-[#83838326]">
         <SidebarItem
           onClick={handleResetId}
           title="New Chat"
@@ -52,31 +45,15 @@ const Menu = () => {
 
       {/* Conversations list */}
       <div className="chat-list h-full flex flex-col overflow-y-auto">
-        <div className="flex-1  border-t border-b border-[#83838326]">
+        <div className="flex-1">
           <ConversationsList />
         </div>
       </div>
 
-      {/* Settings */}
-      <div className="hidden">
-        <SidebarItem onClick={setIsModalOpen} title="Settings" Icon={FaGear} />
-      </div>
-
       {/* Profile & settings */}
-      <DropdownUser user={user} logout={handleLogout} />
-
-      {/* Settings modal */}
-      <Modal
-        open={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title="Settings"
-      >
-        <div className="flex flex-col">
-          <div onClick={handleLogout}>Log out</div>
-          <div>Setting 3</div>
-          <div>Setting 4</div>
-        </div>
-      </Modal>
+      <div className="border-t border-[#83838326]">
+        <DropdownUser user={user} logout={handleLogout} />
+      </div>
 
       {/* Search modal */}
       <Modal
