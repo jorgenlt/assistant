@@ -8,12 +8,8 @@ const ConversationsList = () => {
 
   const dispatch = useDispatch();
 
-  const getId = (conversation) => conversation?._id ?? conversation?.id;
-
   const conversationElements = useMemo(() => {
-    const convs = Array.isArray(conversations) ? conversations : [];
-
-    if (convs.length === 0) return [];
+    if (conversations.length === 0) return [];
 
     const sorted = [...conversations].sort((a, b) => {
       // get last message date (or updatedAt if no messages)
@@ -33,15 +29,15 @@ const ConversationsList = () => {
       dispatch(deleteConversationThunk(id));
     };
 
-    return sorted.map((conv) => {
-      const id = getId(conv);
+    return sorted.map((conversation) => {
+      const id = conversation._id;
       const isCurrent = id === currentId;
-      const title = conv.title ?? null;
+      const title = conversation.title || null;
 
       return (
         <ListItem
           key={id}
-          action={() => dispatch(updateCurrentId(id))} // Change current conversation
+          action={() => dispatch(updateCurrentId(id))}
           title={title}
           id={id}
           isCurrent={isCurrent}
