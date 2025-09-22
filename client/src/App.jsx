@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import {
   fetchConversationsThunk,
   updateCurrentId,
+  deleteConversationThunk,
 } from "./features/chat/chatSlice";
 import { setIsSearchOpen } from "./features/menu/menuSlice";
 import Menu from "./features/menu/Menu";
@@ -13,6 +14,7 @@ import Loader from "./components/Loader";
 const App = () => {
   const isAuth = useSelector((state) => state.auth.isAuth);
   const { theme, isThemeDark } = useSelector((state) => state.menu);
+  const currentId = useSelector((state) => state.chat.currentId);
   const fetchConversationsStatus = useSelector(
     (state) => state.chat.fetchConversationsStatus
   );
@@ -51,6 +53,17 @@ const App = () => {
       // Ctrl + m
       if ((event.ctrlKey || event.metaKey) && event.key === "m") {
         event.preventDefault();
+        dispatch(updateCurrentId(null));
+      }
+
+      // Ctrl + shift + backspace
+      if (
+        (event.ctrlKey || event.metaKey) &&
+        event.shiftKey &&
+        event.key === "Backspace"
+      ) {
+        event.preventDefault();
+        dispatch(deleteConversationThunk(currentId));
         dispatch(updateCurrentId(null));
       }
     };
