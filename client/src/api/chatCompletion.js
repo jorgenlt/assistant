@@ -2,7 +2,7 @@ import { BASE_API_URL } from "../app/config";
 import axios from "axios";
 
 const chatCompletion = async (
-  currentId,
+  conversationId,
   userId,
   prompt,
   provider,
@@ -10,12 +10,12 @@ const chatCompletion = async (
   token
 ) => {
   try {
-    const url = `${BASE_API_URL}/conversations/${currentId}/messages`;
+    const url = `${BASE_API_URL}/conversations/${conversationId}/messages`;
 
     const response = await axios.post(
       url,
       {
-        currentId,
+        conversationId,
         userId,
         role: "user",
         content: prompt,

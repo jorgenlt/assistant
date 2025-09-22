@@ -78,7 +78,7 @@ export const deleteConversation = async (req, res) => {
 
 export const addMessage = async (req, res) => {
   try {
-    const { role, content, provider, model, currentId: id, userId } = req.body;
+    const { role, content, provider, model, conversationId: id, userId } = req.body;
 
     if (!role || !content)
       return res.status(400).json({ error: "Role and content required" });

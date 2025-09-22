@@ -25,12 +25,19 @@ export const getChatResponseThunk = createAsyncThunk(
       throw new Error("No active conversation selected (currentId is falsy).");
     }
 
-    dispatch(updateMessages({ content: prompt, role: "user" }));
+    const conversationId = currentId;
+
+    dispatch(
+      updateMessages({
+        conversationId,
+        message: { content: prompt, role: "user", created: Date.now() },
+      })
+    );
 
     const { provider, model } = providers.current;
 
     const response = await chatCompletion(
-      currentId,
+      conversationId,
       user._id,
       prompt,
       provider,
@@ -38,7 +45,7 @@ export const getChatResponseThunk = createAsyncThunk(
       token
     );
 
-    return response;
+    return { conversationId, response };
   }
 );
 
@@ -143,15 +150,11 @@ export const chat = createSlice({
       state.conversations.push(action.payload);
     },
     updateMessages: (state, action) => {
-      const { currentId } = state;
-      const message = {
-        ...action.payload,
-        created: Date.now(),
-      };
+      const { conversationId, message } = action.payload;
 
-      if (currentId) {
+      if (conversationId) {
         const conv = state.conversations.find(
-          (c) => c._id === currentId || c.id === currentId
+          (c) => c._id === conversationId || c.id === conversationId
         );
         if (conv) {
           if (!Array.isArray(conv.messages)) conv.messages = [];
@@ -190,12 +193,12 @@ export const chat = createSlice({
         state.error = null;
         state.status = "idle";
 
-        const currentId = state.currentId;
-        const { content, role } = action.payload;
+        const { conversationId, response } = action.payload;
+        const { content, role } = response;
 
-        if (currentId && content && role) {
+        if (conversationId && content && role) {
           const conv = state.conversations.find(
-            (c) => (c._id ?? c.id) === currentId
+            (c) => (c._id ?? c.id) === conversationId
           );
           if (conv) {
             conv.messages.push({ created: Date.now(), content, role });
