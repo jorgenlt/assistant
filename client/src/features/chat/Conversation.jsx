@@ -27,7 +27,7 @@ const Conversation = () => {
 
   return (
     <div ref={scrollRef} className="flex justify-center flex-1 overflow-y-auto">
-      <div className="px-2 w-3/5 flex flex-col">
+      <div className="px-2  md:mx-0 w-full md:w-3/5 flex flex-col">
         {messages?.map((message, i) => {
           const { created, content, role } = message;
 

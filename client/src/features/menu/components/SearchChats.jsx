@@ -41,7 +41,7 @@ const SearchChats = ({ onClose }) => {
   });
 
   return (
-    <div className="w-xl">
+    <div className="w-full md:w-xl">
       <div className="p-4 border-b-1 border-b-gray-700">
         <input
           className="w-full pr-6"

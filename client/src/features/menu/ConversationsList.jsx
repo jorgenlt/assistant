@@ -52,7 +52,7 @@ const ConversationsList = () => {
         />
       );
     });
-  }, [conversations, currentId, dispatch]);
+  }, [conversations, currentId, isMobile, dispatch]);
 
   return (
     <div className="cursor-default select-none mt-2">

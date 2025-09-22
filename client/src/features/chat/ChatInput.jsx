@@ -69,8 +69,8 @@ const ChatInput = () => {
   }, [prompt]);
 
   return (
-    <div className="flex-shrink-0 mb-2 ml-2 mr-4 flex justify-center">
-      <div className="w-3/5">
+    <div className="flex-shrink-0 mb-2 md:ml-2 md:mr-4 flex justify-center">
+      <div className="w-full md:w-3/5">
         <div className="p-3 flex items-end gap-2">
           {/* Left action */}
           <div

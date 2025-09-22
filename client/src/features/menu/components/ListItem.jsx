@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import DropdownChat from "./DropdownChat";
 
-function ListItem({ action, title, id, isCurrent, onDelete }) {
+const ListItem = ({ action, title, id, isCurrent, onDelete }) => {
   const isThemeDark = useSelector((state) => state.menu.isThemeDark);
   const error = useSelector((state) => state.chat.error);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -26,6 +26,7 @@ function ListItem({ action, title, id, isCurrent, onDelete }) {
     // Conversation
     <div className="relative">
       <div
+        
         onClick={action}
         className={`${
           isCurrent ? "bg-[var(--hover)]/70  text-[var(--text-hover)]" : ""
