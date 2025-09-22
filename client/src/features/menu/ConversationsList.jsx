@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import ListItem from "./components/ListItem";
 
 const ConversationsList = () => {
-  const conversations = useSelector((state) => state.chat.conversations);
+  const { conversations, currentId } = useSelector((state) => state.chat);
 
   const dispatch = useDispatch();
 
@@ -35,6 +35,7 @@ const ConversationsList = () => {
 
     return sorted.map((conv) => {
       const id = getId(conv);
+      const isCurrent = id === currentId;
       const title = conv.title ?? null;
 
       return (
@@ -43,11 +44,12 @@ const ConversationsList = () => {
           action={() => dispatch(updateCurrentId(id))} // Change current conversation
           title={title}
           id={id}
+          isCurrent={isCurrent}
           onDelete={() => handleDeleteConversation(id)}
         />
       );
     });
-  }, [conversations, dispatch]);
+  }, [conversations, currentId, dispatch]);
 
   return (
     <div className="cursor-default select-none mt-2">
