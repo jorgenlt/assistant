@@ -1,12 +1,30 @@
 import { useEffect, useRef, useState } from "react";
-import { FaRightFromBracket, FaUser, FaKeyboard } from "react-icons/fa6";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleTheme } from "../menuSlice";
+import {
+  FaRightFromBracket,
+  FaUser,
+  FaKeyboard,
+  FaMoon,
+  FaSun,
+} from "react-icons/fa6";
 import SidebarItem from "./SidebarItem";
 import KeyboardShortcuts from "./KeyboardShortcuts";
 import Modal from "../../../components/Modal";
 
 const DropdownUser = ({ user, logout }) => {
+  const theme = useSelector((state) => state.menu.theme);
+  const isThemeDark = useSelector((state) => state.menu.isThemeDark);
+
   const [isOpen, setIsOpen] = useState(false);
   const [isKeyboardShortcutsOpen, setIsKeyboardShortcutsOpen] = useState(false);
+  const [isThemeHover, setIsThemeHover] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const handleToggleTheme = () => {
+    dispatch(toggleTheme());
+  };
 
   const dropdownRef = useRef(null);
 
@@ -41,6 +59,17 @@ const DropdownUser = ({ user, logout }) => {
               Icon={FaKeyboard}
               onClick={handleOpenKeyboardShortcuts}
             />
+            {/* Theme selector */}
+            <div
+              onMouseEnter={() => setIsThemeHover(true)}
+              onMouseLeave={() => setIsThemeHover(false)}
+            >
+              <SidebarItem
+                onClick={handleToggleTheme}
+                title={isThemeHover ? theme : "Toggle Themes"}
+                Icon={isThemeDark ? FaMoon : FaSun}
+              />
+            </div>
             <SidebarItem
               title="Logout"
               Icon={FaRightFromBracket}

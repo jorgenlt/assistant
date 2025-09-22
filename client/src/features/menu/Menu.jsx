@@ -66,24 +66,12 @@ const Menu = () => {
         </div>
       </div>
 
-      {/* Theme selector */}
-      <div
-        onMouseEnter={() => setIsThemeHover(true)}
-        onMouseLeave={() => setIsThemeHover(false)}
-      >
-        <SidebarItem
-          onClick={handleToggleTheme}
-          title={isThemeHover ? theme : "Toggle Themes"}
-          Icon={isThemeDark ? FaMoon : FaSun}
-        />
-      </div>
-
       {/* Settings */}
       <div className="hidden">
         <SidebarItem onClick={setIsModalOpen} title="Settings" Icon={FaGear} />
       </div>
 
-      {/* Profile */}
+      {/* Profile & settings */}
       <DropdownUser user={user} logout={handleLogout} />
 
       {/* Settings modal */}
