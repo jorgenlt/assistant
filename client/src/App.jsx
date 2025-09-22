@@ -5,11 +5,12 @@ import {
   updateCurrentId,
   deleteConversationThunk,
 } from "./features/chat/chatSlice";
-import { setIsSearchOpen } from "./features/menu/menuSlice";
+import { setIsSearchOpen, setIsMenuOpen, setIsMobile } from "./features/menu/menuSlice";
 import Menu from "./features/menu/Menu";
 import Chat from "./features/chat/Chat";
 import Login from "./features/auth/Login";
 import Loader from "./components/Loader";
+import { useWindowSize } from "react-use";
 
 const App = () => {
   const isAuth = useSelector((state) => state.auth.isAuth);
@@ -18,6 +19,9 @@ const App = () => {
   const fetchConversationsStatus = useSelector(
     (state) => state.chat.fetchConversationsStatus
   );
+  const isMenuOpen = useSelector(state => state.menu.isMenuOpen)
+
+  const isMobile = useWindowSize().width < 767;
 
   const dispatch = useDispatch();
 
@@ -40,6 +44,12 @@ const App = () => {
       dispatch(fetchConversationsThunk());
     }
   }, [isAuth, dispatch]);
+
+  useEffect(() => {
+    dispatch(setIsMenuOpen(!isMobile))
+    dispatch(setIsMobile(isMobile))
+  }, [isMobile, dispatch])
+  
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -83,7 +93,8 @@ const App = () => {
         <Login />
       ) : (
         <>
-          <Menu />
+          {isMenuOpen &&  <Menu />}
+         
           <Chat />
         </>
       )}

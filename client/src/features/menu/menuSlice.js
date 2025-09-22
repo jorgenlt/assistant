@@ -4,6 +4,8 @@ const initialState = {
   theme: "dark",
   isThemeDark: true,
   isSearchOpen: false,
+  isMenuOpen: false,
+  isMobile: true,
   themes: [
     "dark",
     "light",
@@ -47,6 +49,12 @@ export const menu = createSlice({
     setIsSearchOpen: (state, action) => {
       state.isSearchOpen = action.payload;
     },
+    setIsMenuOpen: (state, action) => {
+      state.isMenuOpen = action.payload;
+    },
+    setIsMobile: (state, action) => {
+      state.isMobile = action.payload;
+    },
     toggleLargeText: (state) => {
       state.largeText = !state.largeText;
     },
@@ -54,7 +62,7 @@ export const menu = createSlice({
   extraReducers: () => {},
 });
 
-export const { resetMenuSlice, setTheme, setIsSearchOpen, toggleTheme, toggleLargeText } =
+export const { resetMenuSlice, setTheme, setIsSearchOpen, setIsMenuOpen, setIsMobile, toggleTheme, toggleLargeText } =
   menu.actions;
 
 export default menu.reducer;
