@@ -9,21 +9,24 @@ import {
   FaSun,
 } from "react-icons/fa6";
 import SidebarItem from "./SidebarItem";
-import KeyboardShortcuts from "./KeyboardShortcuts";
-import Modal from "../../../components/Modal";
+import { setIsKeyboardShortcutsOpen } from "../menuSlice";
 
 const DropdownUser = ({ user, logout }) => {
   const theme = useSelector((state) => state.menu.theme);
   const isThemeDark = useSelector((state) => state.menu.isThemeDark);
 
   const [isOpen, setIsOpen] = useState(false);
-  const [isKeyboardShortcutsOpen, setIsKeyboardShortcutsOpen] = useState(false);
   const [isThemeHover, setIsThemeHover] = useState(false);
 
   const dispatch = useDispatch();
 
   const handleToggleTheme = () => {
     dispatch(toggleTheme());
+  };
+
+  const handleOpenKeyboardShortcuts = () => {
+    dispatch(setIsKeyboardShortcutsOpen(true));
+    setIsOpen(false);
   };
 
   const dropdownRef = useRef(null);
@@ -38,11 +41,6 @@ const DropdownUser = ({ user, logout }) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   });
-
-  const handleOpenKeyboardShortcuts = () => {
-    setIsKeyboardShortcutsOpen(true);
-    setIsOpen(false);
-  };
 
   return (
     <div ref={dropdownRef} className="relative">
@@ -78,15 +76,6 @@ const DropdownUser = ({ user, logout }) => {
           </div>
         </div>
       )}
-
-      {/* Keyboard shortcuts */}
-      <Modal
-        title="Keyboard shortcuts"
-        open={isKeyboardShortcutsOpen}
-        onClose={() => setIsKeyboardShortcutsOpen(false)}
-      >
-        <KeyboardShortcuts />
-      </Modal>
     </div>
   );
 };

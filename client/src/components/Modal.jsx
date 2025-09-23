@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { FaX } from "react-icons/fa6";
 
-function Modal({ open, onClose, title, children }) {
+const Modal = ({ open, onClose, title, children }) => {
   const overlayRef = useRef(null);
 
   // Close on Escape
@@ -52,6 +52,6 @@ function Modal({ open, onClose, title, children }) {
       </div>
     </div>
   );
-}
+};
 
 export default Modal;

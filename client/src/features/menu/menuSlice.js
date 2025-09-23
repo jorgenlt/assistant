@@ -3,8 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   theme: "dark",
   isThemeDark: true,
-  isSearchOpen: false,
   isMenuOpen: false,
+  isSearchOpen: false,
+  isKeyboardShortcutsOpen: false,
   isMobile: true,
   themes: [
     "dark",
@@ -46,11 +47,14 @@ export const menu = createSlice({
       state.theme = state.themes[nextIndex];
       state.isThemeDark = /dark/.test(state.theme);
     },
+    setIsMenuOpen: (state, action) => {
+      state.isMenuOpen = action.payload;
+    },
     setIsSearchOpen: (state, action) => {
       state.isSearchOpen = action.payload;
     },
-    setIsMenuOpen: (state, action) => {
-      state.isMenuOpen = action.payload;
+    setIsKeyboardShortcutsOpen: (state, action) => {
+      state.isKeyboardShortcutsOpen = action.payload;
     },
     setIsMobile: (state, action) => {
       state.isMobile = action.payload;
@@ -62,7 +66,15 @@ export const menu = createSlice({
   extraReducers: () => {},
 });
 
-export const { resetMenuSlice, setTheme, setIsSearchOpen, setIsMenuOpen, setIsMobile, toggleTheme, toggleLargeText } =
-  menu.actions;
+export const {
+  resetMenuSlice,
+  setTheme,
+  setIsMenuOpen,
+  setIsSearchOpen,
+  setIsKeyboardShortcutsOpen,
+  setIsMobile,
+  toggleTheme,
+  toggleLargeText,
+} = menu.actions;
 
 export default menu.reducer;

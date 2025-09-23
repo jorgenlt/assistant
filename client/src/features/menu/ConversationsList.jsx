@@ -11,7 +11,7 @@ const ConversationsList = () => {
   const dispatch = useDispatch();
 
   const conversationElements = useMemo(() => {
-    if (conversations.length === 0) return [];
+    if (!conversations || conversations?.length === 0) return [];
 
     const sorted = [...conversations].sort((a, b) => {
       // get last message date (or updatedAt if no messages)

@@ -5,25 +5,42 @@ import {
   updateCurrentId,
   deleteConversationThunk,
 } from "./features/chat/chatSlice";
-import { setIsSearchOpen, setIsMenuOpen, setIsMobile } from "./features/menu/menuSlice";
+import {
+  setIsMenuOpen,
+  setIsSearchOpen,
+  setIsKeyboardShortcutsOpen,
+  setIsMobile,
+} from "./features/menu/menuSlice";
 import Menu from "./features/menu/Menu";
 import Chat from "./features/chat/Chat";
 import Login from "./features/auth/Login";
 import Loader from "./components/Loader";
+import Modal from "./components/Modal";
+import SearchChats from "./features/menu/components/SearchChats";
+import KeyboardShortcuts from "./features/menu/components/KeyboardShortcuts";
 import { useWindowSize } from "react-use";
 
 const App = () => {
   const isAuth = useSelector((state) => state.auth.isAuth);
-  const { theme, isThemeDark } = useSelector((state) => state.menu);
+  const {
+    theme,
+    isThemeDark,
+    isMenuOpen,
+    isSearchOpen,
+    isKeyboardShortcutsOpen,
+  } = useSelector((state) => state.menu);
   const currentId = useSelector((state) => state.chat.currentId);
   const fetchConversationsStatus = useSelector(
     (state) => state.chat.fetchConversationsStatus
   );
-  const isMenuOpen = useSelector(state => state.menu.isMenuOpen)
-
   const isMobile = useWindowSize().width < 767;
 
   const dispatch = useDispatch();
+
+  const handleOnCloseSearch = () => {
+    dispatch(setIsSearchOpen(false));
+    if (isMobile) dispatch(setIsMenuOpen(false));
+  };
 
   // Runs once on page load to set the initial theme class on root
   useEffect(() => {
@@ -46,10 +63,9 @@ const App = () => {
   }, [isAuth, dispatch]);
 
   useEffect(() => {
-    dispatch(setIsMenuOpen(!isMobile))
-    dispatch(setIsMobile(isMobile))
-  }, [isMobile, dispatch])
-  
+    dispatch(setIsMenuOpen(!isMobile));
+    dispatch(setIsMobile(isMobile));
+  }, [isMobile, dispatch]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -86,18 +102,51 @@ const App = () => {
   });
 
   return (
-    <div className="flex h-screen bg-[var(--bg2)] text-[var(--text)]">
+    <div className="flex h-screen w-screen bg-[var(--bg2)] text-[var(--text)]">
       {fetchConversationsStatus === "loading" ? (
         <Loader isThemeDark={isThemeDark} />
       ) : !isAuth ? (
         <Login />
       ) : (
         <>
-          {isMenuOpen &&  <Menu />}
+          <div
+            className={`
+            transition-transform duration-300 ease-in-out
+            ${isMobile ? "fixed top-0 left-0 z-20" : "relative"}
+            ${
+              isMobile
+                ? isMenuOpen
+                  ? "translate-x-0"
+                  : "-translate-x-full"
+                : ""
+            }
          
-          <Chat />
+            bg-[var(--bg2)] shadow-xl w-4/5 max-w-xs md:w-xs
+          `}
+          >
+            <Menu />
+          </div>
+
+          {/* Chat flexes into remaining space */}
+          <div className="flex-1 flex flex-col w-full overflow-hidden">
+            <Chat />
+          </div>
         </>
       )}
+
+      {/* Search modal */}
+      <Modal open={isSearchOpen} onClose={handleOnCloseSearch}>
+        <SearchChats onClose={handleOnCloseSearch} />
+      </Modal>
+
+      {/* Keyboard shortcuts */}
+      <Modal
+        title="Keyboard shortcuts"
+        open={isKeyboardShortcutsOpen}
+        onClose={() => dispatch(setIsKeyboardShortcutsOpen(false))}
+      >
+        <KeyboardShortcuts />
+      </Modal>
     </div>
   );
 };

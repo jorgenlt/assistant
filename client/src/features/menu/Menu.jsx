@@ -2,12 +2,10 @@ import { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentId } from "../chat/chatSlice.js";
 import { setIsSearchOpen, setIsMenuOpen } from "./menuSlice.js";
-import { FaPenToSquare, FaGear, FaMagnifyingGlass } from "react-icons/fa6";
+import { FaPenToSquare, FaMagnifyingGlass } from "react-icons/fa6";
 import MenuHeader from "./MenuHeader.jsx";
 import ConversationsList from "./ConversationsList.jsx";
 import SidebarItem from "./components/SidebarItem.jsx";
-import Modal from "../../components/Modal.jsx";
-import SearchChats from "./components/SearchChats.jsx";
 import DropdownUser from "./components/DropdownUser.jsx";
 
 const Menu = () => {
@@ -25,11 +23,6 @@ const Menu = () => {
   const handleLogout = () => {
     localStorage.clear();
     window.location.href = "/";
-  };
-
-  const handleOnCloseSearch = () => {
-    dispatch(setIsSearchOpen(false));
-    if (isMobile) dispatch(setIsMenuOpen(false));
   };
 
   const menuRef = useRef();
@@ -53,9 +46,10 @@ const Menu = () => {
   return (
     <div
       ref={menuRef}
-      className={`${
-        isMobile ? "fixed h-screen z-10 w-4/5" : "w-1/5"
-      } py-2 flex flex-col bg-[var(--bg1)]`}
+      // className={`${
+      //   isMobile ? "fixed h-screen z-10 w-4/5" : "w-1/5"
+      // } py-2 flex flex-col bg-[var(--bg1)]`}
+      className={`h-screen py-2 flex flex-col bg-[var(--bg1)]`}
     >
       {/* Header */}
       <MenuHeader action={handleResetId} />
@@ -85,11 +79,6 @@ const Menu = () => {
       <div className="border-t border-[#83838326]">
         <DropdownUser user={user} logout={handleLogout} />
       </div>
-
-      {/* Search modal */}
-      <Modal open={isSearchOpen} onClose={handleOnCloseSearch}>
-        <SearchChats onClose={handleOnCloseSearch} />
-      </Modal>
     </div>
   );
 };

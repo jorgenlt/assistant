@@ -8,7 +8,7 @@ const Chat = () => {
   const currentId = useSelector((state) => state.chat.currentId);
 
   return (
-    <div className="flex flex-col w-full md:w-4/5">
+    <>
       <ChatHeader />
       {currentId === null ? (
         <ChatHome />
@@ -18,8 +18,8 @@ const Chat = () => {
           <ChatInput />
         </>
       )}
-    </div>
+    </>
   );
-}
+};
 
 export default Chat;
