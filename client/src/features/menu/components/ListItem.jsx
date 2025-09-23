@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import DropdownChat from "./DropdownChat";
 
-const ListItem = ({ action, title, id, isCurrent, onDelete }) => {
+const ListItem = ({ action, title, id, isCurrent, onDelete, isMobile }) => {
   const isThemeDark = useSelector((state) => state.menu.isThemeDark);
   const error = useSelector((state) => state.chat.error);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -26,7 +26,6 @@ const ListItem = ({ action, title, id, isCurrent, onDelete }) => {
     // Conversation
     <div className="relative">
       <div
-        
         onClick={action}
         className={`${
           isCurrent ? "bg-[var(--hover)]/70  text-[var(--text-hover)]" : ""
@@ -34,15 +33,17 @@ const ListItem = ({ action, title, id, isCurrent, onDelete }) => {
       >
         <span className="text-sm truncate">{title}</span>
 
-        <div
-          onClick={handleDeleteClick}
-          className="ml-2 p-1 cursor-pointer hidden group-hover:flex"
-        >
-          <FaTrashCan
-            size={12}
-            className="text-gray-300 hover:text-gray-400 dark:text-gray-600 dark:hover:text-gray-400"
-          />
-        </div>
+        {!isMobile && (
+          <div
+            onClick={handleDeleteClick}
+            className="ml-2 p-1 cursor-pointer hidden group-hover:flex"
+          >
+            <FaTrashCan
+              size={12}
+              className="text-gray-300 hover:text-gray-400 dark:text-gray-600 dark:hover:text-gray-400"
+            />
+          </div>
+        )}
       </div>
 
       {showConfirm && (
@@ -66,6 +67,6 @@ const ListItem = ({ action, title, id, isCurrent, onDelete }) => {
       <PulseLoader size={5} color={isThemeDark ? "#fafafa" : "#121416"} />
     </div>
   );
-}
+};
 
 export default ListItem;

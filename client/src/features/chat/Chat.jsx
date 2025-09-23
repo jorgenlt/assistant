@@ -9,7 +9,7 @@ const Chat = () => {
 
   return (
     <>
-      <ChatHeader />
+      <ChatHeader currentId={currentId} />
       {currentId === null ? (
         <ChatHome />
       ) : (

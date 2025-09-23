@@ -49,6 +49,7 @@ const ConversationsList = () => {
           id={id}
           isCurrent={isCurrent}
           onDelete={() => handleDeleteConversation(id)}
+          isMobile={isMobile}
         />
       );
     });

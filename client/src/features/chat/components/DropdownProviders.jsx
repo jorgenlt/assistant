@@ -4,7 +4,7 @@ import { setModel, setProvider } from "../../providers/providersSlice";
 import { FaChevronDown, FaCheck, FaGear } from "react-icons/fa6";
 import DropdownProvidersModal from "./DropdownProvidersModal";
 
-const DropdownProviders = () => {
+const DropdownProviders = ({ isMobile }) => {
   const { current, openAi, anthropic, mistral } = useSelector(
     (state) => state.providers
   );
@@ -39,10 +39,10 @@ const DropdownProviders = () => {
       {/* Dropdown button */}
       <div
         onClick={() => setIsOpen(!isOpen)}
-        className=" cursor-pointer select-none rounded-xl hover:bg-[var(--hover)] hover:text-[var(--text-hover)] flex items-center py-2 my-2 mx-2 px-4"
+        className="cursor-pointer select-none rounded-xl hover:bg-[var(--hover)] hover:text-[var(--text-hover)] flex items-center py-2 my-2 mx-2 px-4"
       >
         <span className="mr-2">
-          {current.name} ({current.model})
+          {current.name} {!isMobile ? `(${current.model})` : ""}
         </span>
         <FaChevronDown size={13} />
       </div>
