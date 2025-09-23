@@ -1,7 +1,7 @@
 import DropdownProviders from "./components/DropdownProviders";
 import { useWindowSize } from "react-use";
 import { useState } from "react";
-import { FaBars, FaTrashCan } from "react-icons/fa6";
+import { FaBars, FaEllipsisVertical } from "react-icons/fa6";
 import { setIsMenuOpen } from "../menu/menuSlice";
 import { deleteConversationThunk } from "../chat/chatSlice";
 import { useDispatch } from "react-redux";
@@ -42,7 +42,7 @@ const ChatHeader = ({ currentId }) => {
       </div>
       {isMobile && (
         <div className="mr-2" onClick={handleDeleteClick}>
-          <FaTrashCan size={26} />
+          <FaEllipsisVertical size={26} />
         </div>
       )}
       {showConfirm && (
