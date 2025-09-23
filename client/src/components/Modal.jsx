@@ -31,7 +31,7 @@ const Modal = ({ open, onClose, title, children }) => {
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
-        className="relative w-full mx-2 md:min-w-md md:max-w-xl rounded-2xl bg-[var(--bg1)] shadow-xl outline-none transition-all"
+        className="relative w-full mx-2 md:min-w-md max-w-md md:max-w-xl rounded-2xl bg-[var(--bg1)] shadow-xl outline-none transition-all"
       >
         <div className="absolute right-3 top-3">
           <div
