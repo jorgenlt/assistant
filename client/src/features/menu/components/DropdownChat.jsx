@@ -3,8 +3,9 @@ import SidebarItem from "./SidebarItem";
 import { FaTrashCan, FaXmark } from "react-icons/fa6";
 
 const DropdownChat = ({ cancelDelete, confirmDelete }) => {
-  const dropdownRef = useRef(null);
   const [position, setPosition] = useState("top");
+
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
     const updatePosition = () => {

@@ -4,10 +4,11 @@ import { setModel, setProvider } from "../../providers/providersSlice";
 import { FaChevronDown, FaCheck, FaGear } from "react-icons/fa6";
 import DropdownProvidersModal from "./DropdownProvidersModal";
 
-const DropdownProviders = ({ isMobile }) => {
+const DropdownProviders = () => {
   const { current, openAi, anthropic, mistral } = useSelector(
     (state) => state.providers
   );
+  const isMobile = useSelector((state) => state.menu.isMobile);
 
   const [isOpen, setIsOpen] = useState(false);
   const [activeProvider, setActiveProvider] = useState(null); // null means no modal
