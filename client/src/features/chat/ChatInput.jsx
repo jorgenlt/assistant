@@ -72,7 +72,8 @@ const ChatInput = () => {
 
   return (
     <div className="flex-shrink-0 mb-2 md:ml-2 md:mr-4 flex justify-center">
-      <div className="w-full md:w-3/5">
+      {/* <div className="w-full md:w-3/5"> */}
+      <div className="w-full md:max-w-3xl">
         <div className="p-3 flex items-end gap-2">
           {/* Left action */}
           <div
