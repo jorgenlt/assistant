@@ -31,7 +31,7 @@ const SearchChats = ({ onClose }) => {
   const titleElements = filteredConversations.map((conversation, i) => {
     return (
       <div
-        className="cursor-pointer select-none p-2 rounded-xl hover:bg-[var(--hover)]"
+        className="cursor-pointer select-none p-2 rounded-xl hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
         onClick={() => handleUpdateCurrentId(conversation._id)}
         key={i}
       >
