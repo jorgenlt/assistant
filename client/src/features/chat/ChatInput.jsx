@@ -41,13 +41,15 @@ const ChatInput = () => {
   };
 
   const handleSendPrompt = async () => {
-    if (currentId === null) {
-      await createConversation();
-      dispatch(generateConversationTitleThunk(prompt));
-    }
+    if (prompt) {
+      if (currentId === null) {
+        await createConversation();
+        dispatch(generateConversationTitleThunk(prompt));
+      }
 
-    dispatch(getChatResponseThunk(prompt));
-    setPrompt("");
+      dispatch(getChatResponseThunk(prompt));
+      setPrompt("");
+    }
   };
 
   const handleKeyDown = (e) => {
