@@ -1,40 +1,19 @@
-import { useState, useRef, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setModel, setProvider } from "../../providers/providersSlice";
-import { FaChevronDown, FaCheck, FaGear } from "react-icons/fa6";
+import { useState, useRef } from "react";
+import { useSelector } from "react-redux";
+import { FaChevronDown } from "react-icons/fa6";
 import DropdownProvidersModal from "./DropdownProvidersModal";
+import DropdownProvidersMenu from "./DropdownProvidersMenu";
+import useClickOutside from "../../../hooks/useClickOutside";
 
 const DropdownProviders = () => {
-  const { current, openAi, anthropic, mistral } = useSelector(
-    (state) => state.providers
-  );
+  const current = useSelector((state) => state.providers.current);
   const isMobile = useSelector((state) => state.menu.isMobile);
 
-  const [isOpen, setIsOpen] = useState(false);
   const [activeProvider, setActiveProvider] = useState(null); // null means no modal
-
-  const providers = [openAi, anthropic, mistral];
-
-  const dispatch = useDispatch();
-
-  const handleSetModel = (provider, model) => {
-    dispatch(setProvider({ provider }));
-    dispatch(setModel({ provider, model }));
-    setIsOpen(false);
-  };
+  const [isOpen, setIsOpen] = useState(false);
 
   const dropdownRef = useRef(null);
-
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  useClickOutside(dropdownRef, () => setIsOpen(false));
 
   return (
     <div ref={dropdownRef} className="relative inline-block text-left">
@@ -51,43 +30,10 @@ const DropdownProviders = () => {
 
       {/* Dropdown menu */}
       {isOpen && (
-        <div className="ml-2 absolute z-10 min-w-max *:left-0 origin-top-left divide-y rounded-xl shadow-lg bg-[var(--bg1)]">
-          <div className="py-1">
-            {/* Providers */}
-            {providers.map((provider) => (
-              <div
-                key={provider.name}
-                className="text-neutral-400 p-2 flex flex-col m-1 cursor-default select-none text-left"
-              >
-                <div className="flex items-center justify-between">
-                  <span>{provider.name}</span>
-                  <div
-                    onClick={() => setActiveProvider(provider)}
-                    className="cursor-pointer select-none p-2 rounded-full hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
-                  >
-                    <FaGear />
-                  </div>
-                </div>
-
-                {/* Models */}
-                {provider.models.map((model) => (
-                  <div
-                    key={model}
-                    onClick={() => handleSetModel(provider.provider, model)}
-                    className="text-[var(--text)] p-2 flex items-center justify-between m-1 cursor-pointer select-none rounded-xl text-left hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
-                  >
-                    {model}{" "}
-                    {current.model === model && (
-                      <div className="pl-2">
-                        <FaCheck />
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
-        </div>
+        <DropdownProvidersMenu
+          setActiveProvider={setActiveProvider}
+          setIsOpen={setIsOpen}
+        />
       )}
 
       {/* Modal */}
