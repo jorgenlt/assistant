@@ -20,6 +20,7 @@ const DropdownProviders = () => {
   const handleSetModel = (provider, model) => {
     dispatch(setProvider({ provider }));
     dispatch(setModel({ provider, model }));
+    setIsOpen(false);
   };
 
   const dropdownRef = useRef(null);
