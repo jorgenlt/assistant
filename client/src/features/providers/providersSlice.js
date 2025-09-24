@@ -21,8 +21,8 @@ const initialState = {
       "claude-sonnet-4-20250514",
       "claude-opus-4-1-20250805",
     ],
-    pricingLink: "https://www.anthropic.com/pricing#api",
-    getApiLink: "https://docs.anthropic.com/en/docs/get-started",
+    pricingLink: "https://claude.com/pricing",
+    getApiLink: "https://docs.claude.com/en/docs/get-started",
     usageLink: "https://console.anthropic.com/usage",
   },
   mistral: {
