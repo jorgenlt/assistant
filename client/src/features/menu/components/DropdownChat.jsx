@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import SidebarItem from "./SidebarItem";
 import { FaTrashCan, FaXmark } from "react-icons/fa6";
+import useClickOutside from "../../../hooks/useClickOutside";
 
 const DropdownChat = ({ cancelDelete, confirmDelete }) => {
   const [position, setPosition] = useState("top");
 
   const dropdownRef = useRef(null);
+  useClickOutside(dropdownRef, cancelDelete);
 
   useEffect(() => {
     const updatePosition = () => {
@@ -24,20 +26,6 @@ const DropdownChat = ({ cancelDelete, confirmDelete }) => {
       window.removeEventListener("resize", updatePosition);
     };
   }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        cancelDelete();
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  });
 
   return (
     <div
