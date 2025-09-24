@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { FaChevronDown } from "react-icons/fa6";
-import DropdownProvidersModal from "./DropdownProvidersModal";
+import SetApiKeyModal from "./SetApiKeyModal";
 import DropdownProvidersMenu from "./DropdownProvidersMenu";
 import useClickOutside from "../../../hooks/useClickOutside";
 
@@ -38,7 +38,7 @@ const DropdownProviders = () => {
 
       {/* Modal */}
       {activeProvider && (
-        <DropdownProvidersModal
+        <SetApiKeyModal
           open={activeProvider}
           onClose={() => setActiveProvider(null)}
           activeProvider={activeProvider}

@@ -7,7 +7,7 @@ import Button from "../../../components/Button";
 import axios from "axios";
 import ExternalLink from "../../../components/ExternalLink";
 
-const DropdownProvidersModal = ({ open, onClose, activeProvider }) => {
+const SetApiKeyModal = ({ open, onClose, activeProvider }) => {
   const { token, user } = useSelector((state) => state.auth);
 
   const userId = user._id;
@@ -99,4 +99,4 @@ const DropdownProvidersModal = ({ open, onClose, activeProvider }) => {
   );
 };
 
-export default DropdownProvidersModal;
+export default SetApiKeyModal;
