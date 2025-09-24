@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "../menuSlice";
 import {
@@ -10,6 +10,7 @@ import {
 } from "react-icons/fa6";
 import SidebarItem from "./SidebarItem";
 import { setIsKeyboardShortcutsOpen } from "../menuSlice";
+import useClickOutside from "../../../hooks/useClickOutside";
 
 const DropdownUser = ({ user, logout }) => {
   const theme = useSelector((state) => state.menu.theme);
@@ -30,17 +31,7 @@ const DropdownUser = ({ user, logout }) => {
   };
 
   const dropdownRef = useRef(null);
-
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  });
+  useClickOutside(dropdownRef, () => setIsOpen(false));
 
   return (
     <div ref={dropdownRef} className="relative">
