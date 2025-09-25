@@ -1,22 +1,16 @@
-import { FaWorm, FaAnglesLeft } from "react-icons/fa6";
+import { TbRobot } from "react-icons/tb";
 
 const MenuHeader = ({ action }) => {
   return (
-    <div className="mb-4 flex justify-between">
+    <div className="mb-4 flex">
       <div
         className="mx-3 px-2 py-2 cursor-pointer w-fit rounded-xl hover:bg-[var(--hover)]"
         onClick={action}
       >
-        <FaWorm className="size-5" color="#ee29f5" />
-      </div>
-      <div
-        className="hidden mx-3 px-2 py-2 cursor-pointer w-fit rounded-xl hover:bg-[var(--hover)]"
-        onClick={action}
-      >
-        <FaAnglesLeft className="size-5" color="gray" />
+        <TbRobot size={30} color="#ee29f5" />
       </div>
     </div>
   );
-}
+};
 
 export default MenuHeader;
