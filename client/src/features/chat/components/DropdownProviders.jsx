@@ -18,7 +18,7 @@ const DropdownProviders = () => {
   return (
     <div ref={dropdownRef} className="relative inline-block text-left">
       {/* Dropdown button */}
-      <div
+      <button
         onClick={() => setIsOpen(!isOpen)}
         className="cursor-pointer select-none rounded-xl hover:bg-[var(--hover)] hover:text-[var(--text-hover)] flex items-center py-2 my-2 mx-2 px-4"
       >
@@ -26,7 +26,7 @@ const DropdownProviders = () => {
           {current.name} {!isMobile ? `(${current.model})` : ""}
         </span>
         <FaChevronDown size={13} />
-      </div>
+      </button>
 
       {/* Dropdown menu */}
       {isOpen && (
