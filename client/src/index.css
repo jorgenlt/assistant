@@ -136,14 +136,14 @@ p {
 
 /* Pop OS */
 [data-theme="popos-dark"] {
-  --bg1: #1d1e21;
-  --bg2: #272727;
-  --bg3: #363636;
-  --bg-chat-bubble: #94ebeb;
-  --text-chat-bubble: #272727;
+  --bg1: #2e2e2e;
+  --bg2: #353535;
+  --bg3: #424242;
+  --bg-chat-bubble: #63d0df;
+  --text-chat-bubble: #262626;
   --text: #f0f6fc;
-  --text-hover: #272727;
-  --hover: #94ebeb;
+  --text-hover: #262626;
+  --hover: #63d0df;
 }
 
 /* VS Code Dark */
