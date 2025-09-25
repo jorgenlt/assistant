@@ -91,7 +91,7 @@ const Login = () => {
 
   return (
     <div className="h-full w-full min-h-screen flex items-center justify-center">
-      <div className="bg-[var(--bg1)] rounded-xl shadow-lg p-8 w-full max-w-md">
+      <div className="bg-[var(--bg1)] rounded-xl shadow-lg p-8 w-full max-w-md mx-4">
         <h1 className="text-xl font-medium mb-6">
           Sign {isSignup ? "up" : "in"}
         </h1>
