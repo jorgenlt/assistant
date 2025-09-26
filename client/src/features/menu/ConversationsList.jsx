@@ -44,7 +44,7 @@ const ConversationsList = () => {
       return (
         <ListItem
           key={id}
-          action={() => handleUpdateCurrentId(id)}
+          onClick={() => handleUpdateCurrentId(id)}
           title={title}
           id={id}
           isCurrent={isCurrent}

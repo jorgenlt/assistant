@@ -5,7 +5,7 @@ import { memo, useState } from "react";
 import DropdownChat from "./DropdownChat";
 
 const ListItem = memo(
-  ({ action, title, id, isCurrent, onDelete, isMobile }) => {
+  ({ onClick, title, id, isCurrent, onDelete, isMobile }) => {
     const isThemeDark = useSelector((state) => state.menu.isThemeDark);
     const error = useSelector((state) => state.chat.error);
     const [showConfirm, setShowConfirm] = useState(false);
@@ -23,7 +23,7 @@ const ListItem = memo(
             isCurrent ? "bg-[var(--hover)]/70  text-[var(--text-hover)]" : ""
           } group relative flex justify-between items-center   rounded-xl mx-2 cursor-pointer select-none hover:bg-[var(--hover)] hover:text-[var(--text-hover)]`}
         >
-          <span onClick={action} className="px-3 py-2 w-full text-sm truncate">
+          <span onClick={onClick} className="px-3 py-2 w-full text-sm truncate">
             {title}
           </span>
 
@@ -47,7 +47,7 @@ const ListItem = memo(
     ) : error ? (
       // Error message
       <div
-        onClick={action}
+        onClick={onClick}
         className="px-3 py-1 rounded-xl mx-2 cursor-pointer select-none hover:bg-gray-200 dark:hover:bg-gray-700"
       >
         <span className="text-red-500 text-nowrap">{error}</span>
