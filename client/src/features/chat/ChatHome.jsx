@@ -25,7 +25,7 @@ const ChatHome = () => {
 
       {/* Chat input */}
       <div className="w-full text-center bg-[var(--bg)] text-[var(--text)] mb-6">
-        <ChatInput />
+        <ChatInput autoFocus={true}/>
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ import { FaArrowUp, FaPaperclip } from "react-icons/fa6";
 import axios from "axios";
 import { BASE_API_URL } from "../../app/config.js";
 
-const ChatInput = () => {
+const ChatInput = ({autoFocus}) => {
   const { name, model } = useSelector((state) => state.providers.current);
   const currentId = useSelector((state) => state.chat.currentId);
   const userId = useSelector((state) => state.auth.user._id);
@@ -85,7 +85,7 @@ const ChatInput = () => {
 
           {/* Input */}
           <textarea
-            autoFocus
+            autoFocus={autoFocus}
             ref={textareaRef}
             placeholder={`${name} (${model})`}
             value={prompt}

@@ -15,7 +15,7 @@ const Chat = () => {
       ) : (
         <>
           <Conversation />
-          <ChatInput />
+          <ChatInput autoFocus={false} />
         </>
       )}
     </>
