@@ -46,10 +46,7 @@ const Menu = () => {
   return (
     <div
       ref={menuRef}
-      // className={`${
-      //   isMobile ? "fixed h-screen z-10 w-4/5" : "w-1/5"
-      // } py-2 flex flex-col bg-[var(--bg1)]`}
-      className={`h-screen py-2 flex flex-col bg-[var(--bg1)]`}
+      className={`h-dvh py-2 flex flex-col bg-[var(--bg1)]`}
     >
       {/* Header */}
       <MenuHeader action={handleResetId} />

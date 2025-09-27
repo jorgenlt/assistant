@@ -102,7 +102,7 @@ const App = () => {
   });
 
   return (
-    <div className="flex h-dvh max-h-dvh w-screen bg-[var(--bg2)] text-[var(--text)]">
+    <div className="flex h-dvh w-screen bg-[var(--bg2)] text-[var(--text)]">
       {fetchConversationsStatus === "loading" ? (
         <Loader isThemeDark={isThemeDark} />
       ) : !isAuth ? (
@@ -111,7 +111,7 @@ const App = () => {
         <>
           <div
             className={`
-            transition-transform duration-300 ease-in-out
+            h-dvh transition-transform duration-300 ease-in-out
             ${isMobile ? "fixed top-0 left-0 z-20" : "relative"}
             ${
               isMobile
