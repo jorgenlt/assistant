@@ -102,7 +102,7 @@ const App = () => {
   });
 
   return (
-    <div className="flex h-screen w-screen bg-[var(--bg2)] text-[var(--text)]">
+    <div className="flex h-screen max-h-screen w-screen bg-[var(--bg2)] text-[var(--text)]">
       {fetchConversationsStatus === "loading" ? (
         <Loader isThemeDark={isThemeDark} />
       ) : !isAuth ? (
