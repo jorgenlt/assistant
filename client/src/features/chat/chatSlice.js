@@ -10,6 +10,7 @@ const initialState = {
   status: "idle",
   fetchConversationsStatus: "idle",
   createConversationStatus: "idle",
+  deletingConversationId: null,
   error: null,
 };
 
@@ -237,6 +238,7 @@ export const chat = createSlice({
           action.error?.message ??
           "Create conversation failed";
       })
+
       // Get chat response
       .addCase(getChatResponseThunk.pending, (state) => {
         state.status = "loading";
@@ -261,6 +263,7 @@ export const chat = createSlice({
         state.status = "failed";
         state.error = action.error.message;
       })
+
       // Fetch conversations
       .addCase(fetchConversationsThunk.pending, (state) => {
         state.fetchConversationsStatus = "loading";
@@ -280,6 +283,7 @@ export const chat = createSlice({
           action.error?.message ??
           "Failed to fetch conversations";
       })
+
       // Generate title
       .addCase(generateConversationTitleThunk.fulfilled, (state, action) => {
         const { conversationId, title } = action.payload;
@@ -295,23 +299,26 @@ export const chat = createSlice({
       .addCase(generateConversationTitleThunk.rejected, (state, action) => {
         state.error = action.error.message;
       })
+
       // Delete conversation
+      .addCase(deleteConversationThunk.pending, (state, action) => {
+        state.deletingConversationId = action.meta.arg; // track which id is deleting
+        state.error = null;
+      })
       .addCase(deleteConversationThunk.fulfilled, (state, action) => {
+        state.deletingConversationId = null;
+        state.error = null;
         const id = action.payload;
 
-        // Filter the conversations array to exclude a specific conversation by id
         state.conversations = state.conversations.filter(
-          (c) =>
-            // Use the nullish coalescing operator to get either c._id or c.id
-            // If c._id is not null or undefined, use it; otherwise, use c.id
-            (c._id ?? c.id) !== id // Check if the identifier does not match the given id
-          // If they don't match, keep the conversation in the new array
+          (c) => (c._id ?? c.id) !== id
         );
 
         if (state.currentId === id) state.currentId = null;
       })
       .addCase(deleteConversationThunk.rejected, (state, action) => {
-        state.error = action.error.message;
+        state.deletingConversationId = null;
+        state.error = action.error?.message;
       });
   },
 });
