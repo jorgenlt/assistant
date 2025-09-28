@@ -13,7 +13,7 @@ const SearchChats = ({ onClose }) => {
     (conversation) =>
       conversation.messages.some((message) =>
         message.content.toLowerCase().includes(query.toLowerCase())
-      ) || conversation.title.toLowerCase().includes(query.toLowerCase())
+      ) || conversation.title?.toLowerCase().includes(query.toLowerCase())
   );
 
   const handleUpdateCurrentId = (id) => {

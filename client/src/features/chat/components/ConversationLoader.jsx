@@ -4,8 +4,8 @@ import { PropagateLoader } from "react-spinners";
 const ConversationLoader = () => {
   const isThemeDark = useSelector((state) => state.menu.isThemeDark);
   return (
-    <div className="flex justify-center align-start pb-10">
-      <div className="p-3">
+    <div className="flex justify-center align-start">
+      <div>
         <PropagateLoader
           size={12}
           color={isThemeDark ? "#fafafa" : "#121416"}

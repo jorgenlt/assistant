@@ -2,53 +2,36 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useRef, useEffect } from "react";
 import {
   getChatResponseThunk,
-  addConversation,
   generateConversationTitleThunk,
+  createConversationThunk,
 } from "./chatSlice.js";
 import { FaArrowUp, FaPaperclip } from "react-icons/fa6";
-import axios from "axios";
-import { BASE_API_URL } from "../../app/config.js";
 
-const ChatInput = ({autoFocus}) => {
+const ChatInput = ({ autoFocus }) => {
   const { name, model } = useSelector((state) => state.providers.current);
   const currentId = useSelector((state) => state.chat.currentId);
-  const userId = useSelector((state) => state.auth.user._id);
-  const token = useSelector((state) => state.auth.token);
 
   const [prompt, setPrompt] = useState("");
 
   const dispatch = useDispatch();
 
-  const createConversation = async () => {
-    try {
-      const url = `${BASE_API_URL}/conversations`;
-      const response = await axios.post(
-        url,
-        { userId },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+  const handleSendPrompt = async () => {
+    if (!prompt) return;
+    setPrompt("");
 
-      if (response.status === 201) {
-        dispatch(addConversation(response.data));
+    try {
+      if (currentId === null) {
+        await dispatch(createConversationThunk()).unwrap();
+
+        await Promise.all([
+          dispatch(generateConversationTitleThunk(prompt)).unwrap(),
+          dispatch(getChatResponseThunk(prompt)).unwrap(),
+        ]);
+      } else {
+        await dispatch(getChatResponseThunk(prompt)).unwrap();
       }
     } catch (err) {
-      console.error("An error occurred:", err.message);
-    }
-  };
-
-  const handleSendPrompt = async () => {
-    if (prompt) {
-      if (currentId === null) {
-        await createConversation();
-        dispatch(generateConversationTitleThunk(prompt));
-      }
-
-      dispatch(getChatResponseThunk(prompt));
-      setPrompt("");
+      console.error("Error handling prompt:", err);
     }
   };
 
@@ -72,7 +55,6 @@ const ChatInput = ({autoFocus}) => {
 
   return (
     <div className="flex-shrink-0 mb-2 md:ml-2 md:mr-4 flex justify-center">
-      {/* <div className="w-full md:w-3/5"> */}
       <div className="w-full md:max-w-3xl">
         <div className="p-3 flex items-end gap-2">
           {/* Left action */}

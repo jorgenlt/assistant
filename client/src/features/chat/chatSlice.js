@@ -9,6 +9,7 @@ const initialState = {
   currentId: null,
   status: "idle",
   fetchConversationsStatus: "idle",
+  createConversationStatus: "idle",
   error: null,
 };
 
@@ -46,6 +47,41 @@ export const getChatResponseThunk = createAsyncThunk(
     );
 
     return { conversationId, response };
+  }
+);
+
+export const createConversationThunk = createAsyncThunk(
+  "chat/createConversation",
+  async (_, { getState, rejectWithValue }) => {
+    const {
+      auth: { token, user },
+    } = getState();
+
+    try {
+      const url = `${BASE_API_URL}/conversations`;
+
+      const userId = user._id;
+
+      const response = await axios.post(
+        url,
+        { userId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 201) {
+        return response.data;
+      }
+
+      return rejectWithValue("Invalid create conversation response");
+    } catch (error) {
+      const msg =
+        error?.response?.data?.message || error?.message || "Login failed";
+      return rejectWithValue(msg);
+    }
   }
 );
 
@@ -184,11 +220,27 @@ export const chat = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Case when fetching chat response is pending
+      // Create conversation
+      .addCase(createConversationThunk.pending, (state) => {
+        state.createConversationStatus = "loading";
+      })
+      .addCase(createConversationThunk.fulfilled, (state, action) => {
+        state.createConversationStatus = "idle";
+        const id = action.payload._id;
+        state.currentId = id;
+        state.conversations.push(action.payload);
+      })
+      .addCase(createConversationThunk.rejected, (state, action) => {
+        state.createConversationStatus = "failed";
+        state.error =
+          action.payload ??
+          action.error?.message ??
+          "Create conversation failed";
+      })
+      // Get chat response
       .addCase(getChatResponseThunk.pending, (state) => {
         state.status = "loading";
       })
-      // Case where getting chat response is successful (fulfilled)
       .addCase(getChatResponseThunk.fulfilled, (state, action) => {
         state.error = null;
         state.status = "idle";
@@ -205,11 +257,11 @@ export const chat = createSlice({
           }
         }
       })
-      // Case where getting chat response failed
       .addCase(getChatResponseThunk.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       })
+      // Fetch conversations
       .addCase(fetchConversationsThunk.pending, (state) => {
         state.fetchConversationsStatus = "loading";
         state.error = null;
@@ -228,7 +280,7 @@ export const chat = createSlice({
           action.error?.message ??
           "Failed to fetch conversations";
       })
-      // Generate title finished
+      // Generate title
       .addCase(generateConversationTitleThunk.fulfilled, (state, action) => {
         const { conversationId, title } = action.payload;
 
@@ -240,10 +292,10 @@ export const chat = createSlice({
           conversation.title = title;
         }
       })
-      // Generate title failed
       .addCase(generateConversationTitleThunk.rejected, (state, action) => {
         state.error = action.error.message;
       })
+      // Delete conversation
       .addCase(deleteConversationThunk.fulfilled, (state, action) => {
         const id = action.payload;
 

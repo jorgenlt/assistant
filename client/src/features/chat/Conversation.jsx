@@ -65,7 +65,11 @@ const Conversation = () => {
 
         {error && <Error error={error} />}
 
-        {status === "loading" && <ConversationLoader />}
+        {status === "loading" && (
+          <div className="pb-10">
+            <ConversationLoader />
+          </div>
+        )}
       </div>
     </div>
   );
