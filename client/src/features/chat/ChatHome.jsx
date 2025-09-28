@@ -19,7 +19,7 @@ const ChatHome = () => {
     <div className="h-full w-full flex flex-col justify-center items-center">
       {/* Welcome message */}
       <div
-        className="cursor-default select-none max-w-3xl"
+        className="cursor-default select-none max-w-3xl px-3"
         onClick={() => setMessage(getWelcomeMessage(welcomeMessages))}
       >
         <h1 className="text-2xl">{message}</h1>
