@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setLogin } from "./authSlice";
-import axios from "axios";
-import { BASE_API_URL } from "../../app/config";
+import { loginThunk, signupThunk } from "./authSlice";
 import { FaGithub } from "react-icons/fa6";
 
 import { TbRobot } from "react-icons/tb";
@@ -30,64 +28,16 @@ const Login = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const login = async () => {
-    try {
-      const url = `${BASE_API_URL}/auth/login`;
-
-      const response = await axios.post(url, {
-        email: formData.email,
-        password: formData.password,
-      });
-
-      if (response.status === 200) {
-        const { token, user } = response.data;
-        dispatch(setLogin({ token, user }));
-      }
-    } catch (err) {
-      setError(err.message);
-      console.error("An error occurred during login:", err.message);
-    }
-  };
-
-  const signup = async () => {
-    const { firstName, lastName, email, password, confirmPassword } = formData;
-
-    if (!firstName || !lastName || !email || !password || !confirmPassword) {
-      setError("Please fill in all required fields");
-      return;
-    }
-
-    // Password validation
-    if (password.length < 8) {
-      setError("Password must be at least 8 characters");
-      return;
-    } else if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
-
-    try {
-      const url = `${BASE_API_URL}/auth/register`;
-      const response = await axios.post(url, formData);
-
-      if (response.status === 201) {
-        login();
-      }
-    } catch (err) {
-      console.error("An error occurred during signup:", err.message);
-      setError(`An error occurred during signup: ${err.message}`);
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (isSignup) {
       setError(null);
-
-      await signup();
+      dispatch(signupThunk(formData));
     } else {
-      await login();
+      dispatch(
+        loginThunk({ email: formData.email, password: formData.password })
+      );
     }
   };
 

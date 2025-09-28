@@ -21,7 +21,7 @@ import KeyboardShortcuts from "./features/menu/components/KeyboardShortcuts";
 import { useWindowSize } from "react-use";
 
 const App = () => {
-  const isAuth = useSelector((state) => state.auth.isAuth);
+  const { isAuth, authStatus } = useSelector((state) => state.auth);
   const {
     theme,
     isThemeDark,
@@ -103,7 +103,7 @@ const App = () => {
 
   return (
     <div className="flex h-dvh w-screen bg-[var(--bg2)] text-[var(--text)]">
-      {fetchConversationsStatus === "loading" ? (
+      {fetchConversationsStatus === "loading" || authStatus === "loading" ? (
         <Loader isThemeDark={isThemeDark} />
       ) : !isAuth ? (
         <Login />
