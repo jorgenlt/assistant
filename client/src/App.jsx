@@ -88,9 +88,11 @@ const App = () => {
         event.shiftKey &&
         event.key === "Backspace"
       ) {
-        event.preventDefault();
-        dispatch(deleteConversationThunk(currentId));
-        dispatch(updateCurrentId(null));
+        if (currentId) {
+          event.preventDefault();
+          dispatch(deleteConversationThunk(currentId));
+          dispatch(updateCurrentId(null));
+        }
       }
     };
 
