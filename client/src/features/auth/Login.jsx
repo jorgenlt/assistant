@@ -1,11 +1,14 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginThunk, signupThunk } from "./authSlice";
 import { FaGithub } from "react-icons/fa6";
 
 import { TbRobot } from "react-icons/tb";
 
 const Login = () => {
+  const authError = useSelector((state) => state.auth.error);
+
+  const [error, setError] = useState(null);
   const [isSignup, setIsSignup] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
@@ -14,7 +17,6 @@ const Login = () => {
     password: "",
     confirmPassword: "",
   });
-  const [error, setError] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -31,14 +33,26 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const trimmedData = Object.fromEntries(
+      Object.entries(formData).map(([k, v]) =>
+        typeof v === "string" ? [k, v.trim()] : [k, v]
+      )
+    );
+
+    const { email, password, ...rest } = trimmedData;
+
     if (isSignup) {
-      setError(null);
-      dispatch(signupThunk(formData));
-    } else {
-      dispatch(
-        loginThunk({ email: formData.email, password: formData.password })
-      );
+      if ([email, password, ...Object.values(rest)].some((v) => !v)) {
+        return setError("Please fill out all fields.");
+      }
+      return dispatch(signupThunk(trimmedData));
     }
+
+    if (!email || !password) {
+      return setError("Please fill out email and password.");
+    }
+
+    dispatch(loginThunk({ email, password }));
   };
 
   return (
@@ -58,6 +72,7 @@ const Login = () => {
 
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             {error && <p className="text-sm text-red-500">{error}</p>}
+            {authError && <p className="text-sm text-red-500">{authError}</p>}
 
             {isSignup && (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

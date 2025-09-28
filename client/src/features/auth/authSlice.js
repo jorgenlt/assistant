@@ -28,8 +28,8 @@ export const loginThunk = createAsyncThunk(
 
       return rejectWithValue("Invalid login response");
     } catch (error) {
-      const msg =
-        error?.response?.data?.message || error?.message || "Login failed";
+      const msg = "Wrong email or password";
+      console.error(error?.response?.data?.message || error?.message);
       return rejectWithValue(msg);
     }
   }
