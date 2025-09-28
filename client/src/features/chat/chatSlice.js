@@ -90,6 +90,7 @@ export const fetchConversationsThunk = createAsyncThunk(
   "chat/fetchConversations",
   async (_, { getState, dispatch }) => {
     const {
+      chat: { currentId },
       auth: { token, user },
     } = getState();
 
@@ -105,8 +106,18 @@ export const fetchConversationsThunk = createAsyncThunk(
         params: { userId },
       });
 
+      const conversations = response.data.conversations;
+
+      // Check if conversation with id currentId exists
+      const currentConversationExists = conversations.some(
+        (conversation) => conversation._id === currentId
+      );
+      if (!currentConversationExists) {
+        dispatch(updateCurrentId(null));
+      }
+
       if (response.status === 200) {
-        return response.data.conversations;
+        return conversations;
       }
     } catch (error) {
       console.error(error.message);
@@ -183,7 +194,6 @@ export const chat = createSlice({
     addConversation: (state, action) => {
       const id = action.payload._id;
       state.currentId = id;
-      // state.conversations[id] = action.payload;
       state.conversations.push(action.payload);
     },
     updateMessages: (state, action) => {

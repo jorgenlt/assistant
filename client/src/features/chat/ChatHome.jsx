@@ -11,7 +11,6 @@ const ChatHome = () => {
   const createConversationStatus = useSelector(
     (state) => state.chat.createConversationStatus
   );
-  console.log("🚀 ~ createConversationStatus:", createConversationStatus);
 
   const [message, setMessage] = useState(getWelcomeMessage(welcomeMessages));
 
