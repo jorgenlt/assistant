@@ -2,7 +2,7 @@ import DropdownProviders from "./components/DropdownProviders";
 import { useState } from "react";
 import { FaBars, FaEllipsisVertical } from "react-icons/fa6";
 import { setIsMenuOpen } from "../menu/menuSlice";
-import { deleteConversationThunk } from "../chat/chatSlice";
+import { deleteConversationThunk } from "./chatThunks";
 import { useDispatch, useSelector } from "react-redux";
 import DropdownChat from "../menu/components/DropdownChat";
 

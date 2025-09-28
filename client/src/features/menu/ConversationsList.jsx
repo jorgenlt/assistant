@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { updateCurrentId, deleteConversationThunk } from "../chat/chatSlice";
+import { updateCurrentId } from "../chat/chatSlice";
+import { deleteConversationThunk } from "../chat/chatThunks";
 import { setIsMenuOpen } from "./menuSlice";
 import { useMemo } from "react";
 import ListItem from "./components/ListItem";

@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { updateCurrentId } from "./features/chat/chatSlice";
 import {
   fetchConversationsThunk,
-  updateCurrentId,
   deleteConversationThunk,
-} from "./features/chat/chatSlice";
+} from "./features/chat/chatThunks";
 import {
   setIsMenuOpen,
   setIsSearchOpen,

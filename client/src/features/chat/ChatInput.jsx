@@ -4,7 +4,7 @@ import {
   getChatResponseThunk,
   generateConversationTitleThunk,
   createConversationThunk,
-} from "./chatSlice.js";
+} from "./chatThunks.js";
 import { FaArrowUp, FaPaperclip } from "react-icons/fa6";
 
 const ChatInput = ({ autoFocus }) => {
