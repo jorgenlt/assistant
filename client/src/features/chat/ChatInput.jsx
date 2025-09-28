@@ -16,7 +16,7 @@ const ChatInput = ({ autoFocus }) => {
   const dispatch = useDispatch();
 
   const handleSendPrompt = async () => {
-    if (!prompt) return;
+    if (!prompt.trim()) return;
     setPrompt("");
 
     try {
