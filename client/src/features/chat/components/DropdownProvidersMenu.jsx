@@ -24,13 +24,15 @@ const DropdownProvidersMenu = ({ setActiveProvider, setIsOpen, apiKeys }) => {
         {providers.map((provider) => (
           <div
             key={provider.name}
-            className="text-neutral-400 p-2 flex flex-col m-1 cursor-default select-none text-left"
+            className={`${
+              apiKeys.includes(provider.provider) ? "" : "text-neutral-400"
+            } p-2 flex flex-col m-1 cursor-default select-none text-left`}
           >
             <div className="flex items-center justify-between">
               <span>{provider.name}</span>
               <div
                 onClick={() => setActiveProvider(provider)}
-                className="cursor-pointer select-none p-2 rounded-full hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
+                className="cursor-pointer select-none p-2 rounded-full text-[var(--text)] hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
               >
                 <FaGear />
               </div>
