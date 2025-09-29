@@ -7,7 +7,7 @@ import Button from "../../../components/Button";
 import axios from "axios";
 import ExternalLink from "../../../components/ExternalLink";
 
-const SetApiKeyModal = ({ open, onClose, activeProvider }) => {
+const SetApiKeyModal = ({ open, onClose, activeProvider, apiKeys }) => {
   const { token, user } = useSelector((state) => state.auth);
 
   const userId = user._id;
@@ -43,29 +43,12 @@ const SetApiKeyModal = ({ open, onClose, activeProvider }) => {
 
   const handleAddKey = () => {
     addKey(provider, apiKey, token);
-
     onClose();
   };
 
-  const hasApiKey = async (userId, token, provider) => {
-    try {
-      const url = `${BASE_API_URL}/users/${userId}/apiKeys/exists`;
-      const response = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          provider: provider,
-        },
-      });
-
-      if (response) setApiKeyExists(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
-    hasApiKey(userId, token, provider);
-  }, [provider, token, userId]);
+    setApiKeyExists(apiKeys.includes(provider));
+  }, [provider, apiKeys]);
 
   return (
     <Modal open={open} onClose={onClose} title={`Set API key for ${name}`}>

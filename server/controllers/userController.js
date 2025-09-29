@@ -13,8 +13,8 @@ export const getUser = async (req, res) => {
     delete userObj.password;
 
     res.status(200).json(userObj);
-  } catch (err) {
-    res.status(404).json({ message: err.message });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
   }
 };
 
@@ -57,19 +57,28 @@ export const addApiKey = async (req, res) => {
   }
 };
 
-export const hasApiKey = async (req, res) => {
+export const hasApiKeys = async (req, res) => {
   const { id } = req.params;
-  const provider = req.header("provider");
 
   try {
     if (!id) {
       throw new Error("id is invalid");
     }
 
-    const result = await hasApiKeyForProvider(id, provider);
+    const user = await User.findById(id);
 
-    res.status(200).json(result);
-  } catch (error) {
-    throw new Error(`Cannot check API key for ${provider}.`, error.message);
-  }
+    if (!user) return false;
+
+    const apiKeys = user.apiKeys;
+
+    const providers = [];
+
+    for (const [key, value] of Object.entries(apiKeys)) {
+      if (value) {
+        providers.push(key);
+      }
+    }
+
+    res.status(200).json(providers);
+  } catch (error) {}
 };

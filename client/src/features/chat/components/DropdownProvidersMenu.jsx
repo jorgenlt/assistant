@@ -2,7 +2,7 @@ import { FaCheck, FaGear } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { setProvider, setModel } from "../../providers/providersSlice";
 
-const DropdownProvidersMenu = ({ setActiveProvider, setIsOpen }) => {
+const DropdownProvidersMenu = ({ setActiveProvider, setIsOpen, apiKeys }) => {
   const { current, openAi, anthropic, mistral } = useSelector(
     (state) => state.providers
   );
@@ -38,10 +38,15 @@ const DropdownProvidersMenu = ({ setActiveProvider, setIsOpen }) => {
 
             {/* Models */}
             {provider.models.map((model) => (
-              <div
+              <button
                 key={model}
                 onClick={() => handleSetModel(provider.provider, model)}
-                className="text-[var(--text)] p-2 flex items-center justify-between m-1 cursor-pointer select-none rounded-xl text-left hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
+                className={`${
+                  apiKeys.includes(provider.provider)
+                    ? "text-[var(--text)] cursor-pointer hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
+                    : ""
+                }  p-2 flex items-center justify-between m-1  select-none rounded-xl text-left`}
+                disabled={!apiKeys.includes(provider.provider)}
               >
                 {model}{" "}
                 {current.model === model && (
@@ -49,7 +54,7 @@ const DropdownProvidersMenu = ({ setActiveProvider, setIsOpen }) => {
                     <FaCheck />
                   </div>
                 )}
-              </div>
+              </button>
             ))}
           </div>
         ))}
