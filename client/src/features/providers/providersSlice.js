@@ -7,7 +7,7 @@ const initialState = {
     name: "OpenAI",
     provider: "openAi",
     model: "gpt-5-nano",
-    models: ["gpt-5", "gpt-5-mini", "gpt-5-nano"],
+    models: ["gpt-5-nano", "gpt-5-mini", "gpt-5"],
     pricingLink: "https://openai.com/api/pricing/",
     getApiLink: "https://auth.openai.com/create-account",
     usageLink: "https://platform.openai.com/settings/organization/usage",
@@ -64,7 +64,6 @@ export const providers = createSlice({
     },
     setModel: (state, action) => {
       const { provider, model } = action.payload;
-
       const currentProvider = state.current.provider;
 
       if (provider === currentProvider) {
