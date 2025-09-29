@@ -1,6 +1,5 @@
 import User from "../models/User.js";
 import { encryptKey } from "../utils/crypto.js";
-import { hasApiKeyForProvider } from "../services/hasApiKeyForProvider.js";
 
 export const getUser = async (req, res) => {
   try {
@@ -55,30 +54,4 @@ export const addApiKey = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-};
-
-export const hasApiKeys = async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    if (!id) {
-      throw new Error("id is invalid");
-    }
-
-    const user = await User.findById(id);
-
-    if (!user) return false;
-
-    const apiKeys = user.apiKeys;
-
-    const providers = [];
-
-    for (const [key, value] of Object.entries(apiKeys)) {
-      if (value) {
-        providers.push(key);
-      }
-    }
-
-    res.status(200).json(providers);
-  } catch (error) {}
 };

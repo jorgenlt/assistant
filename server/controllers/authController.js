@@ -57,8 +57,20 @@ export const login = async (req, res) => {
 
     // Remove the user password and api keys before sending a response
     const userObj = user.toObject(); // Convert to plain js object
+
+    const apiKeys = userObj.apiKeys;
+
+    const providers = [];
+
+    for (const [key, value] of Object.entries(apiKeys)) {
+      if (value) {
+        providers.push(key);
+      }
+    }
+
+    userObj.apiKeys = providers;
+
     delete userObj.password;
-    delete userObj.apiKeys;
 
     // Sending a response with the generated token and user's details
     res.status(200).json({ token, user: userObj });
