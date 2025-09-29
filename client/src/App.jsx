@@ -47,22 +47,22 @@ const App = () => {
   };
 
   // Set provider and model once at login
-  const initialized = useRef(false);
-  useEffect(() => {
-    if (isAuth && !initialized.current) {
-      initialized.current = true;
+  // const initialized = useRef(false);
+  // useEffect(() => {
+  //   if (isAuth && !initialized.current) {
+  //     initialized.current = true;
 
-      const apiKeys = user.apiKeys || [];
+  //     const apiKeys = user.apiKeys || [];
 
-      if (apiKeys.length > 0) {
-        const provider = apiKeys[0];
-        const model = providers[provider].models[0];
+  //     if (apiKeys.length > 0) {
+  //       const provider = apiKeys[0];
+  //       const model = providers[provider].models[0];
 
-        dispatch(setProvider({ provider }));
-        dispatch(setModel({ provider, model }));
-      }
-    }
-  }, [isAuth, user, providers, dispatch]);
+  //       dispatch(setProvider({ provider }));
+  //       dispatch(setModel({ provider, model }));
+  //     }
+  //   }
+  // }, [isAuth, user, providers, dispatch]);
 
   useEffect(() => {
     dispatch(pingServer());
