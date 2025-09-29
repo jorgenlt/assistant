@@ -11,6 +11,7 @@ import {
   setIsKeyboardShortcutsOpen,
   setIsMobile,
 } from "./features/menu/menuSlice";
+import { pingServer } from "./features/server/serverSlice";
 import Menu from "./features/menu/Menu";
 import Chat from "./features/chat/Chat";
 import Login from "./features/auth/Login";
@@ -21,6 +22,8 @@ import KeyboardShortcuts from "./features/menu/components/KeyboardShortcuts";
 import { useWindowSize } from "react-use";
 
 const App = () => {
+  const serverStatus = useSelector((state) => state.server.status);
+
   const { isAuth, authStatus } = useSelector((state) => state.auth);
   const {
     theme,
@@ -42,7 +45,10 @@ const App = () => {
     if (isMobile) dispatch(setIsMenuOpen(false));
   };
 
-  // Runs once on page load to set the initial theme class on root
+  useEffect(() => {
+    dispatch(pingServer());
+  }, [dispatch]);
+
   useEffect(() => {
     const root = document.documentElement;
     root.classList.add(isThemeDark ? "dark" : "light");
@@ -105,7 +111,9 @@ const App = () => {
 
   return (
     <div className="flex h-dvh w-screen bg-[var(--bg2)] text-[var(--text)]">
-      {fetchConversationsStatus === "loading" || authStatus === "loading" ? (
+      {serverStatus === "loading" ? (
+        <Loader isThemeDark={isThemeDark} text="Waiting for server..." />
+      ) : fetchConversationsStatus === "loading" || authStatus === "loading" ? (
         <Loader isThemeDark={isThemeDark} />
       ) : !isAuth ? (
         <Login />
