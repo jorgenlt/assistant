@@ -23,7 +23,7 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  // whitelist: ["files", "status", "error"],
+  whitelist: ["menu", "providers", "auth"],
 };
 
 // Combine reducers
