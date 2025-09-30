@@ -48,8 +48,23 @@ export const addApiKey = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
+    const userObj = updatedUser.toObject();
+    const apiKeys = userObj.apiKeys;
+
+    const providers = [];
+    for (const [key, value] of Object.entries(apiKeys)) {
+      if (value) {
+        providers.push(key);
+      }
+    }
+
+    userObj.apiKeys = providers;
+
+    delete userObj.password;
+
     res.status(200).json({
       message: `API key for ${provider} encrypted and saved in the database.`,
+      userObj,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

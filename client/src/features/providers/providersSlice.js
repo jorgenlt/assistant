@@ -1,6 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { BASE_API_URL } from "../../app/config";
+import axios from "axios";
+import { updateUser } from "../auth/authSlice";
 
 const initialState = {
+  status: "idle",
+  error: null,
   current: { name: "OpenAI", provider: "openAi", model: "gpt-5-nano" },
   default: { name: "OpenAI", provider: "openAi", model: "gpt-5-nano" },
   openAi: {
@@ -15,7 +20,7 @@ const initialState = {
   anthropic: {
     name: "Anthropic",
     provider: "anthropic",
-    model: "claude-3-7-sonnet-20250219",
+    model: "claude-3-5-haiku-20241022",
     models: [
       "claude-3-5-haiku-20241022",
       "claude-sonnet-4-20250514",
@@ -35,6 +40,49 @@ const initialState = {
     usageLink: "https://console.mistral.ai/usage",
   },
 };
+
+export const addApiKeyThunk = createAsyncThunk(
+  "providers/addApiKey",
+  async (
+    { provider, key, userId, token },
+    { getState, dispatch, rejectWithValue }
+  ) => {
+    try {
+      const url = `${BASE_API_URL}/users/${userId}/apikeys`;
+      const response = await axios.patch(
+        url,
+        { provider, key },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        // Update user in auth
+        const updatedUser = response.data.userObj;
+        dispatch(updateUser(updatedUser));
+
+        // Set provider/model to match added API key
+        const model = getState().providers[provider].model;
+        dispatch(setProvider({ provider }));
+        dispatch(setModel({ provider, model }));
+
+        return response.data;
+      } else {
+        console.error(`Unexpected response status: ${response.status}`);
+        return null;
+      }
+    } catch (error) {
+      const msg =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Adding API key failed";
+      return rejectWithValue(msg);
+    }
+  }
+);
 
 export const providers = createSlice({
   name: "providers",
@@ -73,6 +121,22 @@ export const providers = createSlice({
         state[provider].model = model;
       }
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(addApiKeyThunk.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(addApiKeyThunk.fulfilled, (state) => {
+        state.status = "idle";
+        state.error = null;
+      })
+      .addCase(addApiKeyThunk.rejected, (state, action) => {
+        state.status = "failed";
+        state.error =
+          action.payload ?? action.error?.message ?? "Signup failed";
+      });
   },
 });
 

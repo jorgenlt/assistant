@@ -1,48 +1,24 @@
 import { useState, useEffect } from "react";
 import Modal from "../../../components/Modal";
 import { FaFloppyDisk, FaXmark } from "react-icons/fa6";
-import { BASE_API_URL } from "../../../app/config";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addApiKeyThunk } from "../../providers/providersSlice";
 import Button from "../../../components/Button";
-import axios from "axios";
 import ExternalLink from "../../../components/ExternalLink";
 
 const SetApiKeyModal = ({ open, onClose, activeProvider, apiKeys }) => {
   const { token, user } = useSelector((state) => state.auth);
-
   const userId = user._id;
+
+  const dispatch = useDispatch();
 
   const { provider, name, pricingLink, getApiLink, usageLink } = activeProvider;
 
   const [apiKey, setApiKey] = useState("");
   const [apiKeyExists, setApiKeyExists] = useState(false);
 
-  const addKey = async (provider, key, token) => {
-    try {
-      const url = `${BASE_API_URL}/users/${userId}/apikeys`;
-      const response = await axios.patch(
-        url,
-        { provider, key },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (response.status === 200) {
-        return response.data;
-      } else {
-        console.error(`Unexpected response status: ${response.status}`);
-        return null;
-      }
-    } catch (error) {
-      console.error("An error occurred:", error.message);
-    }
-  };
-
   const handleAddKey = () => {
-    addKey(provider, apiKey, token);
+    dispatch(addApiKeyThunk({ provider, key: apiKey, userId, token }));
     onClose();
   };
 

@@ -76,6 +76,9 @@ export const authSlice = createSlice({
     setLogout: () => {
       return initialState;
     },
+    updateUser: (state, action) => {
+      state.user = action.payload;
+    },
     setError: (state, action) => {
       state.error = action.payload;
     },
@@ -118,7 +121,7 @@ export const authSlice = createSlice({
 });
 
 // Exporting action from auth slice
-export const { setLogout, setError } = authSlice.actions;
+export const { setLogout, updateUser, setError } = authSlice.actions;
 
 // Exporting auth slice reducer function
 export default authSlice.reducer;
