@@ -47,7 +47,7 @@ const SetApiKeyModal = ({ open, onClose, activeProvider, apiKeys }) => {
   };
 
   useEffect(() => {
-    setApiKeyExists(apiKeys.includes(provider));
+    setApiKeyExists(apiKeys?.includes(provider));
   }, [provider, apiKeys]);
 
   return (

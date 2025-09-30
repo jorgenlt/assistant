@@ -25,7 +25,7 @@ const DropdownProvidersMenu = ({ setActiveProvider, setIsOpen, apiKeys }) => {
           <div
             key={provider.name}
             className={`${
-              apiKeys.includes(provider.provider) ? "" : "text-neutral-400"
+              apiKeys?.includes(provider.provider) ? "" : "text-neutral-400"
             } p-2 flex flex-col m-1 cursor-default select-none text-left`}
           >
             <div className="flex items-center justify-between">
@@ -44,11 +44,11 @@ const DropdownProvidersMenu = ({ setActiveProvider, setIsOpen, apiKeys }) => {
                 key={model}
                 onClick={() => handleSetModel(provider.provider, model)}
                 className={`${
-                  apiKeys.includes(provider.provider)
+                  apiKeys?.includes(provider.provider)
                     ? "text-[var(--text)] cursor-pointer hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
                     : ""
                 }  p-2 flex items-center justify-between m-1  select-none rounded-xl text-left`}
-                disabled={!apiKeys.includes(provider.provider)}
+                disabled={!apiKeys?.includes(provider.provider)}
               >
                 {model}{" "}
                 {current.model === model && (
