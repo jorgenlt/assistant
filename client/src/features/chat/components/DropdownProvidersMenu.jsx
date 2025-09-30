@@ -7,6 +7,8 @@ const DropdownProvidersMenu = ({ setActiveProvider, setIsOpen, apiKeys }) => {
     (state) => state.providers
   );
 
+  const hasApiKey = apiKeys?.length > 0;
+
   const providers = [openAi, anthropic, mistral];
 
   const dispatch = useDispatch();
@@ -51,7 +53,7 @@ const DropdownProvidersMenu = ({ setActiveProvider, setIsOpen, apiKeys }) => {
                 disabled={!apiKeys?.includes(provider.provider)}
               >
                 {model}{" "}
-                {current.model === model && (
+                {hasApiKey && current.model === model && (
                   <div className="pl-2">
                     <FaCheck />
                   </div>

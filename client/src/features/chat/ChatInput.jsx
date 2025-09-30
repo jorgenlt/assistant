@@ -10,6 +10,8 @@ import { FaArrowUp, FaPaperclip } from "react-icons/fa6";
 const ChatInput = ({ autoFocus }) => {
   const { name, model } = useSelector((state) => state.providers.current);
   const currentId = useSelector((state) => state.chat.currentId);
+  const apiKeys = useSelector((state) => state.auth.user.apiKeys);
+  const hasApiKey = apiKeys?.length > 0;
 
   const [prompt, setPrompt] = useState("");
 
@@ -67,13 +69,18 @@ const ChatInput = ({ autoFocus }) => {
 
           {/* Input */}
           <textarea
+            disabled={!hasApiKey}
             autoFocus={autoFocus}
             ref={textareaRef}
-            placeholder={`${name} (${model})`}
+            placeholder={
+              hasApiKey
+                ? `${name} (${model})`
+                : "No API key. Enter API key for a provider in the top menu."
+            }
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="chat-input-textarea max-h-[350px] overflow-y-auto flex-1 resize-none overflow-hidden rounded-4xl p-4 outline-none bg-[var(--bg3)] text-[var(--text)]"
+            className="chat-input-textarea select-none max-h-[350px] overflow-y-auto flex-1 resize-none overflow-hidden rounded-4xl p-4 outline-none bg-[var(--bg3)] text-[var(--text)]"
             rows={1}
           />
 
