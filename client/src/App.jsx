@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { updateCurrentId } from "./features/chat/chatSlice";
 import {
   fetchConversationsThunk,
@@ -11,7 +11,6 @@ import {
   setIsKeyboardShortcutsOpen,
   setIsMobile,
 } from "./features/menu/menuSlice";
-import { setProvider, setModel } from "./features/providers/providersSlice";
 import { pingServer } from "./features/server/serverSlice";
 import Menu from "./features/menu/Menu";
 import Chat from "./features/chat/Chat";
@@ -24,8 +23,7 @@ import { useWindowSize } from "react-use";
 
 const App = () => {
   const serverStatus = useSelector((state) => state.server.status);
-  const { isAuth, authStatus, user } = useSelector((state) => state.auth);
-  const providers = useSelector((state) => state.providers);
+  const { isAuth, authStatus } = useSelector((state) => state.auth);
   const {
     theme,
     isThemeDark,
@@ -45,24 +43,6 @@ const App = () => {
     dispatch(setIsSearchOpen(false));
     if (isMobile) dispatch(setIsMenuOpen(false));
   };
-
-  // Set provider and model once at login
-  // const initialized = useRef(false);
-  // useEffect(() => {
-  //   if (isAuth && !initialized.current) {
-  //     initialized.current = true;
-
-  //     const apiKeys = user.apiKeys || [];
-
-  //     if (apiKeys.length > 0) {
-  //       const provider = apiKeys[0];
-  //       const model = providers[provider].models[0];
-
-  //       dispatch(setProvider({ provider }));
-  //       dispatch(setModel({ provider, model }));
-  //     }
-  //   }
-  // }, [isAuth, user, providers, dispatch]);
 
   useEffect(() => {
     dispatch(pingServer());

@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { BASE_API_URL } from "../../app/config";
 import axios from "axios";
+import { setModel, setProvider } from "../providers/providersSlice";
 
 const initialState = {
   token: null,
@@ -12,7 +13,7 @@ const initialState = {
 
 export const loginThunk = createAsyncThunk(
   "auth/login",
-  async ({ email, password }, { rejectWithValue }) => {
+  async ({ email, password }, { getState, dispatch, rejectWithValue }) => {
     try {
       const url = `${BASE_API_URL}/auth/login`;
 
@@ -23,6 +24,16 @@ export const loginThunk = createAsyncThunk(
 
       if (response.status === 200) {
         const { token, user } = response.data;
+
+        // Check of user has any api keys and set a valid provider/model if they do
+        const apiKeys = user.apiKeys;
+        if (apiKeys.length > 0) {
+          const provider = apiKeys[0];
+          const model = getState().providers[provider].model;
+          dispatch(setProvider({ provider }));
+          dispatch(setModel({ provider, model }));
+        }
+
         return { token, user };
       }
 
@@ -38,7 +49,6 @@ export const loginThunk = createAsyncThunk(
 export const signupThunk = createAsyncThunk(
   "auth/signup",
   async (formData, { dispatch, rejectWithValue }) => {
-    console.log(formData);
     try {
       const url = `${BASE_API_URL}/auth/register`;
 
