@@ -12,6 +12,7 @@ const KeyboardShortcuts = () => {
     <div>
       <div className="p-4 flex flex-col gap-2">
         <Shortcut description="Search chats" keys="Ctrl/Cmd + K" />
+        <Shortcut description="Send message" keys="Ctrl/Cmd + Enter" />
         <Shortcut description="New chat" keys="Ctrl/Cmd + M" />
         <Shortcut description="Delete chat" keys="Ctrl/Cmd + Shift + Backspace" />
       </div>
