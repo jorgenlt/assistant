@@ -78,7 +78,14 @@ export const deleteConversation = async (req, res) => {
 
 export const addMessage = async (req, res) => {
   try {
-    const { role, content, provider, model, conversationId: id, userId } = req.body;
+    const {
+      role,
+      content,
+      provider,
+      model,
+      conversationId: id,
+      userId,
+    } = req.body;
 
     if (!role || !content)
       return res.status(400).json({ error: "Role and content required" });
@@ -143,6 +150,7 @@ export const generateTitle = async (req, res) => {
     const providers = [
       { provider: "mistral", model: "mistral-small-latest" },
       { provider: "openAi", model: "gpt-5-nano" },
+      { provider: "anthropic", model: "claude-3-5-haiku-20241022" },
     ];
 
     let generatedTitle = null;

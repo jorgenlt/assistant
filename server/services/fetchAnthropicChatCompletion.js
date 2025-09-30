@@ -9,7 +9,7 @@ async function fetchAnthropicChatCompletion(context, apiKey, model) {
 
     const chatResponse = await anthropic.messages.create({
       model,
-      max_tokens: 3500,
+      max_tokens: 6000,
       system: systemPrompt,
       messages: context,
     });

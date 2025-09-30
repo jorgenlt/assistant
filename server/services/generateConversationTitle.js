@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 import { Mistral } from "@mistralai/mistralai";
+import Anthropic from "@anthropic-ai/sdk";
 
 const generateConversationTitle = async (prompt, apiKey, provider, model) => {
   const systemPrompt =
@@ -50,6 +51,31 @@ const generateConversationTitle = async (prompt, apiKey, provider, model) => {
       });
 
       return response.choices[0].message.content.trim();
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  if (provider === "anthropic") {
+    console.log("provider is anthropic");
+    try {
+      const anthropic = new Anthropic({
+        apiKey,
+      });
+
+      const response = await anthropic.messages.create({
+        model,
+        max_tokens: 3500,
+        system: systemPrompt,
+        messages: [
+          {
+            role: "user",
+            content: prompt,
+          },
+        ],
+      });
+      console.log("response: ", response);
+      return response.content[0].text.trim();
     } catch (error) {
       throw new Error(error);
     }
