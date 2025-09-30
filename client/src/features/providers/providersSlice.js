@@ -112,13 +112,12 @@ export const providers = createSlice({
     },
     setModel: (state, action) => {
       const { provider, model } = action.payload;
-      const currentProvider = state.current.provider;
+      if (!state[provider]) return;
 
-      if (provider === currentProvider) {
+      state[provider].model = model;
+
+      if (state.current.provider === provider) {
         state.current.model = model;
-        state[provider].model = model;
-      } else {
-        state[provider].model = model;
       }
     },
   },

@@ -40,21 +40,8 @@ export const chat = createSlice({
         }
       }
     },
-    deleteConversations: (state) => {
-      state.conversations = [];
-      state.currentId = null;
-    },
     updateCurrentId: (state, action) => {
       state.currentId = action.payload;
-    },
-    importConversations: (state, action) => {
-      state.conversations = action.payload;
-      state.currentId = null;
-    },
-    resetChatSlice: () => {
-      return {
-        ...initialState,
-      };
     },
     setError: (state, action) => {
       state.error = action.payload;
@@ -168,11 +155,8 @@ export const chat = createSlice({
 export const {
   addConversation,
   updateMessages,
-  deleteConversations,
   getTitle,
   updateCurrentId,
-  importConversations,
-  resetChatSlice,
   setError,
 } = chat.actions;
 

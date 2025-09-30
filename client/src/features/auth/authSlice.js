@@ -22,7 +22,7 @@ export const loginThunk = createAsyncThunk(
         password,
       });
 
-      if (response.status === 200) {
+      if (response?.status === 200) {
         const { token, user } = response.data;
 
         // Check of user has any api keys and set a valid provider/model if they do

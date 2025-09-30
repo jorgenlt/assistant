@@ -22,7 +22,7 @@ export const pingServer = createAsyncThunk(
 const serverSlice = createSlice({
   name: "server",
   initialState: {
-    status: "idle", // idle | loading | awake | error
+    status: "idle",
     responseTime: null,
     error: null,
   },
