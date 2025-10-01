@@ -26,6 +26,7 @@
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
     "remark-gfm": "^4.0.1",
+    "spinners-react": "^1.0.11",
     "tailwindcss": "^4.1.12"
   },
   "devDependencies": {
