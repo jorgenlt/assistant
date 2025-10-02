@@ -1,4 +1,4 @@
-import { highlight } from "./searchUtils";
+import { highlight } from "./utils/searchUtils";
 
 const getId = (c, fallbackIndex) => c?._id || c?.id || String(fallbackIndex);
 

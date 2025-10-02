@@ -17,7 +17,7 @@ import Chat from "./features/chat/Chat";
 import Login from "./features/auth/Login";
 import Loader from "./components/Loader";
 import Modal from "./components/Modal";
-import SearchChats from "./features/menu/components/search/SearchChats";
+import SearchChats from "./features/search/SearchChats";
 import KeyboardShortcuts from "./features/menu/components/KeyboardShortcuts";
 import { useWindowSize } from "react-use";
 

@@ -1,6 +1,6 @@
 import { useState, useMemo, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateCurrentId } from "../../../chat/chatSlice";
+import { updateCurrentId } from "../chat/chatSlice";
 import useFuse from "./useFuse";
 import SearchInput from "./SearchInput";
 import ResultsList from "./ResultsList";
