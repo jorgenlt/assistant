@@ -6,19 +6,19 @@ import {
   deleteConversationThunk,
 } from "./features/chat/chatThunks";
 import {
-  setIsMenuOpen,
+  setIsSidebarOpen,
   setIsSearchOpen,
   setIsKeyboardShortcutsOpen,
   setIsMobile,
-} from "./features/menu/menuSlice";
+} from "./features/sidebar/sidebarSlice";
 import { pingServer } from "./features/server/serverSlice";
-import Menu from "./features/menu/Menu";
+import Sidebar from "./features/sidebar/Sidebar";
 import Chat from "./features/chat/Chat";
 import Login from "./features/auth/Login";
 import Loader from "./components/Loader";
 import Modal from "./components/Modal";
 import SearchChats from "./features/search/SearchChats";
-import KeyboardShortcuts from "./features/menu/components/KeyboardShortcuts";
+import KeyboardShortcuts from "./features/sidebar/components/KeyboardShortcuts";
 import { useWindowSize } from "react-use";
 
 const App = () => {
@@ -27,10 +27,10 @@ const App = () => {
   const {
     theme,
     isThemeDark,
-    isMenuOpen,
+    isSidebarOpen,
     isSearchOpen,
     isKeyboardShortcutsOpen,
-  } = useSelector((state) => state.menu);
+  } = useSelector((state) => state.sidebar);
   const currentId = useSelector((state) => state.chat.currentId);
   const fetchConversationsStatus = useSelector(
     (state) => state.chat.fetchConversationsStatus
@@ -41,7 +41,7 @@ const App = () => {
 
   const handleOnCloseSearch = () => {
     dispatch(setIsSearchOpen(false));
-    if (isMobile) dispatch(setIsMenuOpen(false));
+    if (isMobile) dispatch(setIsSidebarOpen(false));
   };
 
   useEffect(() => {
@@ -68,7 +68,7 @@ const App = () => {
   }, [isAuth, dispatch]);
 
   useEffect(() => {
-    dispatch(setIsMenuOpen(!isMobile));
+    dispatch(setIsSidebarOpen(!isMobile));
     dispatch(setIsMobile(isMobile));
   }, [isMobile, dispatch]);
 
@@ -124,7 +124,7 @@ const App = () => {
             ${isMobile ? "fixed top-0 left-0 z-20" : "relative"}
             ${
               isMobile
-                ? isMenuOpen
+                ? isSidebarOpen
                   ? "translate-x-0"
                   : "-translate-x-full"
                 : ""
@@ -133,7 +133,7 @@ const App = () => {
             bg-[var(--bg2)] shadow-xl w-4/5 max-w-xs md:w-xs
           `}
           >
-            <Menu />
+            <Sidebar />
           </div>
 
           {/* Chat flexes into remaining space */}

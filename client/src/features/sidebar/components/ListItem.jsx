@@ -6,7 +6,7 @@ import DropdownChat from "./DropdownChat";
 
 const ListItem = memo(
   ({ onClick, title, id, isCurrent, onDelete, isMobile }) => {
-    const isThemeDark = useSelector((state) => state.menu.isThemeDark);
+    const isThemeDark = useSelector((state) => state.sidebar.isThemeDark);
     const error = useSelector((state) => state.chat.error);
     const deletingConversationId = useSelector(
       (state) => state.chat.deletingConversationId

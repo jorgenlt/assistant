@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   theme: "dark",
   isThemeDark: true,
-  isMenuOpen: false,
+  isSidebarOpen: false,
   isSearchOpen: false,
   isKeyboardShortcutsOpen: false,
   isMobile: true,
@@ -28,15 +28,10 @@ const initialState = {
   ],
 };
 
-export const menu = createSlice({
-  name: "menu",
+export const sidebar = createSlice({
+  name: "sidebar",
   initialState,
   reducers: {
-    resetMenuSlice: () => {
-      return {
-        ...initialState,
-      };
-    },
     setTheme: (state, action) => {
       state.theme = action.payload;
     },
@@ -47,8 +42,8 @@ export const menu = createSlice({
       state.theme = state.themes[nextIndex];
       state.isThemeDark = /dark/.test(state.theme);
     },
-    setIsMenuOpen: (state, action) => {
-      state.isMenuOpen = action.payload;
+    setIsSidebarOpen: (state, action) => {
+      state.isSidebarOpen = action.payload;
     },
     setIsSearchOpen: (state, action) => {
       state.isSearchOpen = action.payload;
@@ -67,14 +62,13 @@ export const menu = createSlice({
 });
 
 export const {
-  resetMenuSlice,
   setTheme,
-  setIsMenuOpen,
+  setIsSidebarOpen,
   setIsSearchOpen,
   setIsKeyboardShortcutsOpen,
   setIsMobile,
   toggleTheme,
   toggleLargeText,
-} = menu.actions;
+} = sidebar.actions;
 
-export default menu.reducer;
+export default sidebar.reducer;

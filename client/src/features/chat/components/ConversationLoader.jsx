@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { PropagateLoader } from "react-spinners";
 
 const ConversationLoader = () => {
-  const isThemeDark = useSelector((state) => state.menu.isThemeDark);
+  const isThemeDark = useSelector((state) => state.sidebar.isThemeDark);
   return (
     <div className="flex justify-center align-start">
       <div>

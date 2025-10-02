@@ -12,7 +12,7 @@ import {
 import { combineReducers } from "redux";
 import storage from "redux-persist/lib/storage";
 import chatReducer from "../features/chat/chatSlice";
-import menuReducer from "../features/menu/menuSlice";
+import sidebarReducer from "../features/sidebar/sidebarSlice";
 import providersReducer from "../features/providers/providersSlice";
 import authReducer from "../features/auth/authSlice";
 import serverReducer from "../features/server/serverSlice";
@@ -23,13 +23,13 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  whitelist: ["menu", "providers", "auth"],
+  whitelist: ["sidebar", "providers", "auth"],
 };
 
 // Combine reducers
 const rootReducer = combineReducers({
   chat: chatReducer,
-  menu: menuReducer,
+  sidebar: sidebarReducer,
   providers: providersReducer,
   auth: authReducer,
   server: serverReducer,

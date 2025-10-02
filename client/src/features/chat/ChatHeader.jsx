@@ -1,10 +1,10 @@
 import DropdownProviders from "./components/DropdownProviders";
 import { useState } from "react";
 import { FaBars, FaEllipsisVertical } from "react-icons/fa6";
-import { setIsMenuOpen } from "../menu/menuSlice";
+import { setIsSidebarOpen } from "../sidebar/sidebarSlice";
 import { deleteConversationThunk } from "./chatThunks";
 import { useDispatch, useSelector } from "react-redux";
-import DropdownChat from "../menu/components/DropdownChat";
+import DropdownChat from "../sidebar/components/DropdownChat";
 
 const ChatHeader = ({ currentId }) => {
   const [showConfirm, setShowConfirm] = useState(false);
@@ -31,7 +31,7 @@ const ChatHeader = ({ currentId }) => {
       <div className="flex items-center">
         <div
           className="md:hidden cursor-pointer ml-2"
-          onClick={() => dispatch(setIsMenuOpen(true))}
+          onClick={() => dispatch(setIsSidebarOpen(true))}
         >
           <FaBars size={30} />
         </div>

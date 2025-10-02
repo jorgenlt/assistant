@@ -1,6 +1,6 @@
 import { TbRobot } from "react-icons/tb";
 
-const MenuHeader = ({ action }) => {
+const SidebarHeader = ({ action }) => {
   return (
     <div className="mb-4 flex">
       <div
@@ -13,4 +13,4 @@ const MenuHeader = ({ action }) => {
   );
 };
 
-export default MenuHeader;
+export default SidebarHeader;

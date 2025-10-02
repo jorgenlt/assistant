@@ -7,7 +7,7 @@ import useClickOutside from "../../../hooks/useClickOutside";
 
 const DropdownProviders = () => {
   const current = useSelector((state) => state.providers.current);
-  const isMobile = useSelector((state) => state.menu.isMobile);
+  const isMobile = useSelector((state) => state.sidebar.isMobile);
   const apiKeys = useSelector((state) => state.auth.user.apiKeys);
 
   const [activeProvider, setActiveProvider] = useState(null); // null means no modal

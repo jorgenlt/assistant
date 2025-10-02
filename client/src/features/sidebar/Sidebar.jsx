@@ -1,15 +1,15 @@
 import { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentId } from "../chat/chatSlice.js";
-import { setIsSearchOpen, setIsMenuOpen } from "./menuSlice.js";
+import { setIsSearchOpen, setIsSidebarOpen } from "./sidebarSlice.js";
 import { FaPenToSquare, FaMagnifyingGlass } from "react-icons/fa6";
-import MenuHeader from "./MenuHeader.jsx";
+import SidebarHeader from "./SidebarHeader.jsx";
 import ConversationsList from "./ConversationsList.jsx";
 import SidebarItem from "./components/SidebarItem.jsx";
 import DropdownUser from "./components/DropdownUser.jsx";
 
-const Menu = () => {
-  const { isSearchOpen, isMobile } = useSelector((state) => state.menu);
+const Sidebar = () => {
+  const { isSearchOpen, isMobile } = useSelector((state) => state.sidebar);
 
   const user = useSelector((state) => state.auth.user);
 
@@ -17,7 +17,7 @@ const Menu = () => {
 
   const handleResetId = () => {
     dispatch(updateCurrentId(null));
-    if (isMobile) dispatch(setIsMenuOpen(false));
+    if (isMobile) dispatch(setIsSidebarOpen(false));
   };
 
   const handleLogout = () => {
@@ -25,13 +25,13 @@ const Menu = () => {
     window.location.href = "/";
   };
 
-  const menuRef = useRef();
+  const ref = useRef();
 
   useEffect(() => {
     if (isMobile) {
       const handleClickOutside = (e) => {
-        if (menuRef.current && !menuRef.current.contains(e.target)) {
-          dispatch(setIsMenuOpen(false));
+        if (ref.current && !ref.current.contains(e.target)) {
+          dispatch(setIsSidebarOpen(false));
         }
       };
 
@@ -44,12 +44,9 @@ const Menu = () => {
   }, [dispatch, isMobile]);
 
   return (
-    <div
-      ref={menuRef}
-      className={`h-dvh py-2 flex flex-col bg-[var(--bg1)]`}
-    >
+    <div ref={ref} className={`h-dvh py-2 flex flex-col bg-[var(--bg1)]`}>
       {/* Header */}
-      <MenuHeader action={handleResetId} />
+      <SidebarHeader action={handleResetId} />
 
       {/* New Chat & Search Chats */}
       <div className="border-b border-[#83838326]">
@@ -80,4 +77,4 @@ const Menu = () => {
   );
 };
 
-export default Menu;
+export default Sidebar;

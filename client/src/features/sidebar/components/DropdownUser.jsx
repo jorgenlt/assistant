@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleTheme } from "../menuSlice";
+import { toggleTheme } from "../sidebarSlice";
 import {
   FaRightFromBracket,
   FaUser,
@@ -9,12 +9,12 @@ import {
   FaSun,
 } from "react-icons/fa6";
 import SidebarItem from "./SidebarItem";
-import { setIsKeyboardShortcutsOpen } from "../menuSlice";
+import { setIsKeyboardShortcutsOpen } from "../sidebarSlice";
 import useClickOutside from "../../../hooks/useClickOutside";
 
 const DropdownUser = ({ user, logout }) => {
-  const theme = useSelector((state) => state.menu.theme);
-  const isThemeDark = useSelector((state) => state.menu.isThemeDark);
+  const theme = useSelector((state) => state.sidebar.theme);
+  const isThemeDark = useSelector((state) => state.sidebar.isThemeDark);
 
   const [isOpen, setIsOpen] = useState(false);
   const [isThemeHover, setIsThemeHover] = useState(false);

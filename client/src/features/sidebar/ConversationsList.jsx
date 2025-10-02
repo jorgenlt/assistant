@@ -1,13 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentId } from "../chat/chatSlice";
 import { deleteConversationThunk } from "../chat/chatThunks";
-import { setIsMenuOpen } from "./menuSlice";
+import { setIsSidebarOpen } from "./sidebarSlice";
 import { useMemo } from "react";
 import ListItem from "./components/ListItem";
 
 const ConversationsList = () => {
   const { conversations, currentId } = useSelector((state) => state.chat);
-  const isMobile = useSelector((state) => state.menu.isMobile);
+  const isMobile = useSelector((state) => state.sidebar.isMobile);
 
   const dispatch = useDispatch();
 
@@ -34,7 +34,7 @@ const ConversationsList = () => {
 
     const handleUpdateCurrentId = (id) => {
       dispatch(updateCurrentId(id));
-      if (isMobile) dispatch(setIsMenuOpen(false));
+      if (isMobile) dispatch(setIsSidebarOpen(false));
     };
 
     return sorted.map((conversation) => {
