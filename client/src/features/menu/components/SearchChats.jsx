@@ -52,15 +52,14 @@ const SearchChats = ({ onClose }) => {
   // refs for scrolling to active item
   const itemRefs = useRef({});
 
-  // Sort conversations by most recent message timestamp for sensible defaults
+  // Sort conversations by most recent message (message.updatedAt)
   const conversationsSorted = useMemo(() => {
     return [...conversations].sort((a, b) => {
-      const aDate = a.messages?.length
-        ? new Date(a.messages[a.messages.length - 1].createdAt).getTime()
-        : 0;
-      const bDate = b.messages?.length
-        ? new Date(b.messages[b.messages.length - 1].createdAt).getTime()
-        : 0;
+      console.log(a.updatedAt);
+      const aDate = a?.updatedAt ? new Date(a.updatedAt).getTime() : 0;
+      const bDate = b?.updatedAt ? new Date(b.updatedAt).getTime() : 0;
+
+      console.log(aDate, bDate);
       return bDate - aDate;
     });
   }, [conversations]);
@@ -309,7 +308,7 @@ const SearchChats = ({ onClose }) => {
               )}
             </div>
           ) : flatResults.length === 0 ? (
-            <div className="text-center text-gray-500 py-8">
+            <div className="select-none text-center text-gray-500 py-8">
               😕 No matches found — try different words
             </div>
           ) : (
