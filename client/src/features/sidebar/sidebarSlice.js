@@ -22,7 +22,6 @@ const initialState = {
     "oled-dark",
     // Light themes
     "solarized-light",
-    "slack-light",
     "discord-light",
     "material-light",
   ],

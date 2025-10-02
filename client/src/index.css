@@ -42,8 +42,14 @@ button {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .fade-in {
   animation: fadeIn 50ms ease-out forwards;
@@ -52,53 +58,41 @@ button {
 /* THEMES */
 /* Base (light/default) theme */
 :root {
-  --bg1: #efefef;
+  --bg1: #EBEBEB;
   --bg2: #f8f8f8;
-  --bg3: #ffffff;
+  --bg3: #e2e3e3;
   --bg-chat-bubble: #e2e3e3;
   --text-chat-bubble: #030712;
   --text: #030712;
   --text-hover: #030712;
-  --hover: #e6e7e7;
+  --hover: #D6D6D6;
 }
 
 /* Dark theme */
 [data-theme="dark"] {
-  --bg1: #111827;
-  --bg2: #1f2937;
-  --bg3: #374151;
-  --bg-chat-bubble: #d1d5db;
+  --bg1: #141414;
+  --bg2: #1A1A1A;
+  --bg3: #272727;
+  --bg-chat-bubble: #C2C2C2;
   --text-chat-bubble: #030712;
-  --text: #fafafa;
-  --text-hover: #fafafa;
-  --hover: #374151;
+  --text: #E0E0E0;
+  --text-hover: #E0E0E0;
+  --hover: #3D3D3D;
 }
 
 /* Solarized Light */
 [data-theme="solarized-light"] {
-  --bg1: #faeec8;
-  --bg2: #fdf6e3;
-  --bg3: #fcf3d9;
-  --bg-chat-bubble: #ffe9a8;
+  --bg1: #faeab6;
+  --bg2: #fde092;
+  --bg3: #feeec2;
+  --bg-chat-bubble: #ffd556;
   --text-chat-bubble: #5e4908;
-  --text: #5e4908;
-  --text-hover: #5e4908;
-  --hover: #ffe9a8;
+  --text: #4e3c06;
+  --text-hover: #4e3c06;
+  --hover: #ffd556;
 }
 
 /* LIGHT THEMES */
-
-/* Slack Light */
-[data-theme="slack-light"] {
-  --bg1: #ffffff;
-  --bg2: #f8f8f8;
-  --bg3: #e0e0e0;
-  --bg-chat-bubble: #1264a3;
-  --text-chat-bubble: #ffffff;
-  --text: #1d1c1d;
-  --text-hover: #1d1c1d;
-  --hover: #efefef;
-}
 
 /* Discord Light */
 [data-theme="discord-light"] {
@@ -226,12 +220,12 @@ button {
 [data-theme="oled-dark"] {
   --bg1: #000000;
   --bg2: #000000;
-  --bg3: #101010;
-  --bg-chat-bubble: #25292d;
-  --text-chat-bubble: #fafafa;
-  --text: #f1f0f0;
-  --text-hover: #f1f0f0;
-  --hover: #131313;
+  --bg3: #121212;
+  --bg-chat-bubble: #242424;
+  --text-chat-bubble: #ebebeb;
+  --text: #ebebeb;
+  --text-hover: #ebebeb;
+  --hover: #242424;
 }
 
 /* Pop OS */
