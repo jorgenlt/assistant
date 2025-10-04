@@ -49,7 +49,7 @@ const Sidebar = () => {
       <SidebarHeader action={handleResetId} />
 
       {/* New Chat & Search Chats */}
-      <div className="border-b border-[#83838326]">
+      <div className="pb-1 border-b border-[#83838326]">
         <SidebarItem
           onClick={handleResetId}
           title="New Chat"
@@ -70,7 +70,7 @@ const Sidebar = () => {
       </div>
 
       {/* Profile & settings */}
-      <div className="border-t border-[#83838326]">
+      <div className="pt-1 border-t border-[#83838326]">
         <DropdownUser user={user} logout={handleLogout} />
       </div>
     </div>
