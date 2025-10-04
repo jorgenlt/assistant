@@ -11,9 +11,9 @@ const useFuse = (conversations, query) => {
       ],
       includeMatches: true,
       includeScore: true,
-      threshold: 0.45,
-      minMatchCharLength: 1,
-      useExtendedSearch: false,
+      threshold: 0.35,
+      minMatchCharLength: 2,
+      useExtendedSearch: true,
     });
   }, [conversations]);
 
