@@ -24,7 +24,7 @@ const Modal = ({ open, onClose, title, children }) => {
     <div
       ref={overlayRef}
       onClick={handleOverlayClick}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/10 dark:bg-white/10 "
+      className="px-2 fixed inset-0 z-50 flex items-center justify-center bg-black/10 dark:bg-white/10 "
       aria-hidden={!open}
     >
       <div
