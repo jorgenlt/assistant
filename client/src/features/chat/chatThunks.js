@@ -6,7 +6,7 @@ import { BASE_API_URL } from "../../app/config";
 import axios from "axios";
 
 export const getChatResponseThunk = createAsyncThunk(
-  "chat/getResponse",
+  "chat/getChatResponse",
   async (prompt, { getState, dispatch }) => {
     const {
       chat: { currentId },
@@ -137,7 +137,7 @@ export const generateConversationTitleThunk = createAsyncThunk(
       if (!title) {
         return {
           conversationId,
-          title: "Error: title could not be generated.",
+          title: "Error: Title could not be generated.",
         };
       }
 

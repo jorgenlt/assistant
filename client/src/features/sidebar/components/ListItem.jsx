@@ -7,14 +7,17 @@ import DropdownChat from "./DropdownChat";
 const ListItem = memo(
   ({ onClick, title, id, isCurrent, onDelete, isMobile }) => {
     const isThemeDark = useSelector((state) => state.sidebar.isThemeDark);
-    const error = useSelector((state) => state.chat.error);
     const deletingConversationId = useSelector(
       (state) => state.chat.deletingConversationId
+    );
+    const generateConversationTitleId = useSelector(
+      (state) => state.chat.generateConversationTitleId
     );
 
     const [showConfirm, setShowConfirm] = useState(false);
 
     const isDeletingThisItem = deletingConversationId === id;
+    const isGeneratingTitleThisItem = generateConversationTitleId === id;
 
     const confirmDelete = () => {
       setShowConfirm(false);
@@ -60,16 +63,19 @@ const ListItem = memo(
         )}
 
         {/* Error message */}
-        {error && (
+        {!title && !isGeneratingTitleThisItem && (
           <div
             onClick={onClick}
             className="px-3 py-1 rounded-xl mx-2 cursor-pointer select-none hover:bg-gray-200 dark:hover:bg-gray-700"
           >
-            <span className="text-red-500 text-nowrap">{error}</span>
+            <span className="text-red-500 text-nowrap">
+              Error: No title found
+            </span>
           </div>
         )}
 
-        {(isDeletingThisItem || !title) && (
+        {/* Loader */}
+        {(isDeletingThisItem || isGeneratingTitleThisItem) && (
           <div className="px-3 py-1 rounded-xl mx-2 cursor-default select-none">
             <PulseLoader size={5} color={isThemeDark ? "#fafafa" : "#121416"} />
           </div>

@@ -13,6 +13,7 @@ const initialState = {
   status: "idle",
   fetchConversationsStatus: "idle",
   createConversationStatus: "idle",
+  generateConversationTitleId: null,
   deletingConversationId: null,
   error: null,
 };
@@ -114,7 +115,11 @@ export const chat = createSlice({
       })
 
       // Generate title
+      .addCase(generateConversationTitleThunk.pending, (state) => {
+        state.generateConversationTitleId = state.currentId;
+      })
       .addCase(generateConversationTitleThunk.fulfilled, (state, action) => {
+        state.generateConversationTitleId = null;
         const { conversationId, title } = action.payload;
 
         const conversation = state.conversations.find(
@@ -126,6 +131,7 @@ export const chat = createSlice({
         }
       })
       .addCase(generateConversationTitleThunk.rejected, (state, action) => {
+        state.generateConversationTitleId = null;
         state.error = action.error.message;
       })
 

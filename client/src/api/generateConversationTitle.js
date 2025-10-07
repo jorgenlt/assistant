@@ -25,10 +25,7 @@ const generateConversationTitle = async (
 
     return response.data.title;
   } catch (error) {
-    console.error(
-      "An error occured in generateConversationTitle",
-      error.message
-    );
+    throw new Error(error);
   }
 };
 
