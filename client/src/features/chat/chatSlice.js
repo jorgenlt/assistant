@@ -89,7 +89,8 @@ export const chat = createSlice({
       })
       .addCase(getChatResponseThunk.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message;
+        state.error =
+          action?.error?.response?.data?.error || action.error.message;
       })
 
       // Fetch conversations

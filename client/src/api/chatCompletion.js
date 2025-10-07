@@ -28,13 +28,13 @@ const chatCompletion = async (
         },
       }
     );
-
+    console.log("response (chatCompletion.js): ", response);
     if (response.status === 200) {
       return response.data.response;
     }
   } catch (error) {
-    console.error("An error occurred:", error.message);
-    throw error;
+    const err = error?.response?.data?.error || error;
+    throw err;
   }
 };
 
