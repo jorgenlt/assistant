@@ -7,6 +7,8 @@ import userRoutes from "./routes/users.js";
 import conversationRoutes from "./routes/conversations.js";
 import { seed } from "./seeds/seed.js";
 import connectDB from "./db/db.js";
+import https from "https";
+import fs from "fs";
 
 // Configuring environment variables and middleware
 dotenv.config();
@@ -58,11 +60,30 @@ app.use((err, req, res, next) => {
 });
 
 // Setting up mongoDB and starting the server
-const PORT = process.env.PORT || 6001;
-
 connectDB();
 
-app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+const PORT = process.env.PORT || 6001;
+const HTTPS_PORT = 443;
+const NODE_ENV = process.env.NODE_ENV || "development";
+
+if (NODE_ENV === "production") {
+  // HTTPS configuration (Cloudflare Origin Cert)
+  const httpsOptions = {
+    key: fs.readFileSync("./key.pem"),
+    cert: fs.readFileSync("./cert.pem"),
+  };
+
+  https.createServer(httpsOptions, app).listen(HTTPS_PORT, () => {
+    console.log(`HTTPS API running on port ${HTTPS_PORT}`);
+  });
+} else {
+  // Local development (HTTP)
+  app.listen(PORT, () => {
+    console.log(`HTTP API running on port ${PORT}`);
+  });
+}
+
+// app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
 
 // *** Uncomment once to run function to add seeds ***
 // seed();
