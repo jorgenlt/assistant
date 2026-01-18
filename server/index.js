@@ -34,13 +34,15 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+// Cloudfare static header
 app.use((req, res, next) => {
-  const cfHeader = req.headers["cf-connecting-ip"];
-  if (!cfHeader) {
-    return res.status(403).json({ error: "Direct access forbidden" });
+  const secret = req.headers["cforigin"];
+  if (secret !== process.env.CF_SECRET) {
+    return res.status(403).json({ error: "Forbidden" });
   }
   next();
 });
+
 
 // Defining routes
 app.use("/auth", authRoutes);
