@@ -34,6 +34,14 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+app.use((req, res, next) => {
+  const cfHeader = req.headers["cf-connecting-ip"];
+  if (!cfHeader) {
+    return res.status(403).json({ error: "Direct access forbidden" });
+  }
+  next();
+});
+
 // Defining routes
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
