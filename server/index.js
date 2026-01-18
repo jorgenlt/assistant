@@ -18,6 +18,8 @@ app.use(morgan("common"));
 const allowedOrigins = [
   "http://localhost:5173",
   "https://assistant.jorgenlt.no",
+  "https://api-assistant.jorgenlt.no",
+  "https://jorgenlt.no",
 ];
 
 const corsOptions = {
@@ -43,6 +45,11 @@ app.use((req, res, next) => {
   next();
 });
 
+// Log headers
+// app.use((req, res, next) => {
+//   console.log("Incoming request headers:", req.headers);  // ← This will show ALL headers
+//   next();
+// });
 
 // Defining routes
 app.use("/auth", authRoutes);
