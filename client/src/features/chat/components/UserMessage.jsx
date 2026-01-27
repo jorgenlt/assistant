@@ -2,7 +2,7 @@ import { useMemo, memo } from "react";
 import copyToClipboard from "../../../common/utils/copyToClipboard";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { FaCopy } from "react-icons/fa6";
+import { FaCopy, FaGoogle } from "react-icons/fa6";
 import { SiDuckduckgo } from "react-icons/si";
 import normalizeMarkdown from "../../../common/utils/normalizeMarkdown";
 
@@ -29,6 +29,15 @@ const UserMessage = ({ content }) => {
           className="active:scale-90 p-1.5 px-2 py-2 cursor-pointer w-fit rounded-xl hover:bg-[var(--hover)] hover:text-[var(--text-hover)] opacity-0 group-hover:opacity-100 transition"
         >
           <SiDuckduckgo size={22} />
+        </a>
+        <a
+          href={`https://google.com/search?q=${encodeURIComponent(parsedContent)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open search in new window"
+          className="active:scale-90 p-1.5 px-2 py-2 cursor-pointer w-fit rounded-xl hover:bg-[var(--hover)] hover:text-[var(--text-hover)] opacity-0 group-hover:opacity-100 transition"
+        >
+          <FaGoogle size={20} />
         </a>
         <button
           onClick={() => handleCopyToClipboard(content)}
