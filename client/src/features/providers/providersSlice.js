@@ -39,6 +39,15 @@ const initialState = {
     getApiLink: "https://console.mistral.ai",
     usageLink: "https://console.mistral.ai/usage",
   },
+  gemini: {
+    name: "Gemini",
+    provider: "gemini",
+    model: "gemini-2.5-flash-lite",
+    models: ["gemini-3-pro-preview", "gemini-3-flash-preview", "gemini-2.5-pro", "gemini-2.5-flash", "gemini-2.5-flash-lite"],
+    pricingLink: "https://ai.google.dev/gemini-api/docs/pricing",
+    getApiLink: "https://ai.google.dev/gemini-api/docs/api-key",
+    usageLink: "https://aistudio.google.com/usage",
+  },
 };
 
 export const addApiKeyThunk = createAsyncThunk(

@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { setProvider, setModel } from "../../providers/providersSlice";
 
 const DropdownProvidersMenu = ({ setActiveProvider, setIsOpen, apiKeys }) => {
-  const { current, openAi, anthropic, mistral } = useSelector(
-    (state) => state.providers
+  const { current, openAi, anthropic, mistral, gemini } = useSelector(
+    (state) => state.providers,
   );
 
   const hasApiKey = apiKeys?.length > 0;
 
-  const providers = [openAi, anthropic, mistral];
+  const providers = [openAi, anthropic, mistral, gemini];
 
   const dispatch = useDispatch();
 
@@ -20,7 +20,7 @@ const DropdownProvidersMenu = ({ setActiveProvider, setIsOpen, apiKeys }) => {
   };
 
   return (
-    <div className="ml-2 absolute z-10 min-w-max *:left-0 origin-top-left divide-y rounded-xl shadow-lg bg-[var(--bg1)]">
+    <div className="ml-2 absolute z-10 min-w-max *:left-0 origin-top-left divide-y rounded-xl shadow-lg bg-[var(--bg1)] overflow-y-auto max-h-[85vh]">
       <div className="py-1">
         {/* Providers */}
         {providers.map((provider) => (
@@ -41,25 +41,35 @@ const DropdownProvidersMenu = ({ setActiveProvider, setIsOpen, apiKeys }) => {
             </div>
 
             {/* Models */}
-            {provider.models.map((model) => (
-              <button
-                key={model}
-                onClick={() => handleSetModel(provider.provider, model)}
-                className={`${
-                  apiKeys?.includes(provider.provider)
-                    ? "text-[var(--text)] cursor-pointer hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
-                    : ""
-                }  p-2 flex items-center justify-between m-1  select-none rounded-xl text-left`}
-                disabled={!apiKeys?.includes(provider.provider)}
-              >
-                {model}{" "}
-                {hasApiKey && current.model === model && (
-                  <div className="pl-2">
-                    <FaCheck />
-                  </div>
-                )}
-              </button>
-            ))}
+            {provider.models.map((model) => {
+              const isAvailable = apiKeys?.includes(provider.provider);
+
+              return (
+                <button
+                  key={model}
+                  onClick={() =>
+                    isAvailable
+                      ? handleSetModel(provider.provider, model)
+                      : null
+                  }
+                  disabled={!isAvailable}
+                  aria-disabled={!isAvailable}
+                  className={`p-2 flex items-center justify-between m-1 select-none rounded-xl text-left
+        ${
+          isAvailable
+            ? "text-[var(--text)] cursor-pointer hover:bg-[var(--hover)] hover:text-[var(--text-hover)]"
+            : "text-neutral-400 cursor-not-allowed pointer-events-none"
+        }`}
+                >
+                  {model}{" "}
+                  {hasApiKey && current.model === model && (
+                    <div className="pl-2">
+                      <FaCheck />
+                    </div>
+                  )}
+                </button>
+              );
+            })}
           </div>
         ))}
       </div>
