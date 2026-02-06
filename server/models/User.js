@@ -43,6 +43,10 @@ const UserSchema = new mongoose.Schema(
         type: String,
         default: null,
       },
+      gemini: {
+        type: String,
+        default: null,
+      },
     },
   },
   {
