@@ -84,7 +84,7 @@ app.use((err, req, res, next) => {
 });
 
 // Setting up mongoDB and starting the server
-const PORT = process.env.PORT || 6001;
+const PORT = process.env.PORT;
 
 connectDB();
 
