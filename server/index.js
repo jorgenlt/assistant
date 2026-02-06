@@ -10,12 +10,9 @@ import connectDB from "./db/db.js";
 
 // Configuring environment variables and middleware
 dotenv.config();
-const envFile = `.env.${process.env.NODE_ENV || "development"}`;
-console.log("Loading env file:", envFile);
-dotenv.config({ path: envFile });
 
 if (process.env.NODE_ENV === "development") {
-  console.log("Development server")
+  console.log("Development server");
 }
 
 const app = express();
@@ -32,7 +29,7 @@ const allowedOrigins = [
 
 const corsOptions = {
   origin: (origin, callback) => {
-    // allow requests with no origin (like mobile apps or curl)
+    // allow requests with no origin
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -85,7 +82,7 @@ app.use((err, req, res, next) => {
 });
 
 // Setting up mongoDB and starting the server
-const PORT = process.env.PORT;
+const PORT = process.env.NODE_ENV === "production" ? process.env.PORT : 6001;
 
 connectDB();
 
