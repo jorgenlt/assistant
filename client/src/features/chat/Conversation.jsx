@@ -37,13 +37,13 @@ const Conversation = () => {
           {/* Message */}
           <div
             className={`flex mb-20 ${
-              role === "assistant" ? "justify-start" : "justify-end"
+              role === "user" ? "justify-end" : "justify-start"
             }`}
           >
-            {role === "assistant" ? (
-              <AssistantMessage content={content} />
-            ) : (
+            {role === "user" ? (
               <UserMessage content={content} />
+            ) : (
+              <AssistantMessage content={content} />
             )}
           </div>
         </div>

@@ -2,6 +2,7 @@ import Conversation from "../models/Conversation.js";
 import fetchOpenAiChatCompletion from "../services/fetchOpenAiChatCompletion.js";
 import fetchAnthropicChatCompletion from "../services/fetchAnthropicChatCompletion.js";
 import fetchMistralChatCompletion from "../services/fetchMistralChatCompletion.js";
+import fetchGeminiChatCompletion from "../services/fetchGeminiChatCompletion.js";
 import generateConversationTitle from "../services/generateConversationTitle.js";
 import { hasApiKeyForProvider } from "../services/hasApiKeyForProvider.js";
 import { getDecryptedApiKey } from "../services/getDecryptedApiKey.js";
@@ -97,7 +98,7 @@ export const addMessage = async (req, res) => {
         $push: { messages: { role, content, created: new Date() } },
         lastMessageAt: new Date(),
       },
-      { new: true }
+      { new: true },
     ).lean();
 
     // Build context from existing messages
@@ -108,6 +109,7 @@ export const addMessage = async (req, res) => {
       openAi: fetchOpenAiChatCompletion,
       anthropic: fetchAnthropicChatCompletion,
       mistral: fetchMistralChatCompletion,
+      gemini: fetchGeminiChatCompletion,
     };
 
     const apiKey = await getDecryptedApiKey(userId, provider);
@@ -128,7 +130,7 @@ export const addMessage = async (req, res) => {
     await Conversation.findByIdAndUpdate(
       id,
       { $push: { messages: { ...response, created: new Date() } } },
-      { new: true }
+      { new: true },
     );
 
     res.json({ response });
@@ -162,7 +164,7 @@ export const generateTitle = async (req, res) => {
           prompt,
           apiKey,
           provider,
-          model
+          model,
         );
         break;
       }
@@ -175,7 +177,7 @@ export const generateTitle = async (req, res) => {
     const updated = await Conversation.findByIdAndUpdate(
       conversationId,
       { title: generatedTitle },
-      { new: true }
+      { new: true },
     ).lean();
 
     if (!updated) {
