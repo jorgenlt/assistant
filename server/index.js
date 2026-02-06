@@ -9,9 +9,11 @@ import { seed } from "./seeds/seed.js";
 import connectDB from "./db/db.js";
 
 // Configuring environment variables and middleware
-dotenv.config({
-  path: `.env.${process.env.NODE_ENV || "development"}`
-});
+dotenv.config();
+const envFile = `.env.${process.env.NODE_ENV || "development"}`;
+console.log("Loading env file:", envFile);
+dotenv.config({ path: envFile });
+
 if (process.env.NODE_ENV === "development") {
   console.log("Development server")
 }
@@ -19,7 +21,6 @@ if (process.env.NODE_ENV === "development") {
 const app = express();
 app.use(express.json());
 app.use(morgan("common"));
-
 
 // Configure CORS
 const allowedOrigins = [
