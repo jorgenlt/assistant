@@ -17,7 +17,8 @@ const SetApiKeyModal = ({ open, onClose, activeProvider, apiKeys }) => {
   const [apiKey, setApiKey] = useState("");
   const [apiKeyExists, setApiKeyExists] = useState(false);
 
-  const handleAddKey = () => {
+  const handleAddKey = (e) => {
+    e.preventDefault();
     dispatch(addApiKeyThunk({ provider, key: apiKey, userId, token }));
     onClose();
   };
@@ -29,7 +30,7 @@ const SetApiKeyModal = ({ open, onClose, activeProvider, apiKeys }) => {
   return (
     <Modal open={open} onClose={onClose} title={`Set API key for ${name}`}>
       <div className="p-4">
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleAddKey}>
           <input
             type="text"
             value={apiKey}
@@ -43,8 +44,21 @@ const SetApiKeyModal = ({ open, onClose, activeProvider, apiKeys }) => {
             required
           />
           <div className="flex justify-end gap-2">
-            <Button onClick={onClose} title="Cancel" Icon={FaXmark} />
-            <Button onClick={handleAddKey} title="Save" Icon={FaFloppyDisk} />
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                onClose();
+              }}
+              title="Cancel"
+              Icon={FaXmark}
+              type="button"
+            />
+            <Button
+              onClick={handleAddKey}
+              title="Save"
+              Icon={FaFloppyDisk}
+              type="submit"
+            />
           </div>
         </form>
 
