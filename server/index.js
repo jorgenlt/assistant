@@ -9,10 +9,17 @@ import { seed } from "./seeds/seed.js";
 import connectDB from "./db/db.js";
 
 // Configuring environment variables and middleware
-dotenv.config();
+dotenv.config({
+  path: `.env.${process.env.NODE_ENV || "development"}`
+});
+if (process.env.NODE_ENV === "development") {
+  console.log("Development server")
+}
+
 const app = express();
 app.use(express.json());
 app.use(morgan("common"));
+
 
 // Configure CORS
 const allowedOrigins = [
@@ -37,13 +44,15 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Cloudfare static header
-app.use((req, res, next) => {
-  const secret = req.headers["cforigin"];
-  if (secret !== process.env.CF_SECRET) {
-    return res.status(403).json({ error: "Forbidden" });
-  }
-  next();
-});
+if (process.env.NODE_ENV === "production") {
+  app.use((req, res, next) => {
+    const secret = req.headers["cforigin"];
+    if (secret !== process.env.CF_SECRET) {
+      return res.status(403).json({ error: "Forbidden" });
+    }
+    next();
+  });
+}
 
 // Log headers
 // app.use((req, res, next) => {
