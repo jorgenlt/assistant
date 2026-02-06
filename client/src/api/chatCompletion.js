@@ -28,7 +28,7 @@ const chatCompletion = async (
         },
       }
     );
-    console.log("response (chatCompletion.js): ", response);
+
     if (response.status === 200) {
       return response.data.response;
     }
