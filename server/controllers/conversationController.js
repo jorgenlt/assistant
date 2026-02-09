@@ -3,7 +3,7 @@ import fetchOpenAiChatCompletion from "../services/fetchOpenAiChatCompletion.js"
 import fetchAnthropicChatCompletion from "../services/fetchAnthropicChatCompletion.js";
 import fetchMistralChatCompletion from "../services/fetchMistralChatCompletion.js";
 import fetchGeminiChatCompletion from "../services/fetchGeminiChatCompletion.js";
-import fetchXaiChatCompletion from "../services/fetchOpenAiChatCompletion.js";
+import fetchXaiChatCompletion from "../services/fetchXaiChatCompletion.js";
 import generateConversationTitle from "../services/generateConversationTitle.js";
 import { hasApiKeyForProvider } from "../services/hasApiKeyForProvider.js";
 import { getDecryptedApiKey } from "../services/getDecryptedApiKey.js";
