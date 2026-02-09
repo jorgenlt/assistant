@@ -43,10 +43,25 @@ const initialState = {
     name: "Gemini",
     provider: "gemini",
     model: "gemini-2.5-flash-lite",
-    models: ["gemini-3-pro-preview", "gemini-3-flash-preview", "gemini-2.5-pro", "gemini-2.5-flash", "gemini-2.5-flash-lite"],
+    models: [
+      "gemini-3-pro-preview",
+      "gemini-3-flash-preview",
+      "gemini-2.5-pro",
+      "gemini-2.5-flash",
+      "gemini-2.5-flash-lite",
+    ],
     pricingLink: "https://ai.google.dev/gemini-api/docs/pricing",
     getApiLink: "https://ai.google.dev/gemini-api/docs/api-key",
     usageLink: "https://aistudio.google.com/usage",
+  },
+  xai: {
+    name: "xAI",
+    provider: "xai",
+    model: "grok-4-1-fast-non-reasoning",
+    models: ["grok-4-1-fast-non-reasoning", "grok-4-1-fast-reasoning"],
+    pricingLink: "https://docs.x.ai/developers/models#model-pricing",
+    getApiLink: "https://console.x.ai/home",
+    usageLink: "https://console.x.ai/home",
   },
 };
 
@@ -54,7 +69,7 @@ export const addApiKeyThunk = createAsyncThunk(
   "providers/addApiKey",
   async (
     { provider, key, userId, token },
-    { getState, dispatch, rejectWithValue }
+    { getState, dispatch, rejectWithValue },
   ) => {
     try {
       const url = `${BASE_API_URL}/users/${userId}/apikeys`;
@@ -65,7 +80,7 @@ export const addApiKeyThunk = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       if (response.status === 200) {
@@ -90,7 +105,7 @@ export const addApiKeyThunk = createAsyncThunk(
         "Adding API key failed";
       return rejectWithValue(msg);
     }
-  }
+  },
 );
 
 export const providers = createSlice({

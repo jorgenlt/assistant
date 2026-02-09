@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { setProvider, setModel } from "../../providers/providersSlice";
 
 const DropdownProvidersMenu = ({ setActiveProvider, setIsOpen, apiKeys }) => {
-  const { current, openAi, anthropic, mistral, gemini } = useSelector(
+  const { current, openAi, anthropic, mistral, gemini, xai } = useSelector(
     (state) => state.providers,
   );
 
   const hasApiKey = apiKeys?.length > 0;
 
-  const providers = [openAi, anthropic, mistral, gemini];
+  const providers = [openAi, anthropic, mistral, gemini, xai];
 
   const dispatch = useDispatch();
 
