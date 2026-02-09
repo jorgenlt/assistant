@@ -47,12 +47,16 @@ const UserSchema = new mongoose.Schema(
         type: String,
         default: null,
       },
+      xai: {
+        type: String,
+        default: null,
+      },
     },
   },
   {
     // Timestamps: enables automatic timestamps for createdAt and updatedAt fields.
     timestamps: true,
-  }
+  },
 );
 
 // Create a model from the schema and assign it to the variable User

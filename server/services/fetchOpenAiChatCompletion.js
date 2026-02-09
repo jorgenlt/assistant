@@ -1,32 +1,26 @@
-import OpenAI from "openai";
+import { createXai } from "@ai-sdk/xai"; // ← import createXai instead of (or in addition to) xai
+import { generateText } from "ai";
 import systemPrompt from "./systemPrompt.js";
 
-const fetchOpenAiChatCompletion = async (context, apiKey, model) => {
+const fetchXaiChatCompletion = async (context, apiKey, model) => {
   try {
-    const systemMessage = {
-      role: "system",
-      content: systemPrompt,
-    };
+    // Create a fresh provider instance with the passed apiKey
+    const customXai = createXai({ apiKey });
 
-    const messages = [systemMessage, ...context];
-
-    const client = new OpenAI({ apiKey, dangerouslyAllowBrowser: false });
-
-    const response = await client.chat.completions.create({
-      model,
-      messages,
+    const { text } = await generateText({
+      model: customXai(model), // use the custom instance
+      system: systemPrompt,
+      messages: context,
     });
 
-    const { role, content } = response.choices[0].message;
-
-    return { role, content };
+    return {
+      role: "assistant",
+      content: text,
+    };
   } catch (error) {
-    console.error(
-      "Error in fetchMistralChatCompletion:",
-      error.message || error.response?.data?.error?.message
-    );
+    console.error("Error in fetchXaiChatCompletion:", error);
     throw error;
   }
 };
 
-export default fetchOpenAiChatCompletion;
+export default fetchXaiChatCompletion;

@@ -3,6 +3,7 @@ import fetchOpenAiChatCompletion from "../services/fetchOpenAiChatCompletion.js"
 import fetchAnthropicChatCompletion from "../services/fetchAnthropicChatCompletion.js";
 import fetchMistralChatCompletion from "../services/fetchMistralChatCompletion.js";
 import fetchGeminiChatCompletion from "../services/fetchGeminiChatCompletion.js";
+import fetchXaiChatCompletion from "../services/fetchOpenAiChatCompletion.js";
 import generateConversationTitle from "../services/generateConversationTitle.js";
 import { hasApiKeyForProvider } from "../services/hasApiKeyForProvider.js";
 import { getDecryptedApiKey } from "../services/getDecryptedApiKey.js";
@@ -110,6 +111,7 @@ export const addMessage = async (req, res) => {
       anthropic: fetchAnthropicChatCompletion,
       mistral: fetchMistralChatCompletion,
       gemini: fetchGeminiChatCompletion,
+      xai: fetchXaiChatCompletion,
     };
 
     const apiKey = await getDecryptedApiKey(userId, provider);
