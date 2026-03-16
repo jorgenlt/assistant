@@ -17,6 +17,8 @@ const Conversation = () => {
 
   const scrollRef = useRef();
 
+  const lastMessageRef = useRef(null);
+
   const messageElements = useMemo(() => {
     if (!messages) return null;
 
@@ -27,8 +29,10 @@ const Conversation = () => {
         ? formatDate(messages[i - 1].created)
         : null;
 
+      const isLast = i === messages.length - 1;
+      
       return (
-        <div key={_id || i}>
+        <div key={_id || i} ref={isLast ? lastMessageRef : null}>
           {/* Date separator */}
           {formattedCreated !== formattedPrevMsgCreated && (
             <ConversationDate created={formattedCreated} />
@@ -51,12 +55,24 @@ const Conversation = () => {
     });
   }, [messages]);
 
-  // Scroll to bottom when messages change
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+// Scroll to the last message, offset by 20% of the view height
+useEffect(() => {
+  const container = scrollRef.current;
+  const lastEl = lastMessageRef.current;
+
+  if (container) {
+    if (lastEl) {
+      const top = lastEl.offsetTop;
+      const offset = container.clientHeight * 0.2;
+      const target = Math.max(0, top - offset);
+      container.scrollTop = target;
+    } else {
+      // Fallback: if last element isn't mounted yet
+      container.scrollTop = container.scrollHeight;
     }
-  }, [messages]);
+  }
+}, [messages]);
+
 
   return (
     <div ref={scrollRef} className="flex justify-center flex-1 overflow-y-auto">
