@@ -12,8 +12,17 @@ body {
   padding: 0;
   /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif; */
-  font-family: ui-sans-serif, -apple-system, system-ui, Segoe UI, Helvetica,
-    Apple Color Emoji, Arial, sans-serif, Segoe UI Emoji, Segoe UI Symbol;
+  font-family:
+    ui-sans-serif,
+    -apple-system,
+    system-ui,
+    Segoe UI,
+    Helvetica,
+    Apple Color Emoji,
+    Arial,
+    sans-serif,
+    Segoe UI Emoji,
+    Segoe UI Symbol;
   line-height: 1.5;
   font-weight: 400;
   font-synthesis: none;
@@ -58,26 +67,28 @@ button {
 /* THEMES */
 /* Base (light/default) theme */
 :root {
-  --bg1: #EBEBEB;
+  --bg1: #ebebeb;
   --bg2: #f8f8f8;
   --bg3: #e2e3e3;
   --bg-chat-bubble: #e2e3e3;
-  --text-chat-bubble: #030712;
+  --text-chat-bubble: #25292d;
+  --text2-chat-bubble: #5C6670;
   --text: #030712;
   --text-hover: #030712;
-  --hover: #D6D6D6;
+  --hover: #d6d6d6;
 }
 
 /* Dark theme */
 [data-theme="dark"] {
   --bg1: #141414;
-  --bg2: #1A1A1A;
+  --bg2: #1a1a1a;
   --bg3: #272727;
-  --bg-chat-bubble: #C2C2C2;
-  --text-chat-bubble: #030712;
-  --text: #E0E0E0;
-  --text-hover: #E0E0E0;
-  --hover: #3D3D3D;
+  --bg-chat-bubble: #c2c2c2;
+  --text-chat-bubble: #25292d;
+  --text2-chat-bubble: #535c65;
+  --text: #e0e0e0;
+  --text-hover: #e0e0e0;
+  --hover: #3d3d3d;
 }
 
 /* Solarized Light */
@@ -87,6 +98,7 @@ button {
   --bg3: #feeec2;
   --bg-chat-bubble: #ffd556;
   --text-chat-bubble: #5e4908;
+  --text2-chat-bubble: #96740D;
   --text: #4e3c06;
   --text-hover: #4e3c06;
   --hover: #ffd556;
@@ -101,6 +113,7 @@ button {
   --bg3: #e3e5e8;
   --bg-chat-bubble: #5865f2;
   --text-chat-bubble: #ffffff;
+  --text2-chat-bubble: #B8B8B8;
   --text: #2e3338;
   --text-hover: #2e3338;
   --hover: #b8bdf5;
@@ -113,6 +126,7 @@ button {
   --bg3: #e0e0e0;
   --bg-chat-bubble: #2196f3;
   --text-chat-bubble: #ffffff;
+  --text2-chat-bubble: #ADADAD;
   --text: #212121;
   --text-hover: #212121;
   --hover: #e9e8e8;
@@ -127,6 +141,7 @@ button {
   --bg3: #21262d;
   --bg-chat-bubble: #238636;
   --text-chat-bubble: #ffffff;
+  --text2-chat-bubble: #C7CCD1;
   --text: #f0f6fc;
   --text-hover: #f0f6fc;
   --hover: #238636;
@@ -139,6 +154,7 @@ button {
   --bg3: #424242;
   --bg-chat-bubble: #63d0df;
   --text-chat-bubble: #262626;
+  --text2-chat-bubble: #535c65;
   --text: #f0f6fc;
   --text-hover: #262626;
   --hover: #63d0df;
@@ -151,6 +167,7 @@ button {
   --bg3: #2d2d30;
   --bg-chat-bubble: #007acc;
   --text-chat-bubble: #ffffff;
+  --text2-chat-bubble: #C7CCD1;
   --text: #cccccc;
   --text-hover: #cccccc;
   --hover: rgb(83, 97, 121);
@@ -163,6 +180,7 @@ button {
   --bg3: #2c3e50;
   --bg-chat-bubble: #1264a3;
   --text-chat-bubble: #ffffff;
+  --text2-chat-bubble: #C7CCD1;
   --text: #d1d2d3;
   --text-hover: #d1d2d3;
   --hover: #2b3044;
@@ -175,6 +193,7 @@ button {
   --bg3: #40444b;
   --bg-chat-bubble: #5865f2;
   --text-chat-bubble: #ffffff;
+  --text2-chat-bubble: #C7CCD1;
   --text: #dcddde;
   --text-hover: #dcddde;
   --hover: #5865f2;
@@ -187,6 +206,7 @@ button {
   --bg3: #333333;
   --bg-chat-bubble: #bb86fc;
   --text-chat-bubble: #000000;
+  --text2-chat-bubble: #535C65;
   --text: #ffffff;
   --text-hover: #ffffff;
   --hover: #644786;
@@ -199,6 +219,7 @@ button {
   --bg3: #3a3f4b;
   --bg-chat-bubble: #61afef;
   --text-chat-bubble: #282c34;
+  --text2-chat-bubble: #535C65;
   --text: #abb2bf;
   --text-hover: #abb2bf;
   --hover: #424856;
@@ -211,6 +232,7 @@ button {
   --bg3: #49483e;
   --bg-chat-bubble: #a6e22e;
   --text-chat-bubble: #272822;
+  --text2-chat-bubble: #535C65;
   --text: #f8f8f2;
   --text-hover: #f8f8f2;
   --hover: #667034;
@@ -223,9 +245,8 @@ button {
   --bg3: #121212;
   --bg-chat-bubble: #242424;
   --text-chat-bubble: #ebebeb;
+  --text2-chat-bubble: #6E7A87;
   --text: #ebebeb;
   --text-hover: #ebebeb;
   --hover: #242424;
 }
-
-/* Pop OS */
