@@ -6,6 +6,7 @@ const initialState = {
   isSidebarOpen: false,
   isSearchOpen: false,
   isKeyboardShortcutsOpen: false,
+  isSettingsOpen: false,
   isMobile: true,
   isEnterSend: false,
   themes: [
@@ -51,6 +52,9 @@ export const sidebar = createSlice({
     setIsKeyboardShortcutsOpen: (state, action) => {
       state.isKeyboardShortcutsOpen = action.payload;
     },
+    setIsSettingsOpen: (state, action) => {
+      state.isSettingsOpen = action.payload;
+    },
     setIsMobile: (state, action) => {
       state.isMobile = action.payload;
     },
@@ -69,6 +73,7 @@ export const {
   setIsSidebarOpen,
   setIsSearchOpen,
   setIsKeyboardShortcutsOpen,
+  setIsSettingsOpen,
   setIsMobile,
   toggleEnterIsSend,
   toggleTheme,

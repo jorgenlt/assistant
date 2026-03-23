@@ -10,7 +10,7 @@ import {
   FaGear,
 } from "react-icons/fa6";
 import SidebarItem from "./SidebarItem";
-import { setIsKeyboardShortcutsOpen } from "../sidebarSlice";
+import { setIsKeyboardShortcutsOpen, setIsSettingsOpen } from "../sidebarSlice";
 import useClickOutside from "../../../hooks/useClickOutside";
 
 const DropdownUser = ({ user, logout }) => {
@@ -28,6 +28,11 @@ const DropdownUser = ({ user, logout }) => {
 
   const handleOpenKeyboardShortcuts = () => {
     dispatch(setIsKeyboardShortcutsOpen(true));
+    setIsOpen(false);
+  };
+
+  const handleOpenSettings = () => {
+    dispatch(setIsSettingsOpen(true));
     setIsOpen(false);
   };
 
@@ -63,7 +68,7 @@ const DropdownUser = ({ user, logout }) => {
             <SidebarItem
               title="Settings"
               Icon={FaGear}
-              onClick={handleOpenKeyboardShortcuts}
+              onClick={handleOpenSettings}
             />
             <SidebarItem
               title="Logout"

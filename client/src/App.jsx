@@ -9,6 +9,7 @@ import {
   setIsSidebarOpen,
   setIsSearchOpen,
   setIsKeyboardShortcutsOpen,
+  setIsSettingsOpen,
   setIsMobile,
 } from "./features/sidebar/sidebarSlice";
 import { pingServer } from "./features/server/serverSlice";
@@ -19,6 +20,8 @@ import Loader from "./components/Loader";
 import Modal from "./components/Modal";
 import SearchChats from "./features/search/SearchChats";
 import KeyboardShortcuts from "./features/sidebar/components/KeyboardShortcuts";
+import Settings from "./features/sidebar/components/Settings"
+
 import { useWindowSize } from "react-use";
 
 const App = () => {
@@ -30,6 +33,7 @@ const App = () => {
     isSidebarOpen,
     isSearchOpen,
     isKeyboardShortcutsOpen,
+    isSettingsOpen,
   } = useSelector((state) => state.sidebar);
   const currentId = useSelector((state) => state.chat.currentId);
   const fetchConversationsStatus = useSelector(
@@ -155,6 +159,15 @@ const App = () => {
         onClose={() => dispatch(setIsKeyboardShortcutsOpen(false))}
       >
         <KeyboardShortcuts />
+      </Modal>
+
+       {/* Settings */}
+      <Modal
+        title="Settings"
+        open={isSettingsOpen}
+        onClose={() => dispatch(setIsSettingsOpen(false))}
+      >
+        <Settings />
       </Modal>
     </div>
   );
