@@ -76,6 +76,7 @@ button {
   --text: #030712;
   --text-hover: #030712;
   --hover: #d6d6d6;
+  --toggle-switch: rgb(129, 246, 129);
 }
 
 /* Dark theme */
@@ -89,6 +90,7 @@ button {
   --text: #e0e0e0;
   --text-hover: #e0e0e0;
   --hover: #3d3d3d;
+  --toggle-switch: rgb(129, 246, 129);
 }
 
 /* Solarized Light */
@@ -102,6 +104,7 @@ button {
   --text: #4e3c06;
   --text-hover: #4e3c06;
   --hover: #ffd556;
+  --toggle-switch: #4e3c06;
 }
 
 /* LIGHT THEMES */
@@ -117,6 +120,7 @@ button {
   --text: #2e3338;
   --text-hover: #2e3338;
   --hover: #b8bdf5;
+  --toggle-switch: #5865f2;
 }
 
 /* Material Light */
@@ -130,6 +134,7 @@ button {
   --text: #212121;
   --text-hover: #212121;
   --hover: #e9e8e8;
+  --toggle-switch: #2196f3;
 }
 
 /* DARK THEMES */
@@ -145,6 +150,7 @@ button {
   --text: #f0f6fc;
   --text-hover: #f0f6fc;
   --hover: #238636;
+  --toggle-switch: #238636;
 }
 
 /* Pop OS */
@@ -158,6 +164,7 @@ button {
   --text: #f0f6fc;
   --text-hover: #262626;
   --hover: #63d0df;
+  --toggle-switch: #63d0df;
 }
 
 /* VS Code Dark */
@@ -171,6 +178,7 @@ button {
   --text: #cccccc;
   --text-hover: #cccccc;
   --hover: rgb(83, 97, 121);
+  --toggle-switch: rgb(129, 246, 129);
 }
 
 /* Slack Dark */
@@ -184,6 +192,7 @@ button {
   --text: #d1d2d3;
   --text-hover: #d1d2d3;
   --hover: #2b3044;
+  --toggle-switch: rgb(129, 246, 129);
 }
 
 /* Discord Dark */
@@ -197,6 +206,7 @@ button {
   --text: #dcddde;
   --text-hover: #dcddde;
   --hover: #5865f2;
+  --toggle-switch: #5865f2;
 }
 
 /* Material Dark */
@@ -210,6 +220,7 @@ button {
   --text: #ffffff;
   --text-hover: #ffffff;
   --hover: #644786;
+  --toggle-switch: #bb86fc;
 }
 
 /* One Dark */
@@ -223,6 +234,7 @@ button {
   --text: #abb2bf;
   --text-hover: #abb2bf;
   --hover: #424856;
+  --toggle-switch: #61afef;
 }
 
 /* Monokai Dark */
@@ -236,6 +248,7 @@ button {
   --text: #f8f8f2;
   --text-hover: #f8f8f2;
   --hover: #667034;
+  --toggle-switch: #a6e22e;
 }
 
 /* Oled Dark */
@@ -249,4 +262,5 @@ button {
   --text: #ebebeb;
   --text-hover: #ebebeb;
   --hover: #242424;
+  --toggle-switch: rgb(129, 246, 129);
 }

@@ -20,7 +20,7 @@ import Loader from "./components/Loader";
 import Modal from "./components/Modal";
 import SearchChats from "./features/search/SearchChats";
 import KeyboardShortcuts from "./features/sidebar/components/KeyboardShortcuts";
-import Settings from "./features/sidebar/components/Settings"
+import Settings from "./features/sidebar/components/Settings";
 
 import { useWindowSize } from "react-use";
 
@@ -37,7 +37,7 @@ const App = () => {
   } = useSelector((state) => state.sidebar);
   const currentId = useSelector((state) => state.chat.currentId);
   const fetchConversationsStatus = useSelector(
-    (state) => state.chat.fetchConversationsStatus
+    (state) => state.chat.fetchConversationsStatus,
   );
   const isMobile = useWindowSize().width < 767;
 
@@ -161,7 +161,7 @@ const App = () => {
         <KeyboardShortcuts />
       </Modal>
 
-       {/* Settings */}
+      {/* Settings */}
       <Modal
         title="Settings"
         open={isSettingsOpen}
