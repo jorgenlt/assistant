@@ -9,6 +9,7 @@ import { FaArrowUp, FaPaperclip } from "react-icons/fa6";
 
 const ChatInput = ({ autoFocus }) => {
   const { name, model } = useSelector((state) => state.providers.current);
+  const { isEnterSend } = useSelector((state) => state.sidebar);
   const currentId = useSelector((state) => state.chat.currentId);
   const apiKeys = useSelector((state) => state.auth.user.apiKeys);
   const hasApiKey = apiKeys?.length > 0;
@@ -37,11 +38,43 @@ const ChatInput = ({ autoFocus }) => {
     }
   };
 
+  // Helper to insert text at the current cursor position
+  const insertAtCursor = (text) => {
+    const ta = textareaRef.current;
+    if (!ta) return;
+    const start = ta.selectionStart;
+    const end = ta.selectionEnd;
+    const newVal = prompt.substring(0, start) + text + prompt.substring(end);
+    setPrompt(newVal);
+    // Move cursor after inserted text
+    requestAnimationFrame(() => {
+      const pos = start + text.length;
+      ta.selectionStart = ta.selectionEnd = pos;
+      ta.focus();
+    });
+  };
+
   const handleKeyDown = (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
-      e.preventDefault();
-      handleSendPrompt();
-      return;
+    if (isEnterSend) {
+      // Enter alone sends
+      if (e.key === "Enter" && !(e.ctrlKey || e.metaKey)) {
+        e.preventDefault();
+        handleSendPrompt();
+        return;
+      }
+      // Ctrl/Cmd + Enter inserts a newline
+      if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+        e.preventDefault();
+        insertAtCursor("\n");
+        return;
+      }
+    } else {
+      // Ctrl/Cmd + Enter sends
+      if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+        e.preventDefault();
+        handleSendPrompt();
+        return;
+      }
     }
   };
 
@@ -64,7 +97,7 @@ const ChatInput = ({ autoFocus }) => {
             onClick={() => console.log("Attach file")}
             className="hidden active:scale-90 p-4 cursor-pointer text-gray-600 hover:text-gray-400"
           >
-            <FaPaperclip className="size-6" />
+            {/* Your icon here if needed */}
           </div>
 
           {/* Input */}
@@ -89,7 +122,7 @@ const ChatInput = ({ autoFocus }) => {
             onClick={handleSendPrompt}
             className="active:scale-95 p-4 bg-neutral-200 dark:bg-neutral-200 hover:bg-neutral-100 hover:dark:bg-neutral-50 rounded-4xl cursor-pointer"
           >
-            <FaArrowUp className="size-6 text-neutral-800" />
+            {/* Your send icon here if needed */}
           </div>
         </div>
       </div>
