@@ -7,6 +7,7 @@ import {
   FaKeyboard,
   FaMoon,
   FaSun,
+  FaGear,
 } from "react-icons/fa6";
 import SidebarItem from "./SidebarItem";
 import { setIsKeyboardShortcutsOpen } from "../sidebarSlice";
@@ -59,6 +60,11 @@ const DropdownUser = ({ user, logout }) => {
                 Icon={isThemeDark ? FaMoon : FaSun}
               />
             </div>
+            <SidebarItem
+              title="Settings"
+              Icon={FaGear}
+              onClick={handleOpenKeyboardShortcuts}
+            />
             <SidebarItem
               title="Logout"
               Icon={FaRightFromBracket}
