@@ -168,24 +168,3 @@ export const {
 } = chat.actions;
 
 export default chat.reducer;
-
-/*
-Usage tips
-
-On app load, dispatch fetchConversations() to populate the list.
-After creating a conversation (via createConversation thunk), you can rely on the fulfilled case to merge it into state.conversations automatically or call fetchConversations() again if you prefer a fresh fetch.
-Since your conversations have embedded messages, the fetched objects will include messages arrays. Your UI can render the list from state.conversations and open a conversation to view its messages.
-Example usage in a component
-
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchConversations } from './path/to/chatSlice';
-import { selectAllConversations } from './path/to/selectors'; // if you expose a selector
-
-// On mount
-useEffect(() => {
-  dispatch(fetchConversations());
-}, [dispatch]);
-
-// Access in component
-const conversations = useSelector((state) => Object.values(state.chat.conversations));
-*/
